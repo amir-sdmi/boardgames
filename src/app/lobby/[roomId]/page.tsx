@@ -30,6 +30,7 @@ export default function RoomPage() {
     return () => unsubscribe();
   }, [user, roomId]);
 
+  const handleSendChat = () => {};
   if (loading) return <p>Loading room...</p>;
 
   return (
@@ -39,12 +40,21 @@ export default function RoomPage() {
         Share this link with your friends: {`${generateAddRoomLink(roomId)}`}
       </p>
 
-      <h2>Players in Room:</h2>
-      <ul>
-        {players.map((player) => (
-          <li key={player.id}>{player.name}</li>
-        ))}
-      </ul>
+      <div className="border border-blue-200">
+        <h2 className="text-2xl">Players in Room:</h2>
+        <ul>
+          {players.map((player) => (
+            <li key={player.id}>{player.name}</li>
+          ))}
+        </ul>
+      </div>
+      <div className="mt-10 h-64 border border-yellow-200"></div>
+      <div className="flex border border-yellow-200">
+        <input type="text" className="w-full bg-gray-700 text-blue-200" />
+        <button onClick={handleSendChat} className="bg-yellow-200 text-black">
+          send
+        </button>
+      </div>
     </div>
   );
 }
