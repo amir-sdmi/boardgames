@@ -1,6 +1,6 @@
 "use client";
 
-import { joinRoom, listenToRoom } from "@/services/roomService";
+import { joinRoom, listenToRoom, startGame } from "@/services/roomService";
 import { UserType } from "@/types/firebaseTypes";
 import { useUser } from "@clerk/nextjs";
 import { useParams } from "next/navigation";
@@ -36,8 +36,10 @@ export default function RoomPage() {
 
   //TODO: make start game by being ready all players.
   const handleStartGame = () => {
+    startGame(roomId, players);
     router.push(`/game/${roomId}`);
   };
+
   if (loading) return <p>Loading room...</p>;
 
   return (

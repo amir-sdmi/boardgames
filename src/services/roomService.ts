@@ -1,3 +1,5 @@
+import { createNewGame } from "@/app/game/core/initializeGame";
+import { cardData } from "@/app/lobby/utils/cardData";
 import { db } from "@/lib/firebase";
 import { RoomType, UserType } from "@/types/firebaseTypes";
 import {
@@ -21,7 +23,7 @@ export const createRoom = async (user: UserType) => {
         name: user.name,
       },
     ],
-    isActive: true,
+    isGameStarted: false,
   });
   return newRoom.id;
 };
@@ -34,6 +36,15 @@ export const joinRoom = async (roomId: string, user: UserType) => {
   });
 };
 
+//Start the game
+export const startGame = async (roomId: string, players: UserType[]) => {
+  const roomRef = doc(db, "rooms", roomId);
+  const gameState = createNewGame(players, cardData);
+  await updateDoc(roomRef, {
+    isGameStarted: true,
+    gameState,
+  });
+};
 export const listenToRoom = (
   roomId: RoomType["id"],
   callback: (roomData: RoomType | null) => void,

@@ -1,18 +1,21 @@
 import { CardInformationType, CardsType } from "@/types/gameTypes";
 import { cardData } from "./cardData";
 
-export function fromDeckToHand(card: CardInformationType, hand: CardsType[]) {
+export function fromDeckToHand(
+  cardId: CardInformationType["id"],
+  hand: CardsType[],
+) {
   const updatedHand = [...hand];
 
   // Find if the card already exists in hand
-  const cardInHand = updatedHand.find((c) => c.id === card.id);
+  const cardInHand = updatedHand.find((c) => c.id === cardId);
 
   if (cardInHand) {
     // Increase quantity if card is already in hand
     cardInHand.quantity++;
   } else {
     // Add the card to hand with quantity 1 if not already present
-    updatedHand.push({ ...card, quantity: 1 });
+    updatedHand.push({ id: cardId, quantity: 1 });
   }
 
   return updatedHand;

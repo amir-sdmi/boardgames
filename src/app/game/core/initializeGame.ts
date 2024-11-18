@@ -92,10 +92,10 @@ export const createNewGame = (
       card.id >= activeCardsPerPlayer(players.length).from &&
       card.id <= activeCardsPerPlayer(players.length).to,
   );
-  const tempDeck: CardInformationType[] = [];
+  const tempDeck: CardInformationType["id"][] = [];
   filteredCards.forEach((card) => {
     for (let i = 0; i < card.totalQuantity; i++) {
-      tempDeck.push(card);
+      tempDeck.push(card.id);
     }
   });
   const deck = shuffleArray(tempDeck);
@@ -103,17 +103,13 @@ export const createNewGame = (
   //giving five card to each player
   players.forEach((player) => {
     for (let i = 0; i < 5; i++) {
-      const card = deck.pop() as CardInformationType;
-      player.hand = fromDeckToHand(card, player.hand);
+      const cardId = deck.pop();
+      if (cardId) player.hand = fromDeckToHand(cardId, player.hand);
     }
   });
 
   const discardPile: CardsType[] = cardData.map((card) => {
-    return {
-      id: card.id,
-      name: card.name,
-      quantity: 0,
-    };
+    return { id: card.id, quantity: 0 };
   });
 
   return {

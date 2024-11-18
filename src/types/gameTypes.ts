@@ -40,7 +40,7 @@ type CardsType = {
 type GameType = {
   players: PlayerType[];
   currentPlayer: CurrentPlayer;
-  deck: CardInformationType[];
+  deck: CardInformationType["id"][];
   discardPile: CardsType[];
   round: 1 | 2 | 3 | 4;
   availableManures: number;
