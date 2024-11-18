@@ -1,5 +1,5 @@
 import { db } from "@/lib/firebase";
-import { RoomType, PlayerType } from "@/types/firebaseTypes";
+import { RoomType, UserType } from "@/types/firebaseTypes";
 import {
   addDoc,
   arrayUnion,
@@ -10,18 +10,15 @@ import {
 } from "firebase/firestore";
 
 //create new room
-export const createRoom = async (
-  userId: PlayerType["id"],
-  userName: PlayerType["name"],
-) => {
+export const createRoom = async (user: UserType) => {
   const roomRef = collection(db, "rooms");
   const newRoom = await addDoc(roomRef, {
-    createdBy: userId,
+    createdBy: user.id,
     createdAt: new Date(),
     players: [
       {
-        id: userId,
-        name: userName,
+        id: user.id,
+        name: user.name,
       },
     ],
     isActive: true,
@@ -30,14 +27,10 @@ export const createRoom = async (
 };
 
 //Join an existing room
-export const joinRoom = async (
-  roomId: string,
-  userId: string,
-  userName: string,
-) => {
+export const joinRoom = async (roomId: string, user: UserType) => {
   const roomRef = doc(db, "rooms", roomId);
   await updateDoc(roomRef, {
-    players: arrayUnion({ id: userId, name: userName }),
+    players: arrayUnion({ id: user.id, name: user.name }),
   });
 };
 
