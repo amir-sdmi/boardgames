@@ -1,5 +1,5 @@
-import { fromDeckToHand } from "@/app/lobby/utils/cardsUtils";
-import { shuffleArray } from "@/app/lobby/utils/utils";
+import { fromDeckToHand } from "@/app/game/utils/cardsUtils";
+import { shuffleArray } from "@/app/game/utils/utils";
 import { UserType } from "@/types/firebaseTypes";
 import {
   CardInformationType,

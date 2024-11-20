@@ -5,8 +5,9 @@ import { UserType } from "@/types/firebaseTypes";
 import { useUser } from "@clerk/nextjs";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { generateAddRoomLink } from "@/app/lobby/utils/utils";
+import { generateAddRoomLink } from "@/app/game/utils/utils";
 import { useRouter } from "next/navigation";
+import { PLAYER_LIMITS } from "@/config/constants";
 
 export default function RoomPage() {
   const { roomId } = useParams<{ roomId: string }>();
@@ -36,8 +37,15 @@ export default function RoomPage() {
 
   //TODO: make start game by being ready all players.
   const handleStartGame = () => {
-    startGame(roomId, players);
-    router.push(`/game/${roomId}`);
+    if (
+      players.length >= PLAYER_LIMITS.MIN &&
+      players.length <= PLAYER_LIMITS.MAX
+    ) {
+      startGame(roomId, players);
+      router.push(`/game/${roomId}`);
+    } else {
+      alert("You need at least 3 players and at most 7 to start the game");
+    }
   };
 
   if (loading) return <p>Loading room...</p>;

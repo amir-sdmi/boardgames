@@ -1,5 +1,5 @@
 import { createNewGame } from "@/app/game/core/initializeGame";
-import { cardData } from "@/app/lobby/utils/cardData";
+import { cardData } from "@/app/game/utils/cardData";
 import { db } from "@/lib/firebase";
 import { RoomType, UserType } from "@/types/firebaseTypes";
 import {
