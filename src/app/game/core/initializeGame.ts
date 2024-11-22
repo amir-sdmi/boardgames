@@ -22,8 +22,8 @@ const createNewPlayer = (
     money: 0,
     hand: [],
     fields: [
-      { id: 0, crops: { id: null, quantity: 0 }, manure: false },
-      { id: 1, crops: { id: null, quantity: 0 }, manure: false },
+      { id: 0, crops: null, manure: false },
+      { id: 1, crops: null, manure: false },
     ],
     thirdField: false,
     playerHat: { ownerId: id, owenedBy: id },
@@ -39,7 +39,7 @@ const activeCardsPerPlayer = (
 ): { from: number; to: number } => {
   switch (playerCount) {
     case 3:
-      return { from: 1, to: 9 };
+      return { from: 1, to: 3 };
     case 4:
       return { from: 0, to: 9 };
     case 5:
@@ -49,7 +49,7 @@ const activeCardsPerPlayer = (
     case 7:
       return { from: 0, to: 12 };
     default:
-      return { from: 0, to: 12 };
+      return { from: 0, to: 2 };
   }
 };
 //TODO: chnage game for not having undefined here ! i did it by adding default to them

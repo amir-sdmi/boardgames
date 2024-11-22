@@ -8,13 +8,12 @@ export default function GamePage() {
   const { roomId } = useParams<{ roomId: string }>();
   const { user } = useUser();
 
-  if (!user) return;
+  if (!user) return null;
+
   return (
-    <>
-      <GameProvider roomId={roomId}>
-        <h1>Game Page</h1>
-        <Player userId={user.id} />
-      </GameProvider>
-    </>
+    <GameProvider roomId={roomId}>
+      <h1>Game Page</h1>
+      <Player userId={user.id} roomId={roomId} />
+    </GameProvider>
   );
 }

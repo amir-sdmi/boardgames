@@ -11,6 +11,9 @@ export const plantFromHand = (
   const newCurrentPlayer = { ...currentPlayer };
 
   //check if same card has been planted before, or field is empty, plant the card
+  if (!newField.crops) {
+    newField.crops = { id: -1, quantity: 0 };
+  }
   if (newField.crops.quantity === 0 || newField.crops.id === card.id) {
     newField.crops.quantity++;
     newField.crops.id = card.id;

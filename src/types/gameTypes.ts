@@ -14,7 +14,7 @@ type PlayerType = {
 
 type FieldType = {
   id: number;
-  crops: CardsType;
+  crops: CardsType | null;
   manure: boolean;
 };
 
@@ -34,7 +34,7 @@ type CardInformationType = {
   ];
 };
 type CardsType = {
-  id: number | null;
+  id: number;
   quantity: number;
 };
 type GameType = {
