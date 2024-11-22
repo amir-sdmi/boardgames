@@ -3,7 +3,7 @@
 import Button from "@/app/components/ui/Button";
 import { CardsType, PlayerType } from "@/types/gameTypes";
 import { cardName } from "../utils/cardsUtils";
-import { handlePlantFromHandAction } from "@/app/game/core/gameActions";
+import { plantFromHandAction } from "@/app/game/core/actions/plantFromHandAction";
 
 export default function PlayerDetails({
   player,
@@ -14,7 +14,7 @@ export default function PlayerDetails({
 }) {
   const handlePlantFromHand = async (fieldIndex: number, card: CardsType) => {
     try {
-      await handlePlantFromHandAction(roomId, player.id, fieldIndex, card.id);
+      await plantFromHandAction(roomId, player.id, fieldIndex, card.id);
     } catch (error) {
       console.error("Error planting from hand:", error);
     }
