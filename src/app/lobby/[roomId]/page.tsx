@@ -21,7 +21,7 @@ export default function RoomPage() {
       return;
     }
     //join room
-    joinRoom(roomId, { id: user.id, name: user.fullName || "Ananymous" }).catch(
+    joinRoom(roomId, { id: user.id, name: user.fullName || "Anonymous" }).catch(
       (error) => {
         console.error("Error joining room", error);
       },
@@ -37,14 +37,17 @@ export default function RoomPage() {
 
   //TODO: make start game by being ready all players.
   const handleStartGame = () => {
+    const playersCount = players.length;
     if (
-      players.length >= PLAYER_LIMITS.MIN &&
-      players.length <= PLAYER_LIMITS.MAX
+      playersCount >= PLAYER_LIMITS.MIN &&
+      playersCount <= PLAYER_LIMITS.MAX
     ) {
       startGame(roomId, players);
       router.push(`/game/${roomId}`);
     } else {
-      alert("You need at least 3 players and at most 7 to start the game");
+      console.error(
+        "You need at least 3 players and at most 7 to start the game",
+      );
     }
   };
 

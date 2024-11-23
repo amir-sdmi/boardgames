@@ -1,6 +1,6 @@
 import { db } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
-import { GameType, PlayerType } from "@/types/gameTypes";
+import { doc, FieldValue, getDoc, updateDoc } from "firebase/firestore";
+import { GameType } from "@/types/gameTypes";
 
 export async function fetchGameState(roomId: string): Promise<GameType> {
   const roomRef = doc(db, "rooms", roomId);
@@ -13,13 +13,11 @@ export async function fetchGameState(roomId: string): Promise<GameType> {
   return roomDoc.data().gameState as GameType;
 }
 
-export function findPlayer(
-  players: PlayerType[],
-  playerId: number,
-): PlayerType {
-  const player = players.find((p) => p.id === playerId);
-  if (!player) {
-    throw new Error("Player not found");
-  }
-  return player;
+export async function updateFirestoreDocument(
+  collectionPath: string,
+  docId: string,
+  data: { [key: string]: FieldValue | Partial<unknown> | undefined },
+): Promise<void> {
+  const docRef = doc(db, collectionPath, docId);
+  await updateDoc(docRef, data);
 }

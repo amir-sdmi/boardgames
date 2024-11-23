@@ -12,11 +12,16 @@ export default function Player({
   roomId: string;
 }) {
   const { gameState } = useGameContext();
-  if (!gameState) return;
+  if (!gameState) {
+    return <div>Loading game state ...</div>;
+  }
+
   const thisPlayer = gameState.players.find(
     (player) => player.userId === userId,
   );
-  if (!thisPlayer) return;
+  if (!thisPlayer) {
+    return <div> Player not found in game</div>;
+  }
 
   const handleBuy = async (
     player: PlayerType,
@@ -33,7 +38,7 @@ export default function Player({
   return (
     <>
       <PlayerDetails player={thisPlayer} roomId={roomId} />
-      <PlayerBuyingActions player={thisPlayer} handleBuy={handleBuy} />;
+      <PlayerBuyingActions player={thisPlayer} handleBuy={handleBuy} />
     </>
   );
 }

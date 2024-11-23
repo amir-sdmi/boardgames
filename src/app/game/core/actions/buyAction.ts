@@ -1,8 +1,11 @@
 import { BuyType, GameType, PlayerType } from "@/types/gameTypes";
 import { fromDeckToHand } from "../../utils/cardsUtils";
-import { doc, updateDoc } from "@firebase/firestore";
-import { db } from "@/lib/firebase";
-import { fetchGameState, findPlayer } from "../../utils/gameStateUtils";
+
+import {
+  fetchGameState,
+  updateFirestoreDocument,
+} from "../../utils/gameStateUtils";
+import { findPlayer } from "../../utils/utils";
 
 const MAX_FIELDS = 3;
 const CARDS_TO_DRAW = 3;
@@ -29,7 +32,8 @@ const buying = (
       ) {
         updatedPlayer.money -= price;
         updatedPlayer.fields.push({
-          id: updatedPlayer.fields.length,
+          //This is one time purchase, so no problem for id
+          id: 2,
           crops: null,
           manure: false,
         });
@@ -62,6 +66,11 @@ const buying = (
         updatedPlayer.hasBoughtCards = true;
         let newHand = [...updatedPlayer.hand];
         //Todo: this is problem, maybe we dont have enough cards in deck, it fixed now, but needs better solution
+        if (updatedDeck.length < CARDS_TO_DRAW) {
+          throw new Error(
+            `Not enough cards in deck. Required: ${CARDS_TO_DRAW}, Available: ${updatedDeck.length}`,
+          );
+        }
         for (let i = 0; i < CARDS_TO_DRAW; i++) {
           const newCardId = updatedDeck.pop();
           if (newCardId !== undefined) {
@@ -114,6 +123,7 @@ export async function buyAction(
     availableTractors: updatedTractors,
   };
 
-  const roomRef = doc(db, "rooms", roomId);
-  await updateDoc(roomRef, { gameState: updatedGameState });
+  await updateFirestoreDocument("rooms", roomId, {
+    gameState: updatedGameState,
+  });
 }

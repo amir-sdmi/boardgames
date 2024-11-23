@@ -1,12 +1,14 @@
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 import {
   CardsType,
   GameType,
   CurrentPlayer,
   FieldType,
 } from "@/types/gameTypes";
-import { fetchGameState, findPlayer } from "../../utils/gameStateUtils";
+import {
+  fetchGameState,
+  updateFirestoreDocument,
+} from "../../utils/gameStateUtils";
+import { findPlayer } from "../../utils/utils";
 
 const plantFromHand = (
   hand: CardsType[],
@@ -70,6 +72,7 @@ export async function plantFromHandAction(
     currentPlayer: newCurrentPlayer,
   };
 
-  const roomRef = doc(db, "rooms", roomId);
-  await updateDoc(roomRef, { gameState: updatedGameState });
+  await updateFirestoreDocument("rooms", roomId, {
+    gameState: updatedGameState,
+  });
 }

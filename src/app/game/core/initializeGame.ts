@@ -26,7 +26,7 @@ const createNewPlayer = (
       { id: 1, crops: null, manure: false },
     ],
     thirdField: false,
-    playerHat: { ownerId: id, owenedBy: id },
+    playerHat: { ownerId: id, ownedBy: id },
     tractor: false,
     otherPlayersHats: [],
     hasBoughtCards: false,

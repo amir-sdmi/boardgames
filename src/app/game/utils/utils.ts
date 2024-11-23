@@ -1,3 +1,4 @@
+import { PlayerType } from "@/types/gameTypes";
 import { cardData } from "./cardData";
 
 export const generateAddRoomLink = (roomId: string) => {
@@ -17,4 +18,14 @@ export function cardName(id: number | null) {
   if (id === null) return "No card";
   const foundCard = cardData.find((card) => card.id === id);
   return foundCard ? foundCard.name : "Unknown card";
+}
+export function findPlayer(
+  players: PlayerType[],
+  playerId: number,
+): PlayerType {
+  const player = players.find((p) => p.id === playerId);
+  if (!player) {
+    throw new Error("Player not found");
+  }
+  return player;
 }

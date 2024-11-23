@@ -20,7 +20,7 @@ type FieldType = {
 
 type HatType = {
   ownerId: PlayerType["id"];
-  owenedBy: PlayerType["id"];
+  ownedBy: PlayerType["id"];
 };
 type CardInformationType = {
   id: number;
