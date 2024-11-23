@@ -12,7 +12,7 @@ type RoomType = {
   createdBy: UserType["id"];
   players: UserType[];
   isGameStarted: boolean;
-  gameState: GameType;
+  gameState?: GameType;
 };
 
 export type { RoomType, UserType };

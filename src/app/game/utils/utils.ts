@@ -1,8 +1,7 @@
 import { PlayerType } from "@/types/gameTypes";
-import { cardData } from "./cardData";
 
 export const generateAddRoomLink = (roomId: string) => {
-  return `https://localhost/lobby/${roomId}`;
+  return `${process.env.NEXT_PUBLIC_APP_URL}/lobby/${roomId}`;
 };
 
 export function shuffleArray<T>(array: T[]): T[] {
@@ -14,11 +13,6 @@ export function shuffleArray<T>(array: T[]): T[] {
   return newArray;
 }
 
-export function cardName(id: number | null) {
-  if (id === null) return "No card";
-  const foundCard = cardData.find((card) => card.id === id);
-  return foundCard ? foundCard.name : "Unknown card";
-}
 export function findPlayer(
   players: PlayerType[],
   playerId: number,
