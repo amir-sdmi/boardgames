@@ -1,19 +1,18 @@
 import { Timestamp } from "firebase/firestore";
+import { GameType } from "./gameTypes";
 
 type UserType = {
   id: string;
   name: string;
 };
-type PlayerType = {
-  id: UserType["id"];
-  name: UserType["name"];
-};
+
 type RoomType = {
   id: string;
   createdAt: Timestamp;
   createdBy: UserType["id"];
-  players: PlayerType[];
-  isActive: boolean;
+  players: UserType[];
+  isGameStarted: boolean;
+  gameState?: GameType;
 };
 
-export type { RoomType, UserType, PlayerType };
+export type { RoomType, UserType };
