@@ -1,0 +1,37 @@
+{
+  "users": {
+    "id": "string",
+    "name": "string",
+    "email": "string"
+  },
+  "rooms": {
+    "id": "string",
+    "createdBy": "string",
+    "createdAt": "timestamp",
+    "isActive": "boolean",
+    "players": [
+      {
+        "id": "string",
+        "name": "string"
+      }
+    ],
+    "chats": {
+      "message": "string",
+      "sentBy": "string",
+      "sentAt": "timestamp"
+    },
+    "gameState": {
+      "players": [
+        {
+          "id": "number",
+          "userId": "string",
+          "name": "string",
+          "money": "number",
+          "thirdField": "boolean",
+          "tractor": "boolean",
+          "hasBoughtCards": "boolean"
+        }
+      ]
+    }
+  }
+}

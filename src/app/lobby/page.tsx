@@ -17,7 +17,10 @@ export default function LobbyPage() {
     }
 
     try {
-      const roomId = await createRoom(user.id, user.fullName || "Anonymous");
+      const roomId = await createRoom({
+        id: user.id,
+        name: user.fullName || "Ananymous",
+      });
       router.push(`/lobby/${roomId}`);
     } catch (error) {
       console.error("Error creating room", error);
