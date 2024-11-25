@@ -16,23 +16,24 @@ const plantFromHand = (
   card: CardsType,
   currentPlayer: CurrentPlayer,
 ) => {
-  const newHand = hand.filter((c) => c.id !== card.id || --c.quantity > 0);
-  const newField =
-    field.crops?.id === card.id || !field.crops?.quantity
-      ? {
-          ...field,
-          crops: { id: card.id, quantity: (field.crops?.quantity || 0) + 1 },
-        }
-      : field;
+  if (field.crops === null || field.crops.id === card.id) {
+    const newHand = hand.filter((c) => c.id !== card.id || --c.quantity > 0);
+    const newField = {
+      ...field,
+      crops: { id: card.id, quantity: (field.crops?.quantity || 0) + 1 },
+    };
 
-  return {
-    newHand,
-    newField,
-    newCurrentPlayer: {
-      ...currentPlayer,
-      plantCounts: currentPlayer.plantCounts + 1,
-    },
-  };
+    return {
+      newHand,
+      newField,
+      newCurrentPlayer: {
+        ...currentPlayer,
+        plantCounts: currentPlayer.plantCounts + 1,
+      },
+    };
+  } else {
+    throw new Error("Field already has a different crop");
+  }
 };
 
 export async function plantFromHandAction(

@@ -22,12 +22,7 @@ export const createRoom = async (user: UserType) => {
     const newRoom = await addDoc(roomRef, {
       createdBy: user.id,
       createdAt: serverTimestamp(),
-      players: [
-        {
-          id: user.id,
-          name: user.name,
-        },
-      ],
+      players: [],
       isGameStarted: false,
     });
     return newRoom.id;

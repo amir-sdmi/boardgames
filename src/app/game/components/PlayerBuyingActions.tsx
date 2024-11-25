@@ -38,7 +38,7 @@ export default function PlayerBuyingActions({
       {!player.hasBoughtCards && (
         <Button
           onClick={() => handlePurchases("cards", PRICES.cards)}
-          disabled={isLoading || player.money > PRICES.cards}
+          disabled={isLoading || player.money < PRICES.cards}
         >
           Buy Cards ({PRICES.cards})
         </Button>

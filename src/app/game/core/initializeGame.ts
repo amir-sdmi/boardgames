@@ -19,7 +19,7 @@ const createNewPlayer = (
     id,
     userId,
     playerName,
-    money: 0,
+    money: 10,
     hand: [],
     fields: [
       { id: 0, crops: null, manure: false },
