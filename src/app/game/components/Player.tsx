@@ -3,6 +3,7 @@ import PlayerDetails from "./PlayerDetails";
 import PlayerBuyingActions from "./PlayerBuyingActions";
 import { BuyType, PlayerType } from "@/types/gameTypes";
 import { buyAction } from "../core/actions/buyAction";
+import Fields from "./Fields";
 
 export default function Player({
   userId,
@@ -36,9 +37,10 @@ export default function Player({
     }
   };
   return (
-    <>
+    <div className="flex">
       <PlayerDetails player={thisPlayer} roomId={roomId} />
       <PlayerBuyingActions player={thisPlayer} handleBuy={handleBuy} />
-    </>
+      <Fields roomId={roomId} playerId={thisPlayer.id} handleBuy={handleBuy} />
+    </div>
   );
 }

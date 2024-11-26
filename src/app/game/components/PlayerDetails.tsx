@@ -22,25 +22,29 @@ export default function PlayerDetails({
 
   return (
     <>
-      <h1>Player Details</h1>
-      <p>id: {player.id}</p>
-      <p>name: {player.playerName}</p>
-      <p>tractor: {player.tractor ? "yes" : "no"}</p>
-      <p>money: {player.money}</p>
-      <ol className="border border-blue-500">
-        {player.hand.map((card, handIndex) => (
-          <li key={handIndex}>
-            {cardName(card.id)} {card.quantity}
-            <div>
-              <Button onClick={() => handlePlantFromHand(0, card)}>F1</Button>
-              <Button onClick={() => handlePlantFromHand(1, card)}>F2</Button>
-              {player.fields.length > 2 && (
-                <Button onClick={() => handlePlantFromHand(2, card)}>F3</Button>
-              )}
-            </div>
-          </li>
-        ))}
-      </ol>
+      <div className="border border-red-400">
+        <h1>Player Details</h1>
+        <p>id: {player.id}</p>
+        <p>name: {player.playerName}</p>
+        <p>tractor: {player.tractor ? "yes" : "no"}</p>
+        <p>money: {player.money}</p>
+        <ol className="border border-blue-500">
+          {player.hand.map((card, handIndex) => (
+            <li key={handIndex}>
+              {cardName(card.id)} {card.quantity}
+              <div>
+                <Button onClick={() => handlePlantFromHand(0, card)}>F1</Button>
+                <Button onClick={() => handlePlantFromHand(1, card)}>F2</Button>
+                {player.fields.length > 2 && (
+                  <Button onClick={() => handlePlantFromHand(2, card)}>
+                    F3
+                  </Button>
+                )}
+              </div>
+            </li>
+          ))}
+        </ol>{" "}
+      </div>
     </>
   );
 }
