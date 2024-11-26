@@ -1,9 +1,11 @@
 import Button from "@/app/components/ui/Button";
 import { useGameContext } from "@/contexts/GameContext";
-import { cardData } from "../utils/cardData";
 import { BuyType, PlayerType } from "@/types/gameTypes";
 import { harvestAction } from "../core/actions/harvestAction";
 import { PRICES } from "@/config/constants";
+import { cardName } from "../utils/cardsUtils";
+
+const MAX_FIELDS = 3 as const;
 
 type FieldsProps = {
   roomId: string;
@@ -46,6 +48,7 @@ export default function Fields({ roomId, playerId, handleBuy }: FieldsProps) {
           <p>manure : {field.manure ? "yes" : "no"}</p>
           {!field.manure && gameState.availableManures > 0 && (
             <Button
+              disabled={player.money < PRICES.manure}
               onClick={() =>
                 handleBuy(player, "manure", PRICES.manure, field.id)
               }
@@ -56,15 +59,13 @@ export default function Fields({ roomId, playerId, handleBuy }: FieldsProps) {
           {field.crops && (
             <div>
               <p>id: {field.crops.id}</p>
-              <p>
-                name: {cardData.find((c) => c.id === field.crops?.id)?.name}
-              </p>
+              <p>name : {cardName(field.crops.id)}</p>
               <p>quantity: {field.crops.quantity}</p>
             </div>
           )}
         </li>
       ))}
-      {player.fields.length < 3 && (
+      {player.fields.length < MAX_FIELDS && (
         <Button onClick={() => handleBuy(player, "field", PRICES.field)}>
           + Buy Field for {PRICES.field} coins
         </Button>
