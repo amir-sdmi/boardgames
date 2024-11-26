@@ -1,10 +1,7 @@
 import { BuyType, PlayerType } from "@/types/gameTypes";
 import Button from "@/app/components/ui/Button";
 import { useState } from "react";
-const PRICES = {
-  cards: 1,
-  tractor: 2,
-} as const;
+import { PRICES } from "@/config/constants";
 
 type PlayerBuyingActionsProps = {
   player: PlayerType;
