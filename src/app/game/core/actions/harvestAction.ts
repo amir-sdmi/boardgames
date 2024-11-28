@@ -5,18 +5,24 @@ import {
   updateFirestoreDocument,
 } from "../../utils/gameStateUtils";
 import { findPlayer } from "../../utils/utils";
+import { MIN_HARVEST_QUANTITY } from "@/config/constants";
+
 //find the price of the card
-function findThePrice(sellingCrops: CardsType): number {
+function findThePrice(sellingCrops: CardsType, hasManure: boolean): number {
+  // on the field should be at least 2 crops to harvest
+  if (sellingCrops.quantity < MIN_HARVEST_QUANTITY) return 0;
+
   const cardDetails = cardData.find((card) => card.id === sellingCrops.id);
+
+  //manure works as an additional crop
+  const quantity = hasManure
+    ? sellingCrops.quantity + 1
+    : sellingCrops.quantity;
   let closestIndex: null | number = null;
   let closestValue = 0;
   if (cardDetails) {
     cardDetails.value.forEach((value, index) => {
-      if (
-        value !== null &&
-        value <= sellingCrops.quantity &&
-        value > closestValue
-      ) {
+      if (value !== null && value <= quantity && value > closestValue) {
         closestValue = value;
         closestIndex = index;
       }
@@ -52,7 +58,7 @@ export const harvest = (
     console.log("no crops to harvest");
     return { field, harvestMoney: 0, discardPile };
   } else {
-    const harvestMoney = findThePrice(newField.crops) ?? 0;
+    const harvestMoney = findThePrice(newField.crops, newField.manure) ?? 0;
     //add cards to discard pile
     const discardCard = discardPile.find(
       (card) => card.id === newField.crops?.id,

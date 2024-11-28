@@ -10,4 +10,6 @@ const PRICES = {
   field: 3,
 } as const;
 
-export { PLAYER_LIMITS, PRICES };
+const MIN_HARVEST_QUANTITY = 2 as const;
+
+export { PLAYER_LIMITS, PRICES, MIN_HARVEST_QUANTITY };
