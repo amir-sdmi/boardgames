@@ -18,10 +18,16 @@ function findThePrice(sellingCrops: CardsType, hasManure: boolean): number {
   const quantity = hasManure
     ? sellingCrops.quantity + 1
     : sellingCrops.quantity;
+
+  //manure works as an additional crop
+  const quantity = hasManure
+    ? sellingCrops.quantity + 1
+    : sellingCrops.quantity;
   let closestIndex: null | number = null;
   let closestValue = 0;
   if (cardDetails) {
     cardDetails.value.forEach((value, index) => {
+      if (value !== null && value <= quantity && value > closestValue) {
       if (value !== null && value <= quantity && value > closestValue) {
         closestValue = value;
         closestIndex = index;
@@ -58,6 +64,7 @@ export const harvest = (
     console.log("no crops to harvest");
     return { field, harvestMoney: 0, discardPile };
   } else {
+    const harvestMoney = findThePrice(newField.crops, newField.manure) ?? 0;
     const harvestMoney = findThePrice(newField.crops, newField.manure) ?? 0;
     //add cards to discard pile
     const discardCard = discardPile.find(
