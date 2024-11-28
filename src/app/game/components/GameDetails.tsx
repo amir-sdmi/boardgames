@@ -18,8 +18,8 @@ export default function GameDetails() {
   } = gameState;
 
   return (
-    <div>
-      <h1>Gameboard</h1>
+    <section>
+      <h2>Game State</h2>
       <p>round : {round}</p>
       <p>deck : {deck.length} cards</p>
       <p>
@@ -34,6 +34,6 @@ export default function GameDetails() {
       <p>available tractors: {availableTractors}</p>
       <p>end turn receiving cards count: {endTurnReceivingCardsCount}</p>
       <hr />
-    </div>
+    </section>
   );
 }
