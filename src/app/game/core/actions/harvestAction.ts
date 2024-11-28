@@ -27,6 +27,21 @@ function findThePrice(sellingCrops: CardsType): number {
     return 0;
   }
 }
+
+//update discard pile
+function updateDiscardPile(
+  discardPile: CardsType[],
+  crops: CardsType | null,
+): CardsType[] {
+  if (!crops) return discardPile;
+
+  return discardPile.map((card) =>
+    card.id === crops.id
+      ? { ...card, quantity: card.quantity + crops.quantity }
+      : card,
+  );
+}
+
 export const harvest = (
   field: FieldType,
   discardPile: CardsType[],
@@ -45,13 +60,7 @@ export const harvest = (
     if (discardCard && newField.crops) {
       discardCard.quantity += newField.crops.quantity;
     }
-
-    const updatedDiscardPile = discardPile.map((card) => {
-      if (discardCard && card.id === discardCard.id) {
-        return discardCard;
-      }
-      return card;
-    });
+    const updatedDiscardPile = updateDiscardPile(discardPile, newField.crops);
 
     newField.crops = null;
     return {
@@ -67,16 +76,37 @@ export const harvestAction = async (
   playerId: number,
   fieldIndex: number,
 ) => {
-  const gameState = await fetchGameState(roomId);
-  const { players } = gameState;
+  if (
+    !roomId ||
+    typeof playerId !== "number" ||
+    typeof fieldIndex !== "number"
+  ) {
+    throw new Error("Invalid input parameters");
+  }
 
+  const gameState = await fetchGameState(roomId);
+  if (!gameState) {
+    throw new Error("Game state not found");
+  }
+  const { players } = gameState;
   const player = findPlayer(players, playerId);
+  if (!player) {
+    throw new Error("Player not found");
+  }
 
   const {
     field: newField,
     harvestMoney,
     discardPile: newDiscardPile,
   } = harvest(player.fields[fieldIndex], gameState.discardPile);
+
+  //Todo: prevent race condition ! like here :
+  //     // Use transaction to prevent race conditions
+  //  await updateGameStateTransaction(roomId, (currentState) => {
+  //       // Verify state hasn't changed
+  //       if (currentState.version !== gameState.version) {
+  //        throw new Error('Game state has changed');
+  //       }
 
   const updatedPlayers = players.map((p) =>
     p.id === playerId
