@@ -6,7 +6,7 @@ export const harvest = (
   field: FieldType,
   discardPile: CardsType[],
 ): { field: FieldType; harvestMoney: number; discardPile: CardsType[] } => {
-  const newField = { ...field };
+  const newField = JSON.parse(JSON.stringify(field));
 
   if (newField.crops === null) {
     console.log("no crops to harvest");

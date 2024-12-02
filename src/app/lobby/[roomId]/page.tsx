@@ -37,8 +37,8 @@ export default function RoomPage() {
       if (!roomData) {
         return;
       }
-      setLoading(false);
       setRoomData(roomData);
+      setLoading(false);
     });
 
     return () => unsubscribe();

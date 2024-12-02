@@ -5,6 +5,7 @@ import {
   fetchGameState,
   updateFirestoreDocument,
 } from "../utils/gameStateUtils";
+import { MAX_ROUND } from "@/config/constants";
 
 export const nextRound = async (roomId: string) => {
   const gameState = await fetchGameState(roomId);
@@ -34,7 +35,7 @@ export const nextRound = async (roomId: string) => {
 
   const newRound = round + 1;
   let updatedGameStatus = gameState.gameStatus;
-  if (newRound === 4) {
+  if (newRound > MAX_ROUND) {
     updatedGameStatus = "finished";
   }
   const updatedGameState: GameType = {
