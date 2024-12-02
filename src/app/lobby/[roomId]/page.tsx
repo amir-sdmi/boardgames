@@ -1,18 +1,24 @@
 "use client";
 
-import { joinRoom, listenToRoom, startGame } from "@/services/roomService";
-import { UserType } from "@/types/firebaseTypes";
+import {
+  joinRoom,
+  kickPlayer,
+  listenToRoom,
+  startGame,
+} from "@/services/roomService";
+import { RoomType } from "@/types/firebaseTypes";
 import { useUser } from "@clerk/nextjs";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { generateAddRoomLink } from "@/app/game/utils/utils";
 import { useRouter } from "next/navigation";
 import { PLAYER_LIMITS } from "@/config/constants";
+import Button from "@/app/components/ui/Button";
 
 export default function RoomPage() {
   const { roomId } = useParams<{ roomId: string }>();
   const { user } = useUser();
-  const [players, setPlayers] = useState<UserType[]>([]);
+  const [roomData, setRoomData] = useState<RoomType | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -28,15 +34,39 @@ export default function RoomPage() {
     );
     //listen to room updates
     const unsubscribe = listenToRoom(roomId, (roomData) => {
+      if (!roomData) {
+        return;
+      }
       setLoading(false);
-      setPlayers(roomData?.players || []);
+      setRoomData(roomData);
     });
 
     return () => unsubscribe();
   }, [user, roomId]);
-
+  if (!roomData || loading) {
+    return <p>Loading room...</p>;
+  }
+  const isHost = () => roomData.createdBy === user?.id;
+  const { players } = roomData;
+  if (!players.some((player) => player.id === user?.id)) {
+    return <p>you are not soposed to be here !!!!</p>;
+  }
+  if (roomData.isGameStarted) {
+    router.push(`/game/${roomId}`);
+  }
   //TODO: make start game by being ready all players.
   const handleStartGame = () => {
+    if (!roomData) {
+      return;
+    }
+    if (!user) {
+      console.error("User not found");
+      return;
+    }
+    if (!isHost()) {
+      console.error("Only the room creator can start the game");
+      return;
+    }
     const playersCount = players.length;
     if (
       playersCount >= PLAYER_LIMITS.MIN &&
@@ -51,8 +81,9 @@ export default function RoomPage() {
     }
   };
 
-  if (loading) return <p>Loading room...</p>;
-
+  const handlePlayerKick = (playerId: string) => {
+    kickPlayer(roomId, playerId);
+  };
   return (
     <div>
       <h1>Room: {roomId}</h1>
@@ -63,10 +94,20 @@ export default function RoomPage() {
         <h2>Players in Room:</h2>
         <ul>
           {players.map((player) => (
-            <li key={player.id}>{player.name}</li>
+            <li key={player.id}>
+              {player.name}
+              {
+                //only host can kick other players
+                isHost() && player.id !== roomData.createdBy && (
+                  <Button onClick={() => handlePlayerKick(player.id)}>
+                    Kick
+                  </Button>
+                )
+              }
+            </li>
           ))}
         </ul>
-        <button onClick={handleStartGame}>Start Game!</button>
+        {isHost() && <Button onClick={handleStartGame}>Start Game!</Button>}
       </div>
     </div>
   );

@@ -115,3 +115,19 @@ export const listenToRoom = (
     },
   );
 };
+
+export const kickPlayer = async (roomId: string, playerId: string) => {
+  const roomRef = doc(db, "rooms", roomId);
+  const roomSnapshot = await getDoc(roomRef);
+  if (!roomSnapshot.exists()) {
+    throw new Error("Room not found");
+  }
+  const roomData = roomSnapshot.data() as RoomType;
+  if (roomData.isGameStarted) {
+    throw new Error("Game already started");
+  }
+  const players = roomData.players.filter((player) => player.id !== playerId);
+  await updateDoc(roomRef, {
+    players,
+  });
+};
