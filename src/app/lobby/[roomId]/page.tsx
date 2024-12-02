@@ -34,10 +34,10 @@ export default function RoomPage() {
     );
     //listen to room updates
     const unsubscribe = listenToRoom(roomId, (roomData) => {
+      setLoading(false);
       if (!roomData) {
         return;
       }
-      setLoading(false);
       setRoomData(roomData);
     });
 
@@ -55,7 +55,7 @@ export default function RoomPage() {
     router.push(`/game/${roomId}`);
   }
   //TODO: make start game by being ready all players.
-  const handleStartGame = () => {
+  const handleStartGame = async () => {
     if (!roomData) {
       return;
     }
@@ -72,8 +72,12 @@ export default function RoomPage() {
       playersCount >= PLAYER_LIMITS.MIN &&
       playersCount <= PLAYER_LIMITS.MAX
     ) {
-      startGame(roomId, players);
-      router.push(`/game/${roomId}`);
+      try {
+        await startGame(roomId, players);
+        router.push(`/game/${roomId}`);
+      } catch (error) {
+        console.error("Failed to start the game:", error);
+      }
     } else {
       console.error(
         "You need at least 3 players and at most 7 to start the game",
@@ -81,8 +85,15 @@ export default function RoomPage() {
     }
   };
 
-  const handlePlayerKick = (playerId: string) => {
-    kickPlayer(roomId, playerId);
+  const handlePlayerKick = async (playerId: string) => {
+    if (!isHost()) {
+      throw new Error("Only the host can kick players");
+    }
+    try {
+      await kickPlayer(roomId, playerId);
+    } catch (error) {
+      console.error("Failed to kick player:", error);
+    }
   };
   return (
     <div>
