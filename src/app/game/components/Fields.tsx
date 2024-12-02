@@ -1,7 +1,7 @@
 import Button from "@/app/components/ui/Button";
 import { useGameContext } from "@/contexts/GameContext";
 import { BuyType, PlayerType } from "@/types/gameTypes";
-import { harvestAction } from "../core/actions/harvestAction";
+import { harvestAction } from "../core/actions/harvest/harvestAction";
 import { PRICES } from "@/config/constants";
 import { cardName } from "../utils/cardsUtils";
 

@@ -39,16 +39,16 @@ type CardsType = {
 };
 type GameType = {
   players: PlayerType[];
-  currentPlayer: CurrentPlayer;
+  currentPlayer: CurrentPlayerType;
   deck: CardInformationType["id"][];
   discardPile: CardsType[];
-  round: 1 | 2 | 3 | 4;
+  round: number;
   availableManures: number;
   availableTractors: number;
   endTurnReceivingCardsCount: 2 | 3;
   gameStatus: "initial" | "playing" | "finished";
 };
-type CurrentPlayer = {
+type CurrentPlayerType = {
   id: PlayerType["id"];
   turnStatus: "planting" | "marketing" | "addingCardsToHand";
   plantCounts: number;
@@ -72,6 +72,6 @@ export type {
   HatType,
   FieldType,
   GameType,
-  CurrentPlayer,
+  CurrentPlayerType,
   TradeOffer,
 };

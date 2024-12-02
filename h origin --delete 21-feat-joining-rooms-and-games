@@ -1,0 +1,14 @@
+* [33mf24b293[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32m21-feat-joining-rooms-and-games[m[33m)[m feat: implement room joining and game functionality
+[31m|[m * [33m816d973[m[33m ([m[1;31morigin/21-feat-joining-rooms-and-games[m[33m)[m WIP03 resolving review
+[31m|[m * [33m691077f[m WIP02 resolving review
+[31m|[m * [33m183d155[m WIP01
+[31m|[m[31m/[m  
+* [33mc1f7c8c[m feat: add fields components and fix harvest logic
+* [33m20e7135[m 13-players-details-and-buying-actions
+[32m|[m * [33mb8e9c63[m[33m ([m[1;32mfeature/12-room-chat[m[33m)[m WIP01 jsut made ui of chat in room page
+[32m|[m[32m/[m  
+* [33m3b1e4fa[m feat: add game lobby and player joining functionality
+* [33ma77485c[m feat: integrate Firebase with Firestore and env setup
+* [33mca480c6[m feat: add Clerk auth with sign-in/up pages and public routes
+* [33m194be85[m chore: initial project setup, remove unnecessary files
+* [33m2665b0b[m Initial commit

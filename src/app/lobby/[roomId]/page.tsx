@@ -34,10 +34,10 @@ export default function RoomPage() {
     );
     //listen to room updates
     const unsubscribe = listenToRoom(roomId, (roomData) => {
-      setLoading(false);
       if (!roomData) {
         return;
       }
+      setLoading(false);
       setRoomData(roomData);
     });
 
