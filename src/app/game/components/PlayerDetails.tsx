@@ -1,16 +1,20 @@
 "use client";
 
 import Button from "@/app/components/ui/Button";
-import { CardsType, PlayerType } from "@/types/gameTypes";
+import { CardsType, CurrentPlayerType, PlayerType } from "@/types/gameTypes";
 import { cardName } from "../utils/cardsUtils";
-import { plantFromHandAction } from "@/app/game/core/actions/plantFromHandAction";
+import { plantFromHandAction } from "@/app/game/core/actions/plantFromHand/plantFromHandAction";
+import { showMarketcardsAction } from "../core/actions/market/showMarketcardsAction";
+import { addCardsToHandAction } from "../core/actions/addCardsToHandAction";
 
 export default function PlayerDetails({
   player,
   roomId,
+  currentPlayer,
 }: {
   player: PlayerType;
   roomId: string;
+  currentPlayer: CurrentPlayerType;
 }) {
   const handlePlantFromHand = async (fieldIndex: number, card: CardsType) => {
     try {
@@ -20,9 +24,45 @@ export default function PlayerDetails({
     }
   };
 
+  const handleShowMarket = async () => {
+    try {
+      await showMarketcardsAction(roomId);
+    } catch (error) {
+      console.error("Error showing market:", error);
+    }
+  };
+
+  const handleAddCardsToHand = async (playerId: number) => {
+    try {
+      await addCardsToHandAction(roomId, playerId);
+    } catch (error) {
+      console.error("Error adding cards:", error);
+    }
+  };
   return (
     <>
       <div className="border border-red-400">
+        {player.id === currentPlayer.id && (
+          <div className="border border-green-400">
+            <Button
+              onClick={handleShowMarket}
+              disabled={currentPlayer.turnStatus !== "planting"}
+            >
+              Start Marketting
+            </Button>
+            <Button
+              onClick={() => handleAddCardsToHand(player.id)}
+              // disabled={
+              //   //TODO : this is not totally correct, later should change it
+              //   (currentPlayer.marketingCards.length !== 0 &&
+              //     currentPlayer.turnStatus === "marketing") ||
+              //   currentPlayer.turnStatus === "planting"
+              // }
+            >
+              Add Cards To Hand
+            </Button>
+          </div>
+        )}
         <h1>Player Details</h1>
         <p>id: {player.id}</p>
         <p>name: {player.playerName}</p>
@@ -32,15 +72,24 @@ export default function PlayerDetails({
           {player.hand.map((card, handIndex) => (
             <li key={handIndex}>
               {cardName(card.id)} {card.quantity}
-              <div>
-                <Button onClick={() => handlePlantFromHand(0, card)}>F1</Button>
-                <Button onClick={() => handlePlantFromHand(1, card)}>F2</Button>
-                {player.fields.length > 2 && (
-                  <Button onClick={() => handlePlantFromHand(2, card)}>
-                    F3
-                  </Button>
+              {player.id === currentPlayer.id &&
+                currentPlayer.turnStatus === "planting" &&
+                (currentPlayer.plantCounts < 2 ||
+                  (currentPlayer.plantCounts < 3 && player.tractor)) && (
+                  <div>
+                    <Button onClick={() => handlePlantFromHand(0, card)}>
+                      F1
+                    </Button>
+                    <Button onClick={() => handlePlantFromHand(1, card)}>
+                      F2
+                    </Button>
+                    {player.fields.length > 2 && (
+                      <Button onClick={() => handlePlantFromHand(2, card)}>
+                        F3
+                      </Button>
+                    )}
+                  </div>
                 )}
-              </div>
             </li>
           ))}
         </ol>{" "}

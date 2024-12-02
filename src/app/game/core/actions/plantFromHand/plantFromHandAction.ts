@@ -1,41 +1,10 @@
-import {
-  CardsType,
-  GameType,
-  CurrentPlayer,
-  FieldType,
-} from "@/types/gameTypes";
-
+import { GameType } from "@/types/gameTypes";
 import {
   fetchGameState,
   updateFirestoreDocument,
-} from "../../utils/gameStateUtils";
-import { findPlayer } from "../../utils/utils";
-
-const plantFromHand = (
-  hand: CardsType[],
-  field: FieldType,
-  card: CardsType,
-  currentPlayer: CurrentPlayer,
-) => {
-  if (field.crops === null || field.crops.id === card.id) {
-    const newHand = hand.filter((c) => c.id !== card.id || --c.quantity > 0);
-    const newField = {
-      ...field,
-      crops: { id: card.id, quantity: (field.crops?.quantity || 0) + 1 },
-    };
-
-    return {
-      newHand,
-      newField,
-      newCurrentPlayer: {
-        ...currentPlayer,
-        plantCounts: currentPlayer.plantCounts + 1,
-      },
-    };
-  } else {
-    throw new Error("Field already has a different crop");
-  }
-};
+} from "../../../utils/gameStateUtils";
+import { findPlayer } from "../../../utils/utils";
+import { plantFromHand } from "./plantFromHand";
 
 export async function plantFromHandAction(
   roomId: string,

@@ -1,16 +1,9 @@
-import { BuyType, GameType, PlayerType } from "@/types/gameTypes";
-import { fromDeckToHand } from "../../utils/cardsUtils";
-
-import {
-  fetchGameState,
-  updateFirestoreDocument,
-} from "../../utils/gameStateUtils";
-import { findPlayer } from "../../utils/utils";
+import { fromDeckToHand } from "@/app/game/utils/cardsUtils";
+import { BuyType, PlayerType } from "@/types/gameTypes";
 
 const MAX_FIELDS = 3;
 const CARDS_TO_DRAW = 3;
-
-const buying = (
+export const buy = (
   player: PlayerType,
   deck: number[],
   availableManures: number,
@@ -31,6 +24,7 @@ const buying = (
         updatedPlayer.fields.length < MAX_FIELDS
       ) {
         updatedPlayer.money -= price;
+        updatedPlayer.thirdField = true;
         updatedPlayer.fields.push({
           //This is one time purchase, so no problem for id
           id: 2,
@@ -87,43 +81,3 @@ const buying = (
 
   return { updatedPlayer, updatedDeck, updatedManures, updatedTractors };
 };
-
-export async function buyAction(
-  roomId: string,
-  playerId: number,
-  type: BuyType,
-  price: number,
-  fieldId?: number,
-) {
-  const gameState = await fetchGameState(roomId);
-  const { players, deck, availableManures, availableTractors } = gameState;
-
-  const player = findPlayer(players, playerId);
-
-  const { updatedPlayer, updatedDeck, updatedManures, updatedTractors } =
-    buying(
-      player,
-      deck,
-      availableManures,
-      availableTractors,
-      type,
-      price,
-      fieldId,
-    );
-
-  const updatedPlayers = players.map((p) =>
-    p.id === playerId ? updatedPlayer : p,
-  );
-
-  const updatedGameState: GameType = {
-    ...gameState,
-    players: updatedPlayers,
-    deck: updatedDeck,
-    availableManures: updatedManures,
-    availableTractors: updatedTractors,
-  };
-
-  await updateFirestoreDocument("rooms", roomId, {
-    gameState: updatedGameState,
-  });
-}
