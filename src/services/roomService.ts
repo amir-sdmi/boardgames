@@ -116,13 +116,20 @@ export const listenToRoom = (
   );
 };
 
-export const kickPlayer = async (roomId: string, playerId: string) => {
+export const kickPlayer = async (
+  roomId: string,
+  playerId: string,
+  requesterId: string,
+) => {
   const roomRef = doc(db, "rooms", roomId);
   const roomSnapshot = await getDoc(roomRef);
   if (!roomSnapshot.exists()) {
     throw new Error("Room not found");
   }
   const roomData = roomSnapshot.data() as RoomType;
+  if (roomData.createdBy !== requesterId) {
+    throw new Error("Only the host can kick players");
+  }
   if (roomData.isGameStarted) {
     throw new Error("Game already started");
   }

@@ -86,15 +86,13 @@ export default function RoomPage() {
   };
 
   const handlePlayerKick = async (playerId: string) => {
-    if (!isHost()) {
-      throw new Error("Only the host can kick players");
+    if (!user) {
+      console.error("User not found");
+      return;
     }
-    try {
-      await kickPlayer(roomId, playerId);
-    } catch (error) {
-      console.error("Failed to kick player:", error);
-    }
+    await kickPlayer(roomId, playerId, user.id);
   };
+
   return (
     <div>
       <h1>Room: {roomId}</h1>
