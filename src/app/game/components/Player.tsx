@@ -2,7 +2,7 @@ import { useGameContext } from "@/contexts/GameContext";
 import PlayerDetails from "./PlayerDetails";
 import PlayerBuyingActions from "./PlayerBuyingActions";
 import { BuyType, PlayerType } from "@/types/gameTypes";
-import { buyAction } from "../core/actions/buyAction";
+import { buyAction } from "../core/actions/buy/buyAction";
 import Fields from "./Fields";
 
 export default function Player({
@@ -38,7 +38,11 @@ export default function Player({
   };
   return (
     <div className="flex">
-      <PlayerDetails player={thisPlayer} roomId={roomId} />
+      <PlayerDetails
+        player={thisPlayer}
+        roomId={roomId}
+        currentPlayer={gameState.currentPlayer}
+      />
       <PlayerBuyingActions player={thisPlayer} handleBuy={handleBuy} />
       <Fields roomId={roomId} playerId={thisPlayer.id} handleBuy={handleBuy} />
     </div>

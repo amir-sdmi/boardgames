@@ -4,7 +4,7 @@ import { UserType } from "@/types/firebaseTypes";
 import {
   CardInformationType,
   CardsType,
-  CurrentPlayer,
+  CurrentPlayerType,
   GameType,
   PlayerType,
   TradeOffer,
@@ -79,7 +79,7 @@ export const createNewGame = (
   );
   //choosing initial player randomly
   const randomId: number = Math.floor(Math.random() * players.length);
-  const currentPlayer: CurrentPlayer = {
+  const currentPlayer: CurrentPlayerType = {
     id: randomId,
     turnStatus: "planting",
     plantCounts: 0,
