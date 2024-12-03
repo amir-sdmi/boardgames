@@ -9,6 +9,7 @@ import {
   updateFirestoreDocument,
 } from "../../utils/gameStateUtils";
 import { nextRound } from "../gameMaster";
+import { CARDS_TO_SHOW_IN_MARKET } from "@/config/constants";
 
 export async function showMarketcardsAction(roomId: string) {
   let gameState = await fetchGameState(roomId);
@@ -18,8 +19,8 @@ export async function showMarketcardsAction(roomId: string) {
   }
   const { deck, currentPlayer } = gameState;
   const newDeck = [...deck];
-  const newMarketingCards = currentPlayer.marketingCards;
-  for (let i = 0; i < 2; i++) {
+  const newMarketingCards: CardsType[] = [];
+  for (let i = 0; i < CARDS_TO_SHOW_IN_MARKET; i++) {
     const cardId = newDeck.pop() as CardInformationType["id"];
     if (!cardId) {
       throw new Error("Card not found in deck");
@@ -40,7 +41,12 @@ export async function showMarketcardsAction(roomId: string) {
     currentPlayer: newCurrentPlayer,
     deck: newDeck,
   };
-  await updateFirestoreDocument("rooms", roomId, {
-    gameState: updatedGameState,
-  });
+  try {
+    await updateFirestoreDocument("rooms", roomId, {
+      gameState: updatedGameState,
+    });
+  } catch (error) {
+    console.error("Error updating firestore document", error);
+    throw new Error("Error updating firestore document");
+  }
 }
