@@ -34,15 +34,22 @@ export default function RoomPage() {
     );
     //listen to room updates
     const unsubscribe = listenToRoom(roomId, (roomData) => {
-      setLoading(false);
       if (!roomData) {
         return;
       }
       setRoomData(roomData);
+      setLoading(false);
     });
 
     return () => unsubscribe();
   }, [user, roomId]);
+
+  // Redirect if the game has started
+  useEffect(() => {
+    if (roomData?.isGameStarted) {
+      router.push(`/game/${roomId}`);
+    }
+  }, [roomData?.isGameStarted, roomId, router]);
   if (!roomData || loading) {
     return <p>Loading room...</p>;
   }
@@ -51,9 +58,7 @@ export default function RoomPage() {
   if (!players.some((player) => player.id === user?.id)) {
     return <p>you are not soposed to be here !!!!</p>;
   }
-  if (roomData.isGameStarted) {
-    router.push(`/game/${roomId}`);
-  }
+
   //TODO: make start game by being ready all players.
   const handleStartGame = async () => {
     if (!roomData) {

@@ -11,5 +11,12 @@ const PRICES = {
 } as const;
 
 const MIN_HARVEST_QUANTITY = 2 as const;
-
-export { PLAYER_LIMITS, PRICES, MIN_HARVEST_QUANTITY };
+const MAX_ROUND = 3 as const;
+const CARDS_TO_SHOW_IN_MARKET = 2 as const;
+export {
+  PLAYER_LIMITS,
+  PRICES,
+  MIN_HARVEST_QUANTITY,
+  MAX_ROUND,
+  CARDS_TO_SHOW_IN_MARKET,
+};
