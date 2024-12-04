@@ -14,12 +14,7 @@ export const harvest = (
   } else {
     const harvestMoney = findThePrice(newField.crops, newField.manure) ?? 0;
     //add cards to discard pile
-    const discardCard = discardPile.find(
-      (card) => card.id === newField.crops?.id,
-    );
-    if (discardCard && newField.crops) {
-      discardCard.quantity += newField.crops.quantity;
-    }
+
     const updatedDiscardPile = updateDiscardPile(discardPile, newField.crops);
 
     newField.crops = null;
