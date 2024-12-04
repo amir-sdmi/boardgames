@@ -10,6 +10,7 @@ export async function plantFromMarketAction(
   playerId: number,
   fieldIndex: number,
   cardId: CardsType["id"],
+  markettingCardId: number,
 ) {
   const gameState = await fetchGameState(roomId);
   const { players, currentPlayer } = gameState;
@@ -22,6 +23,7 @@ export async function plantFromMarketAction(
     fieldIndex,
     players[currentPlayer.id],
     card,
+    markettingCardId,
   );
 
   const updatedGameState = {

@@ -17,13 +17,18 @@ export default function Market() {
   if (!user) return null;
   const { currentPlayer, players } = gameState;
 
-  const handlePlantFromMarket = async (fieldIndex: number, card: CardsType) => {
+  const handlePlantFromMarket = async (
+    fieldIndex: number,
+    card: CardsType,
+    markettingCardId: number,
+  ) => {
     try {
       await plantFromMarketAction(
         roomId,
         currentPlayer.id,
         fieldIndex,
         card.id,
+        markettingCardId,
       );
     } catch (error) {
       console.error("Error planting from market:", error);
@@ -39,14 +44,16 @@ export default function Market() {
               <li className="w-32 border border-green-600" key={index}>
                 <p> {cardName(card.id)}</p>
                 <div>
-                  <Button onClick={() => handlePlantFromMarket(0, card)}>
+                  <Button onClick={() => handlePlantFromMarket(0, card, index)}>
                     F1
                   </Button>
-                  <Button onClick={() => handlePlantFromMarket(1, card)}>
+                  <Button onClick={() => handlePlantFromMarket(1, card, index)}>
                     F2
                   </Button>
                   {players[currentPlayer.id].thirdField && (
-                    <Button onClick={() => handlePlantFromMarket(2, card)}>
+                    <Button
+                      onClick={() => handlePlantFromMarket(2, card, index)}
+                    >
                       F3
                     </Button>
                   )}

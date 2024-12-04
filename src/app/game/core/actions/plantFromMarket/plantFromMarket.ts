@@ -9,6 +9,7 @@ export const plantFromMarket = (
   fieldIndex: FieldType["id"],
   player: PlayerType,
   card: CardsType,
+  markettingCardId: number,
 ) => {
   const newCurrentPlayer = { ...currentPlayer };
   const newField = {
@@ -22,8 +23,8 @@ export const plantFromMarket = (
       crops: { id: card.id, quantity: (newField.crops?.quantity || 0) + 1 },
     };
 
-    //remove card from market
-    newCurrentPlayer.marketingCards.pop();
+    //remove card from marketing cards
+    newCurrentPlayer.marketingCards.splice(markettingCardId, 1);
 
     return {
       currentPlayer: newCurrentPlayer,
