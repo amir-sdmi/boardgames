@@ -24,6 +24,7 @@ export const buy = (
         updatedPlayer.fields.length < MAX_FIELDS
       ) {
         updatedPlayer.money -= price;
+        updatedPlayer.thirdField = true;
         updatedPlayer.fields.push({
           //This is one time purchase, so no problem for id
           id: 2,

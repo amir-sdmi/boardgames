@@ -16,8 +16,8 @@ export default function GamePage() {
     <GameProvider roomId={roomId}>
       <h1>Game Page</h1>
       <GameDetails />
-      <Player userId={user.id} roomId={roomId} />
       <Market />
+      <Player userId={user.id} />
     </GameProvider>
   );
 }
