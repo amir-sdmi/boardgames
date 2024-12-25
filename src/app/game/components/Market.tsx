@@ -1,21 +1,30 @@
 import { useGameContext } from "@/contexts/GameContext";
-import { useUser } from "@clerk/nextjs";
 import { cardName } from "../utils/cardsUtils";
 import Button from "@/app/components/ui/Button";
 import { CardsType } from "@/types/gameTypes";
 import { useParams } from "next/navigation";
 import { plantFromMarketAction } from "../core/actions/plantFromMarket/plantFromMarketAction";
+import { useUser } from "@clerk/nextjs";
 
 export default function Market() {
   const { gameState } = useGameContext();
-  const user = useUser();
+  const { user } = useUser();
   const { roomId } = useParams<{ roomId: string }>();
+
   if (!gameState) {
     return <div>Loading game state ...</div>;
   }
 
   if (!user) return null;
+
   const { currentPlayer, players } = gameState;
+
+  const thisPlayer = gameState.players.find(
+    (player) => player.userId === user.id,
+  );
+  if (!thisPlayer) {
+    return <div> Player not found in game</div>;
+  }
 
   const handlePlantFromMarket = async (
     fieldIndex: number,
@@ -43,23 +52,34 @@ export default function Market() {
             {currentPlayer.marketingCards.map((card, index) => (
               <li className="w-32 border border-green-600" key={index}>
                 <p> {cardName(card.id)}</p>
-                <div>
-                  <Button onClick={() => handlePlantFromMarket(0, card, index)}>
-                    F1
-                  </Button>
-                  <Button onClick={() => handlePlantFromMarket(1, card, index)}>
-                    F2
-                  </Button>
-                  {players[currentPlayer.id].thirdField && (
+                {currentPlayer.id === thisPlayer.id && (
+                  <div>
                     <Button
-                      onClick={() => handlePlantFromMarket(2, card, index)}
+                      onClick={() => handlePlantFromMarket(0, card, index)}
                     >
-                      F3
+                      F1
                     </Button>
-                  )}
-                </div>
+                    <Button
+                      onClick={() => handlePlantFromMarket(1, card, index)}
+                    >
+                      F2
+                    </Button>
+                    {players[currentPlayer.id].thirdField && (
+                      <Button
+                        onClick={() => handlePlantFromMarket(2, card, index)}
+                      >
+                        F3
+                      </Button>
+                    )}
+                  </div>
+                )}
               </li>
             ))}
+            {currentPlayer.id === thisPlayer.id && (
+              <li>
+                <Button onClick={() => {}}> Lets Trade </Button>
+              </li>
+            )}
           </ul>
         </div>
       ) : (

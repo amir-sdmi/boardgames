@@ -4,7 +4,7 @@ import Button from "@/app/components/ui/Button";
 import { CardsType, CurrentPlayerType, PlayerType } from "@/types/gameTypes";
 import { cardName } from "../utils/cardsUtils";
 import { plantFromHandAction } from "@/app/game/core/actions/plantFromHand/plantFromHandAction";
-import { showMarketcardsAction } from "../core/actions/showMarketcardsAction";
+import { showMarketcardsAction } from "../core/actions/market/showMarketcardsAction";
 import { addCardsToHandAction } from "../core/actions/addCardsToHandAction";
 
 export default function PlayerDetails({

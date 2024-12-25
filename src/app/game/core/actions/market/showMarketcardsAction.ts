@@ -7,8 +7,8 @@ import {
 import {
   fetchGameState,
   updateFirestoreDocument,
-} from "../../utils/gameStateUtils";
-import { nextRound } from "../gameMaster";
+} from "../../../utils/gameStateUtils";
+import { nextRound } from "../../gameMaster";
 import { CARDS_TO_SHOW_IN_MARKET } from "@/config/constants";
 
 export async function showMarketcardsAction(roomId: string) {
