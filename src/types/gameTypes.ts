@@ -53,17 +53,16 @@ type CurrentPlayerType = {
   turnStatus: "planting" | "marketing" | "addingCardsToHand";
   plantCounts: number;
   marketingCards: CardsType[];
-  tradeProposal: TradeProposalType;
+  tradeProposal: TradeProposalType | null;
 };
 type TradeProposalType = {
   proposerTradeOffer: TradeOfferType;
-  playersDeals: [
-    {
-      playerId: PlayerType["id"];
-      Accepted: boolean | null;
-      newTradeOffer: TradeOfferType | null;
-    },
-  ];
+  playersDeals: PlayerDealType[];
+};
+type PlayerDealType = {
+  playerId: PlayerType["id"];
+  accepted: boolean | null;
+  newTradeOffer: TradeOfferType | null;
 };
 type TradeOfferType = {
   give: {
@@ -88,4 +87,5 @@ export type {
   CurrentPlayerType,
   TradeProposalType,
   TradeOfferType,
+  PlayerDealType,
 };

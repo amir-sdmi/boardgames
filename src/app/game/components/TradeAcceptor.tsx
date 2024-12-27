@@ -1,6 +1,9 @@
 import { CardsType, CurrentPlayerType, PlayerType } from "@/types/gameTypes";
 import { cardName } from "../utils/cardsUtils";
 import Button from "@/app/components/ui/Button";
+import { useState } from "react";
+import { acceptOrRejectTradeAction } from "../core/actions/market/tradeOfferAction";
+import { useParams } from "next/navigation";
 
 export default function TradeAcceptor({
   currentPlayer,
@@ -9,8 +12,21 @@ export default function TradeAcceptor({
   currentPlayer: CurrentPlayerType;
   thisPlayer: PlayerType;
 }) {
+  const { roomId } = useParams<{ roomId: string }>();
+
+  const [showTrade, setShowTrade] = useState(false);
+  if (!currentPlayer.tradeProposal) {
+    return <div>No trade proposal available.</div>;
+  }
   const { give, recieve } = currentPlayer.tradeProposal.proposerTradeOffer;
 
+  const handleAcceptOrRejectTrade = (acceptedOrNot: boolean) => {
+    acceptOrRejectTradeAction(roomId, thisPlayer.id, acceptedOrNot);
+  };
+  const handleCreateOffer = () => {
+    console.log("Create an offer");
+    setShowTrade(true);
+  };
   return (
     <div>
       <p>Acceptor</p>
@@ -41,16 +57,18 @@ export default function TradeAcceptor({
         )}
       </div>
       <Button
-        onClick={() => {}}
-        disabled={playerHasAllTheRequestedCards(
-          thisPlayer.hand,
-          recieve.expextedCards,
-        )}
+        onClick={() => handleAcceptOrRejectTrade(true)}
+        disabled={
+          !playerHasAllTheRequestedCards(thisPlayer.hand, recieve.expextedCards)
+        }
       >
         Accept
       </Button>
-      <Button onClick={() => {}}>Reject</Button>
-      <Button onClick={() => {}}>Create an Offer</Button>
+      <Button onClick={() => handleAcceptOrRejectTrade(false)}>Reject</Button>
+      <Button onClick={handleCreateOffer} disabled={showTrade}>
+        Create an Offer
+      </Button>
+      {/* {showTrade && <TradeOffer marketCards={currentPlayer.marketingCards} />} */}
     </div>
   );
 }

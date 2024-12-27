@@ -26,6 +26,7 @@ export default function Trade() {
           <TradeProposer
             currentPlayer={currentPlayer}
             thisPlayer={thisPlayer}
+            players={gameState.players}
           />
         ) : (
           <TradeAcceptor
