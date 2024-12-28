@@ -87,3 +87,41 @@ export async function acceptOrRejectTradeAction(
     throw new Error("Error updating firestore document");
   }
 }
+
+export async function dealerTradeOfferAction(
+  roomId: string,
+  tradeOffer: TradeOfferType,
+  dealerId: PlayerType["id"],
+) {
+  const gameState = await fetchGameState(roomId);
+  const { currentPlayer } = gameState;
+
+  const newPlayerDeal: PlayerDealType = {
+    playerId: dealerId,
+    accepted: null,
+    newTradeOffer: tradeOffer,
+  };
+
+  const newPlayersDeals = currentPlayer.tradeProposal?.playersDeals.map(
+    (dealer) => (dealer.playerId === dealerId ? newPlayerDeal : dealer),
+  );
+
+  const updatedGameState = {
+    ...gameState,
+    currentPlayer: {
+      ...currentPlayer,
+      tradeProposal: {
+        ...currentPlayer.tradeProposal,
+        playersDeals: newPlayersDeals,
+      },
+    },
+  };
+  try {
+    await updateFirestoreDocument("rooms", roomId, {
+      gameState: updatedGameState,
+    });
+  } catch (error) {
+    console.error("Error updating firestore document", error);
+    throw new Error("Error updating firestore document");
+  }
+}

@@ -1,9 +1,19 @@
-import { CardsType, CurrentPlayerType, PlayerType } from "@/types/gameTypes";
-import { cardName } from "../utils/cardsUtils";
+import {
+  CardsType,
+  CurrentPlayerType,
+  PlayerType,
+  TradeOfferType,
+} from "@/types/gameTypes";
+import { cardName } from "../../utils/cardsUtils";
 import Button from "@/app/components/ui/Button";
 import { useState } from "react";
-import { acceptOrRejectTradeAction } from "../core/actions/market/tradeOfferAction";
+import {
+  acceptOrRejectTradeAction,
+  dealerTradeOfferAction,
+} from "../../core/actions/market/tradeOfferAction";
 import { useParams } from "next/navigation";
+import TradeOffer from "./TradeOffer";
+import { emptyTradeOffer } from "../../utils/tradeUtils";
 
 export default function TradeAcceptor({
   currentPlayer,
@@ -12,6 +22,9 @@ export default function TradeAcceptor({
   currentPlayer: CurrentPlayerType;
   thisPlayer: PlayerType;
 }) {
+  const [dealer, setDealer] = useState<PlayerType>(thisPlayer);
+  const [dealerTradeOffer, setDealerTradeOffer] =
+    useState<TradeOfferType>(emptyTradeOffer);
   const { roomId } = useParams<{ roomId: string }>();
 
   const [showTrade, setShowTrade] = useState(false);
@@ -19,13 +32,19 @@ export default function TradeAcceptor({
     return <div>No trade proposal available.</div>;
   }
   const { give, recieve } = currentPlayer.tradeProposal.proposerTradeOffer;
-
   const handleAcceptOrRejectTrade = (acceptedOrNot: boolean) => {
     acceptOrRejectTradeAction(roomId, thisPlayer.id, acceptedOrNot);
   };
   const handleCreateOffer = () => {
     console.log("Create an offer");
     setShowTrade(true);
+  };
+
+  const handleDealerTradeOffer = () => {
+    dealerTradeOfferAction(roomId, dealerTradeOffer, thisPlayer.id);
+    setDealerTradeOffer(emptyTradeOffer);
+    setDealer(thisPlayer);
+    setShowTrade(false);
   };
   return (
     <div>
@@ -68,7 +87,17 @@ export default function TradeAcceptor({
       <Button onClick={handleCreateOffer} disabled={showTrade}>
         Create an Offer
       </Button>
-      {/* {showTrade && <TradeOffer marketCards={currentPlayer.marketingCards} />} */}
+      {showTrade && (
+        <TradeOffer
+          marketCards={currentPlayer.marketingCards}
+          playerHand={thisPlayer.hand}
+          trader={dealer}
+          setTrader={setDealer}
+          setTradeOffer={setDealerTradeOffer}
+          tradeOffer={dealerTradeOffer}
+          handleProposeTrade={handleDealerTradeOffer}
+        />
+      )}
     </div>
   );
 }

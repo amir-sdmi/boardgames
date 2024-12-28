@@ -1,7 +1,7 @@
 import Button from "@/app/components/ui/Button";
-import { cardName } from "../utils/cardsUtils";
+import { cardName } from "../../utils/cardsUtils";
 import { CardsType, PlayerType, TradeOfferType } from "@/types/gameTypes";
-import { cardData } from "../utils/cardData";
+import { cardData } from "../../utils/cardData";
 
 export default function TradeOffer({
   marketCards,

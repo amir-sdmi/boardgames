@@ -4,10 +4,10 @@ import {
   PlayerType,
 } from "@/types/gameTypes";
 import { useState } from "react";
-import { tradeOfferAction } from "../core/actions/market/tradeOfferAction";
+import { tradeOfferAction } from "../../core/actions/market/tradeOfferAction";
 import { useParams } from "next/navigation";
 import TradeOffer from "./TradeOffer";
-import { emptyTradeOffer } from "../utils/tradeUtils";
+import { emptyTradeOffer } from "../../utils/tradeUtils";
 import Button from "@/app/components/ui/Button";
 
 export default function TradeProposer({

@@ -5,7 +5,7 @@ import { CardsType } from "@/types/gameTypes";
 import { useParams } from "next/navigation";
 import { plantFromMarketAction } from "../core/actions/plantFromMarket/plantFromMarketAction";
 import { useUser } from "@clerk/nextjs";
-import Trade from "./Trade";
+import Trade from "./trade/Trade";
 
 export default function Market() {
   const { gameState } = useGameContext();

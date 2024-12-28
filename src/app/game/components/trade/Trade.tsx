@@ -1,7 +1,7 @@
 import { useGameContext } from "@/contexts/GameContext";
 import { useUser } from "@clerk/nextjs";
-import TradeProposer from "./TradeProposer";
 import TradeAcceptor from "./TradeAcceptor";
+import TradeProposer from "./TradeProposer";
 
 export default function Trade() {
   const { gameState } = useGameContext();
