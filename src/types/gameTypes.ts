@@ -10,6 +10,7 @@ type PlayerType = {
   tractor: boolean;
   otherPlayersHats: PlayerType["id"][];
   hasBoughtCards: boolean;
+  acceptedTrade: CardsType[] | null;
 };
 
 type FieldType = {

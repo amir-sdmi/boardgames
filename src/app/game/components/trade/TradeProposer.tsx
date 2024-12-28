@@ -1,14 +1,10 @@
-import {
-  CurrentPlayerType,
-  PlayerDealType,
-  PlayerType,
-} from "@/types/gameTypes";
+import { CurrentPlayerType, PlayerType } from "@/types/gameTypes";
 import { useState } from "react";
 import { tradeOfferAction } from "../../core/actions/market/tradeOfferAction";
 import { useParams } from "next/navigation";
 import TradeOffer from "./TradeOffer";
 import { emptyTradeOffer } from "../../utils/tradeUtils";
-import Button from "@/app/components/ui/Button";
+import PlayersDealTile from "./PlayerDealTile";
 
 export default function TradeProposer({
   thisPlayer,
@@ -52,42 +48,19 @@ export default function TradeProposer({
                 <PlayersDealTile
                   key={dealer.id}
                   dealer={dealer}
-                  deals={deals || []}
+                  deal={
+                    deals?.find((deal) => deal.playerId === dealer.id) ?? {
+                      playerId: dealer.id,
+                      accepted: null,
+                      newTradeOffer: null,
+                    }
+                  }
                 />
               ) : null,
             )}
           </div>
         )}
       </div>
-    </div>
-  );
-}
-
-function PlayersDealTile({
-  dealer,
-  deals,
-}: {
-  dealer: PlayerType;
-  deals: PlayerDealType[];
-}) {
-  const playerDeal = deals?.find((deal) => deal.playerId === dealer.id);
-  const handlePickForDeal = (dealerId: number) => {
-    console.log("handlePickForDeal", dealerId);
-  };
-  return (
-    <div className="border border-white" key={dealer.id}>
-      <h4>{dealer.playerName}</h4>
-      {playerDeal?.accepted === null && playerDeal?.newTradeOffer === null && (
-        <p>wait...</p>
-      )}
-      {playerDeal?.accepted === true && (
-        <>
-          <p>accepted</p>
-          <Button onClick={() => handlePickForDeal(dealer.id)}>Accept</Button>
-        </>
-      )}
-      {playerDeal?.accepted === false && <p>rejected</p>}
-      {playerDeal?.newTradeOffer && <div>newOffer</div>}
     </div>
   );
 }

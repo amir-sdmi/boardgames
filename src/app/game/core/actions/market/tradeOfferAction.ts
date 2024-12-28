@@ -125,3 +125,5 @@ export async function dealerTradeOfferAction(
     throw new Error("Error updating firestore document");
   }
 }
+
+export async function acceptTradeAction() {}

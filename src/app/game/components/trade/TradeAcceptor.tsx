@@ -37,7 +37,6 @@ export default function TradeAcceptor({
     acceptOrRejectTradeAction(roomId, thisPlayer.id, acceptedOrNot);
   };
   const handleCreateOffer = () => {
-    console.log("Create an offer");
     setShowTrade(true);
   };
 
