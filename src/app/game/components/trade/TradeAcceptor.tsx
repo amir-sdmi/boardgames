@@ -31,7 +31,8 @@ export default function TradeAcceptor({
   if (!currentPlayer.tradeProposal) {
     return <div>No trade proposal available.</div>;
   }
-  const { give, recieve } = currentPlayer.tradeProposal.proposerTradeOffer;
+  const { give, receive, marketCards } =
+    currentPlayer.tradeProposal.proposerTradeOffer;
   const handleAcceptOrRejectTrade = (acceptedOrNot: boolean) => {
     acceptOrRejectTradeAction(roomId, thisPlayer.id, acceptedOrNot);
   };
@@ -52,7 +53,7 @@ export default function TradeAcceptor({
       <div className="border-4 border-pink-300">
         <h3>you will recieve : </h3>
         <p>from Market</p>
-        {give.marketCards.map((card, index) => (
+        {marketCards.map((card, index) => (
           <li key={index}>{cardName(card.id)}</li>
         ))}
         <p>Cards From Hand</p>
@@ -64,11 +65,11 @@ export default function TradeAcceptor({
       </div>
       <div className="border-4 border-red-500">
         <h3>You will Give : </h3>
-        {recieve.expextedCards.length === 0 &&
-        recieve.expectedHats === false ? (
+        {receive.expectedCards.length === 0 &&
+        receive.expectedHats === false ? (
           <p> nothing, Its a gift ! </p>
         ) : (
-          recieve.expextedCards.map((card, index) => (
+          receive.expectedCards.map((card, index) => (
             <li key={index}>
               {cardName(card.id)} x {card.quantity}
             </li>
@@ -78,7 +79,7 @@ export default function TradeAcceptor({
       <Button
         onClick={() => handleAcceptOrRejectTrade(true)}
         disabled={
-          !playerHasAllTheRequestedCards(thisPlayer.hand, recieve.expextedCards)
+          !playerHasAllTheRequestedCards(thisPlayer.hand, receive.expectedCards)
         }
       >
         Accept

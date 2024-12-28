@@ -1,6 +1,7 @@
 import { TradeOfferType } from "@/types/gameTypes";
 
 export const emptyTradeOffer: TradeOfferType = {
-  give: { marketCards: [], handCards: [], hats: [] },
-  recieve: { expextedCards: [], expectedHats: false },
+  marketCards: [],
+  give: { handCards: [], hats: [] },
+  receive: { expectedCards: [], expectedHats: false },
 };

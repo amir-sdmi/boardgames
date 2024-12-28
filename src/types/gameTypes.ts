@@ -65,13 +65,14 @@ type PlayerDealType = {
   newTradeOffer: TradeOfferType | null;
 };
 type TradeOfferType = {
+  marketCards: (CardsType & { index: number })[];
+
   give: {
-    marketCards: (CardsType & { index: number })[];
     handCards: CardsType[];
     hats: HatType[];
   };
-  recieve: {
-    expextedCards: CardsType[];
+  receive: {
+    expectedCards: CardsType[];
     expectedHats: boolean;
   };
 };
