@@ -68,7 +68,7 @@ export default function PlayerDetails({
         <p>name: {player.playerName}</p>
         <p>tractor: {player.tractor ? "yes" : "no"}</p>
         <p>money: {player.money}</p>
-        <ol className="border border-blue-500">
+        <ul className="border border-blue-500">
           {player.hand.map((card, handIndex) => (
             <li key={handIndex}>
               {cardName(card.id)} {card.quantity}
@@ -92,7 +92,14 @@ export default function PlayerDetails({
                 )}
             </li>
           ))}
-        </ol>{" "}
+        </ul>
+        <ul className="border border-yellow-500">
+          {player.acceptedTrade?.map((card) => (
+            <li key={card.id}>
+              {cardName(card.id)} x {card.quantity}
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   );

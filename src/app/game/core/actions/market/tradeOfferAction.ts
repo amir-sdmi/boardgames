@@ -2,6 +2,7 @@ import {
   fetchGameState,
   updateFirestoreDocument,
 } from "@/app/game/utils/gameStateUtils";
+import {} from "@/app/game/utils/utils";
 import {
   PlayerDealType,
   PlayerType,
@@ -125,5 +126,3 @@ export async function dealerTradeOfferAction(
     throw new Error("Error updating firestore document");
   }
 }
-
-export async function acceptTradeAction() {}

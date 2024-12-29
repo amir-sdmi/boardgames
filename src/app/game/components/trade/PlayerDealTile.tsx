@@ -1,6 +1,8 @@
 import Button from "@/app/components/ui/Button";
 import { PlayerDealType, PlayerType } from "@/types/gameTypes";
 import { cardName } from "../../utils/cardsUtils";
+import { useParams } from "next/navigation";
+import { acceptTradeDealAction } from "../../core/actions/market/acceptTradeDealAction";
 
 export default function PlayersDealTile({
   dealer,
@@ -31,9 +33,11 @@ export default function PlayersDealTile({
 }
 
 function OfferTile({ deal }: { deal: PlayerDealType }) {
-  const handleAcceptDeal = () => {
+  const { roomId } = useParams<{ roomId: string }>();
 
-    
+  //market to dealer, traderHand to dealer, dealerHand to trader
+  const handleAcceptDeal = () => {
+    acceptTradeDealAction(roomId, deal.playerId);
   };
 
   return (

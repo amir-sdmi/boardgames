@@ -66,7 +66,11 @@ type PlayerDealType = {
   newTradeOffer: TradeOfferType | null;
 };
 type TradeOfferType = {
-  marketCards: (CardsType & { index: number })[];
+  marketCards: {
+    id: number;
+    quantity: number;
+    index: number;
+  }[];
 
   give: {
     handCards: CardsType[];

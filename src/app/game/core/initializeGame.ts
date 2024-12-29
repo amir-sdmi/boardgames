@@ -29,6 +29,7 @@ const createNewPlayer = (
     tractor: false,
     otherPlayersHats: [],
     hasBoughtCards: false,
+    acceptedTrade: null,
   };
 };
 
