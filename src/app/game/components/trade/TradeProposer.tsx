@@ -55,6 +55,7 @@ export default function TradeProposer({
                       newTradeOffer: null,
                     }
                   }
+                  traderHand={thisPlayer.hand}
                 />
               ) : null,
             )}

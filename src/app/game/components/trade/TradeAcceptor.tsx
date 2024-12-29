@@ -1,5 +1,4 @@
 import {
-  CardsType,
   CurrentPlayerType,
   PlayerType,
   TradeOfferType,
@@ -13,7 +12,10 @@ import {
 } from "../../core/actions/market/tradeOfferAction";
 import { useParams } from "next/navigation";
 import TradeOffer from "./TradeOffer";
-import { emptyTradeOffer } from "../../utils/tradeUtils";
+import {
+  emptyTradeOffer,
+  playerHasAllTheRequestedCards,
+} from "../../utils/tradeUtils";
 
 export default function TradeAcceptor({
   currentPlayer,
@@ -100,16 +102,4 @@ export default function TradeAcceptor({
       )}
     </div>
   );
-}
-
-function playerHasAllTheRequestedCards(
-  playerHand: CardsType[],
-  requestedCards: CardsType[],
-) {
-  return requestedCards.every((requestedCard) => {
-    const playerCard = playerHand.find((card) => card.id === requestedCard.id);
-    return (
-      playerCard !== undefined && playerCard.quantity >= requestedCard.quantity
-    );
-  });
 }

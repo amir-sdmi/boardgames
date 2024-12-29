@@ -7,40 +7,110 @@ import {
   findPlayer,
   removeCardsFromArray,
 } from "@/app/game/utils/utils";
-import { CardsType, CurrentPlayerType, PlayerType } from "@/types/gameTypes";
+import {
+  CardsType,
+  CurrentPlayerType,
+  GameType,
+  PlayerType,
+} from "@/types/gameTypes";
+async function fetchTradeDetails(roomId: string, dealerId: PlayerType["id"]) {
+  const gameState = await fetchGameState(roomId);
+  const { players, currentPlayer } = gameState;
 
-export async function acceptTradeDealAction(
+  const dealer = findPlayer(players, dealerId);
+  if (!dealer) throw new Error(`Dealer not found for dealerId: ${dealerId}`);
+
+  const trader = findPlayer(players, currentPlayer.id);
+  if (!trader)
+    throw new Error(`Trader not found for playerId: ${currentPlayer.id}`);
+
+  return { gameState, dealer, trader, currentPlayer };
+}
+export async function acceptBetweenAcceptedPlayers(
   roomId: string,
   dealerId: PlayerType["id"],
 ) {
-  const gameState = await fetchGameState(roomId);
-  const { currentPlayer, players } = gameState;
+  const { gameState, dealer, trader, currentPlayer } = await fetchTradeDetails(
+    roomId,
+    dealerId,
+  );
+  const tradeOffer = currentPlayer.tradeProposal?.proposerTradeOffer;
 
-  const dealer = findPlayer(players, dealerId);
-  if (!dealer) throw new Error("Dealer not found");
-  const trader = findPlayer(players, currentPlayer.id);
+  if (!tradeOffer) throw new Error("Trade offer not found");
+
+  const { marketCards, give, receive } = tradeOffer;
+  const traderGive = give.handCards;
+  const dealerGive = receive.expectedCards;
+  const tradeDetails = {
+    dealer,
+    dealerGive,
+    trader,
+    traderGive,
+    marketCards,
+  };
+  await acceptTradeDealAction({
+    roomId,
+    gameState,
+    tradeDetails,
+  });
+}
+export async function acceptTradeDealFromDealerTile(
+  roomId: string,
+  dealerId: PlayerType["id"],
+) {
+  const { gameState, dealer, trader, currentPlayer } = await fetchTradeDetails(
+    roomId,
+    dealerId,
+  );
   const deal = currentPlayer.tradeProposal?.playersDeals.find(
     (deal) => deal.playerId === dealerId,
   );
   if (!deal?.newTradeOffer) throw new Error("Deal offer not found");
+
   const { marketCards, give, receive } = deal.newTradeOffer;
 
-  // dealer, should remove giving cards from hand and add received cards to accepted TradeOffer
-  // trader, should remove received cards from hand and add giving cards to accepted TradeOffer
+  const traderGive = receive.expectedCards;
+  const dealerGive = give.handCards;
+  const tradeDetails = {
+    dealer,
+    dealerGive,
+    trader,
+    traderGive,
+    marketCards,
+  };
 
-  const newDealerHand = removeCardsFromArray(dealer.hand, give.handCards);
-  const newTraderHand = removeCardsFromArray(
-    trader.hand,
-    receive.expectedCards,
-  );
-
+  await acceptTradeDealAction({
+    roomId,
+    gameState,
+    tradeDetails,
+  });
+}
+export async function acceptTradeDealAction({
+  roomId,
+  gameState,
+  tradeDetails,
+}: {
+  roomId: string;
+  gameState: GameType;
+  tradeDetails: {
+    dealer: PlayerType;
+    dealerGive: CardsType[];
+    trader: PlayerType;
+    traderGive: CardsType[];
+    marketCards: CardsType[];
+  };
+}) {
+  const { currentPlayer, players } = gameState;
+  const { dealer, dealerGive, trader, traderGive, marketCards } = tradeDetails;
+  const newDealerHand = removeCardsFromArray(dealer.hand, dealerGive);
+  const newTraderHand = removeCardsFromArray(trader.hand, traderGive);
   const dealerAcceptedTradeOffer: CardsType[] = addCardsToArray(
-    receive.expectedCards,
+    traderGive,
     marketCards,
   );
-  const traderAcceptedTradeOffer: CardsType[] = [...give.handCards];
+  const traderAcceptedTradeOffer: CardsType[] = [...dealerGive];
 
-  const newMakettingCards: CardsType[] = removeCardsFromArray(
+  const newMaketingCards: CardsType[] = removeCardsFromArray(
     currentPlayer.marketingCards,
     marketCards,
   );
@@ -56,17 +126,15 @@ export async function acceptTradeDealAction(
   };
   const updatedCurrentPlayer: CurrentPlayerType = {
     ...currentPlayer,
-    marketingCards: newMakettingCards,
+    marketingCards: newMaketingCards,
     tradeProposal: null,
   };
 
-  const updatedPlayers = players.map((player) =>
-    player.id === dealerId
-      ? updatedDealer
-      : player.id === trader.id
-        ? updatedTrader
-        : player,
-  );
+  const updatedPlayers = players.map((player) => {
+    if (player.id === dealer.id) return updatedDealer;
+    if (player.id === trader.id) return updatedTrader;
+    return player;
+  });
 
   const updatedGameState = {
     ...gameState,
