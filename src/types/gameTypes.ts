@@ -10,6 +10,7 @@ type PlayerType = {
   tractor: boolean;
   otherPlayersHats: PlayerType["id"][];
   hasBoughtCards: boolean;
+  acceptedTrade: CardsType[] | null;
 };
 
 type FieldType = {
@@ -53,15 +54,32 @@ type CurrentPlayerType = {
   turnStatus: "planting" | "marketing" | "addingCardsToHand";
   plantCounts: number;
   marketingCards: CardsType[];
-  tradeOffer: TradeOffer;
+  tradeProposal: TradeProposalType | null;
 };
-type TradeOffer = {
-  proposerId: PlayerType["id"];
-  cardsFromProposersHand: CardsType[];
-  cardsFromMarket: CardsType[];
-  requestCards: CardsType[];
-  otherPlayersHats: PlayerType["id"][];
-  includePlayerHat: boolean;
+type TradeProposalType = {
+  proposerTradeOffer: TradeOfferType;
+  playersDeals: PlayerDealType[];
+};
+type PlayerDealType = {
+  playerId: PlayerType["id"];
+  accepted: boolean | null;
+  newTradeOffer: TradeOfferType | null;
+};
+type TradeOfferType = {
+  marketCards: {
+    id: number;
+    quantity: number;
+    index: number;
+  }[];
+
+  give: {
+    handCards: CardsType[];
+    hats: HatType[];
+  };
+  receive: {
+    expectedCards: CardsType[];
+    expectedHats: boolean;
+  };
 };
 type BuyType = "manure" | "tractor" | "cards" | "field";
 export type {
@@ -73,5 +91,7 @@ export type {
   FieldType,
   GameType,
   CurrentPlayerType,
-  TradeOffer,
+  TradeProposalType,
+  TradeOfferType,
+  PlayerDealType,
 };

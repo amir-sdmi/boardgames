@@ -5,6 +5,7 @@ import { CardsType } from "@/types/gameTypes";
 import { useParams } from "next/navigation";
 import { plantFromMarketAction } from "../core/actions/plantFromMarket/plantFromMarketAction";
 import { useUser } from "@clerk/nextjs";
+import Trade from "./trade/Trade";
 
 export default function Market() {
   const { gameState } = useGameContext();
@@ -43,6 +44,7 @@ export default function Market() {
       console.error("Error planting from market:", error);
     }
   };
+
   return (
     <div className="border border-white">
       {currentPlayer.turnStatus === "marketing" ? (
@@ -75,12 +77,8 @@ export default function Market() {
                 )}
               </li>
             ))}
-            {currentPlayer.id === thisPlayer.id && (
-              <li>
-                <Button onClick={() => {}}> Lets Trade </Button>
-              </li>
-            )}
           </ul>
+          {currentPlayer.marketingCards.length !== 0 && <Trade />}
         </div>
       ) : (
         <div>

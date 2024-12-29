@@ -6,6 +6,7 @@ import { cardName } from "../utils/cardsUtils";
 import { plantFromHandAction } from "@/app/game/core/actions/plantFromHand/plantFromHandAction";
 import { showMarketcardsAction } from "../core/actions/market/showMarketcardsAction";
 import { addCardsToHandAction } from "../core/actions/addCardsToHandAction";
+import { plantFromTradeAction } from "../core/actions/plantFromTrade/plantFromTradeAction";
 
 export default function PlayerDetails({
   player,
@@ -21,6 +22,14 @@ export default function PlayerDetails({
       await plantFromHandAction(roomId, player.id, fieldIndex, card.id);
     } catch (error) {
       console.error("Error planting from hand:", error);
+    }
+  };
+
+  const handlePlantFromTrade = async (fieldIndex: number, card: CardsType) => {
+    try {
+      await plantFromTradeAction(roomId, player.id, fieldIndex, card.id);
+    } catch (error) {
+      console.error("Error planting from trade:", error);
     }
   };
 
@@ -68,10 +77,10 @@ export default function PlayerDetails({
         <p>name: {player.playerName}</p>
         <p>tractor: {player.tractor ? "yes" : "no"}</p>
         <p>money: {player.money}</p>
-        <ol className="border border-blue-500">
+        <ul className="border border-blue-500">
           {player.hand.map((card, handIndex) => (
             <li key={handIndex}>
-              {cardName(card.id)} {card.quantity}
+              {cardName(card.id)} x {card.quantity}
               {player.id === currentPlayer.id &&
                 currentPlayer.turnStatus === "planting" &&
                 (currentPlayer.plantCounts < 2 ||
@@ -92,7 +101,27 @@ export default function PlayerDetails({
                 )}
             </li>
           ))}
-        </ol>{" "}
+        </ul>
+        <ul className="border border-yellow-500">
+          {player.acceptedTrade?.map((card) => (
+            <li key={card.id}>
+              {cardName(card.id)} x {card.quantity}
+              <div>
+                <Button onClick={() => handlePlantFromTrade(0, card)}>
+                  F1
+                </Button>
+                <Button onClick={() => handlePlantFromTrade(1, card)}>
+                  F2
+                </Button>
+                {player.fields.length > 2 && (
+                  <Button onClick={() => handlePlantFromTrade(2, card)}>
+                    F3
+                  </Button>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   );

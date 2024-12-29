@@ -7,7 +7,6 @@ import {
   CurrentPlayerType,
   GameType,
   PlayerType,
-  TradeOffer,
 } from "@/types/gameTypes";
 
 const createNewPlayer = (
@@ -30,6 +29,7 @@ const createNewPlayer = (
     tractor: false,
     otherPlayersHats: [],
     hasBoughtCards: false,
+    acceptedTrade: null,
   };
 };
 
@@ -84,7 +84,7 @@ export const createNewGame = (
     turnStatus: "planting",
     plantCounts: 0,
     marketingCards: [],
-    tradeOffer: emptyTempTradeOffer(randomId),
+    tradeProposal: null,
   };
   //create deck of cards, randomly but with some rules, about number of players
   const filteredCards = cardData.filter(
@@ -122,18 +122,5 @@ export const createNewGame = (
     endTurnReceivingCardsCount: endTurnReceivingCards(players.length),
     round: 1,
     gameStatus: "initial",
-  };
-};
-
-export const emptyTempTradeOffer = (
-  currentPlayerId: PlayerType["id"],
-): TradeOffer => {
-  return {
-    proposerId: currentPlayerId,
-    cardsFromProposersHand: [],
-    cardsFromMarket: [],
-    requestCards: [],
-    otherPlayersHats: [],
-    includePlayerHat: false,
   };
 };

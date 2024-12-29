@@ -9,7 +9,6 @@ import {
 } from "../../utils/gameStateUtils";
 import { findPlayer } from "../../utils/utils";
 import { fromDeckToHand } from "../../utils/cardsUtils";
-import { emptyTempTradeOffer } from "../initializeGame";
 import { nextRound } from "../gameMaster";
 
 export async function addCardsToHandAction(roomId: string, playerId: number) {
@@ -40,7 +39,7 @@ export async function addCardsToHandAction(roomId: string, playerId: number) {
     turnStatus: "planting",
     plantCounts: 0,
     marketingCards: [],
-    tradeOffer: emptyTempTradeOffer(nextPlayerId),
+    tradeProposal: null,
   };
   const updatedPlayers = players.map((p) =>
     p.id === playerId
