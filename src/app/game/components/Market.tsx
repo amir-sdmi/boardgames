@@ -78,7 +78,7 @@ export default function Market() {
               </li>
             ))}
           </ul>
-          <Trade />
+          {currentPlayer.marketingCards.length !== 0 && <Trade />}
         </div>
       ) : (
         <div>

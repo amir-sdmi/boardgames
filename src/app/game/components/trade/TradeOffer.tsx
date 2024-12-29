@@ -21,10 +21,11 @@ export default function TradeOffer({
   tradeOffer: TradeOfferType;
   setTradeOffer: (tradeOffer: TradeOfferType) => void;
 }) {
+  const isMarketCardsEmpty = tradeOffer.marketCards.length === 0;
   return (
     <>
       <div className="border-2 border-blue-300">
-        {/* <h3>Give :</h3> */}
+        <h3>Marketing cards are necessary</h3>
         <TradeOfferMarketCards
           marketCards={marketCards}
           tradeOffer={tradeOffer}
@@ -42,7 +43,9 @@ export default function TradeOffer({
         tradeOffer={tradeOffer}
         setTradeOffer={setTradeOffer}
       />
-      <Button onClick={handleProposeTrade}>Propose Trade</Button>
+      <Button onClick={handleProposeTrade} disabled={isMarketCardsEmpty}>
+        Propose Trade
+      </Button>
     </>
   );
 }
