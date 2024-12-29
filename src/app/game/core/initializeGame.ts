@@ -124,20 +124,3 @@ export const createNewGame = (
     gameStatus: "initial",
   };
 };
-
-// export const emptyTempTradeOffer = (): TradeProposalType => {
-//   return {
-//     proposerTradeOffer: {
-//       give: {
-//         marketCards: [],
-//         handCards: [],
-//         hats: [],
-//       },
-//       recieve: {
-//         expextedCards: [],
-//         expectedHats: false,
-//       },
-//     },
-//     playersDeals: [],
-//   };
-// };

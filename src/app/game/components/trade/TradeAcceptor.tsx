@@ -42,11 +42,15 @@ export default function TradeAcceptor({
     setShowTrade(true);
   };
 
-  const handleDealerTradeOffer = () => {
-    dealerTradeOfferAction(roomId, dealerTradeOffer, thisPlayer.id);
-    setDealerTradeOffer(emptyTradeOffer);
-    setDealer(thisPlayer);
-    setShowTrade(false);
+  const handleDealerTradeOffer = async () => {
+    try {
+      await dealerTradeOfferAction(roomId, dealerTradeOffer, thisPlayer.id);
+      setDealerTradeOffer(emptyTradeOffer);
+      setDealer(thisPlayer);
+      setShowTrade(false);
+    } catch (error) {
+      console.error("Error creating trade offer", error);
+    }
   };
   return (
     <div>

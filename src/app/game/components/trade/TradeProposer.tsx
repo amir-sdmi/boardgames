@@ -20,11 +20,15 @@ export default function TradeProposer({
   const [trader, setTrader] = useState(thisPlayer);
   const [showPlayersDeals, setShowPlayersDeals] = useState(false);
   const deals = currentPlayer.tradeProposal?.playersDeals;
-  const handleProposeTrade = () => {
-    tradeOfferAction(roomId, tradeOffer);
-    setTradeOffer(emptyTradeOffer);
-    setTrader(thisPlayer);
-    setShowPlayersDeals(true);
+  const handleProposeTrade = async () => {
+    try {
+      await tradeOfferAction(roomId, tradeOffer);
+      setTradeOffer(emptyTradeOffer);
+      setTrader(thisPlayer);
+      setShowPlayersDeals(true);
+    } catch (error) {
+      console.error("Error creating trade offer", error);
+    }
   };
   return (
     <div className="border border-pink-400">

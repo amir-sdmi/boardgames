@@ -58,6 +58,10 @@ export async function acceptOrRejectTradeAction(
   const gameState = await fetchGameState(roomId);
   const { currentPlayer } = gameState;
 
+  if (!currentPlayer.tradeProposal?.playersDeals) {
+    throw new Error("No trade proposal found");
+  }
+
   const newPlayerDeal: PlayerDealType = {
     playerId: dealerId,
     accepted: acceptedOrNot,
