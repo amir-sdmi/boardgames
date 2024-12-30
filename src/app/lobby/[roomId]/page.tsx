@@ -14,6 +14,7 @@ import { generateAddRoomLink } from "@/app/game/utils/utils";
 import { useRouter } from "next/navigation";
 import { PLAYER_LIMITS } from "@/config/constants";
 import Button from "@/app/components/ui/Button";
+import CopyIcon from "@/app/components/ui/icons/CopyIcon";
 
 export default function RoomPage() {
   const { roomId } = useParams<{ roomId: string }>();
@@ -99,17 +100,39 @@ export default function RoomPage() {
   };
 
   return (
-    <div>
-      <h1>Room: {roomId}</h1>
-      <p>
-        Share this link with your friends: {`${generateAddRoomLink(roomId)}`}
-      </p>
-      <div className="border border-yellow-100">
-        <h2>Players in Room:</h2>
+    <div className="flex min-w-[500px] flex-col items-center justify-center gap-5">
+      <div className="flex flex-col items-center justify-center gap-2">
+        <p className="text-lg font-semibold">
+          Share this link with your friends:
+        </p>
+        <div className="flex justify-between gap-5 rounded-lg border border-white px-2 py-1">
+          <p className="text-left font-semibold">{`${generateAddRoomLink(roomId)}`}</p>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(generateAddRoomLink(roomId));
+            }}
+          >
+            <CopyIcon />
+          </button>
+        </div>
+      </div>
+      <div className="flex flex-col items-center justify-center rounded-2xl border border-white p-5">
         <ul>
-          {players.map((player) => (
-            <li key={player.id}>
-              {player.name}
+          {players.map((player, index) => (
+            <li
+              key={player.id}
+              className="grid grid-cols-[50px_1fr_50px_100px] items-center gap-7 border-b border-white py-2"
+            >
+              <div className="h-6 w-6 rounded-full border border-white text-center font-semibold text-white">
+                {index + 1}
+              </div>
+              <div className="rounded-lg border border-white px-4 py-1 text-center font-semibold">
+                {player.name}
+              </div>
+              <div
+                className="h-6 w-6 rounded-full"
+                style={{ backgroundColor: "#DD0000" }}
+              />
               {
                 //only host can kick other players
                 isHost() && player.id !== roomData.createdBy && (
@@ -121,8 +144,8 @@ export default function RoomPage() {
             </li>
           ))}
         </ul>
-        {isHost() && <Button onClick={handleStartGame}>Start Game!</Button>}
       </div>
+      {isHost() && <Button onClick={handleStartGame}> Start Game! </Button>}
     </div>
   );
 }
