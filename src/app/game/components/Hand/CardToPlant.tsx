@@ -4,7 +4,6 @@ import Image from "next/image";
 import ChevronDownIcon from "@/app/components/ui/icons/ChevronDownIcon";
 import ChevronUpIcon from "@/app/components/ui/icons/ChevronUpIcon";
 import Button from "@/app/components/ui/Button";
-import Info from "@/app/components/ui/Info";
 
 interface CardInHandProps {
   card: CardsType;
@@ -16,7 +15,7 @@ interface CardInHandProps {
   setOpenId: (id: number | null) => void;
 }
 
-export default function CardInHand({
+export default function CardToPlant({
   card,
   openId,
   setOpenId,
@@ -42,7 +41,7 @@ export default function CardInHand({
       <div className="absolute -right-2 -top-2 h-6 w-6 rounded-full bg-red-700 text-center text-sm font-semibold text-white">
         {card.quantity}
       </div>
-      <div className="relative flex items-center justify-between gap-2">
+      <div className="relative grid grid-cols-[30%_1fr_10%] items-center justify-between gap-4">
         <Image
           src={cardImage(card.id)}
           alt={cardName(card.id)}
@@ -50,10 +49,10 @@ export default function CardInHand({
           height={42}
         />
         <p>{cardName(card.id)}</p>
-        {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+        {canPlant && (isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />)}
       </div>
       {isOpen && canPlant && (
-        <div className="flex justify-between gap-1">
+        <div className="flex justify-between gap-1 overflow-hidden">
           <Button
             onClick={() => handlePlantFromHand(0, card)}
             disabled={

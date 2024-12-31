@@ -30,9 +30,8 @@ export default function Fields({ playerId, handleBuy }: FieldsProps) {
 
   return (
     <ul className="flex gap-4 border border-yellow-700">
-      {player.fields.map((field, fieldIndex) => (
-        //TODO: field id and index should be more thinked
-        <li className="w-32 border border-green-600" key={fieldIndex}>
+      {player.fields.map((field) => (
+        <li className="w-32 border border-green-600" key={field.id}>
           <Field field={field} playerId={player.id} />
 
           {

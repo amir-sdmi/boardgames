@@ -1,13 +1,25 @@
 import { useGameContext } from "@/contexts/GameContext";
 import { cardName } from "../utils/cardsUtils";
 import Button from "@/app/components/ui/Button";
-import { CardsType } from "@/types/gameTypes";
+import { BuyType, CardsType, PlayerType } from "@/types/gameTypes";
 import { useParams } from "next/navigation";
 import { plantFromMarketAction } from "../core/actions/plantFromMarket/plantFromMarketAction";
 import { useUser } from "@clerk/nextjs";
 import Trade from "./trade/Trade";
+import PlayerBuyingActions from "./PlayerBuyingActions";
 
-export default function Market() {
+export default function Market({
+  thisPlayer,
+  handleBuy,
+}: {
+  thisPlayer: PlayerType;
+  handleBuy: (
+    player: PlayerType,
+    type: BuyType,
+    price: number,
+    fieldId?: number,
+  ) => void;
+}) {
   const { gameState } = useGameContext();
   const { user } = useUser();
   const { roomId } = useParams<{ roomId: string }>();
@@ -19,13 +31,6 @@ export default function Market() {
   if (!user) return null;
 
   const { currentPlayer, players } = gameState;
-
-  const thisPlayer = gameState.players.find(
-    (player) => player.userId === user.id,
-  );
-  if (!thisPlayer) {
-    return <div> Player not found in game</div>;
-  }
 
   const handlePlantFromMarket = async (
     fieldIndex: number,
@@ -47,6 +52,8 @@ export default function Market() {
 
   return (
     <div className="border border-white">
+      <PlayerBuyingActions player={thisPlayer} handleBuy={handleBuy} />
+
       {currentPlayer.turnStatus === "marketing" ? (
         <div>
           <h2>Market</h2>
