@@ -20,7 +20,11 @@ export function fromDeckToHand(
 
   return updatedHand;
 }
-
+export function cardImage(id: number | null) {
+  if (id === null) return "";
+  const foundCard = cardData.find((card) => card.id === id);
+  return foundCard ? foundCard.icon : "";
+}
 export function cardName(id: number | null) {
   if (id === null) return "No card";
   const foundCard = cardData.find((card) => card.id === id);

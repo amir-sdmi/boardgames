@@ -7,6 +7,8 @@ import { plantFromHandAction } from "@/app/game/core/actions/plantFromHand/plant
 import { showMarketcardsAction } from "../core/actions/market/showMarketcardsAction";
 import { addCardsToHandAction } from "../core/actions/addCardsToHandAction";
 import { plantFromTradeAction } from "../core/actions/plantFromTrade/plantFromTradeAction";
+import CardInHand from "./Hand/CardInHand";
+import { useState } from "react";
 
 export default function PlayerDetails({
   player,
@@ -17,9 +19,20 @@ export default function PlayerDetails({
   roomId: string;
   currentPlayer: CurrentPlayerType;
 }) {
+  const [openId, setOpenId] = useState<number | null>(null);
+
+  const canPlant =
+    player.id === currentPlayer.id &&
+    currentPlayer.turnStatus === "planting" &&
+    (currentPlayer.plantCounts < 2 ||
+      (currentPlayer.plantCounts < 3 && player.tractor));
+
   const handlePlantFromHand = async (fieldIndex: number, card: CardsType) => {
     try {
       await plantFromHandAction(roomId, player.id, fieldIndex, card.id);
+      if (player.fields[fieldIndex].crops?.quantity === 0) {
+        setOpenId(null);
+      }
     } catch (error) {
       console.error("Error planting from hand:", error);
     }
@@ -80,25 +93,15 @@ export default function PlayerDetails({
         <ul className="border border-blue-500">
           {player.hand.map((card, handIndex) => (
             <li key={handIndex}>
-              {cardName(card.id)} x {card.quantity}
-              {player.id === currentPlayer.id &&
-                currentPlayer.turnStatus === "planting" &&
-                (currentPlayer.plantCounts < 2 ||
-                  (currentPlayer.plantCounts < 3 && player.tractor)) && (
-                  <div>
-                    <Button onClick={() => handlePlantFromHand(0, card)}>
-                      F1
-                    </Button>
-                    <Button onClick={() => handlePlantFromHand(1, card)}>
-                      F2
-                    </Button>
-                    {player.fields.length > 2 && (
-                      <Button onClick={() => handlePlantFromHand(2, card)}>
-                        F3
-                      </Button>
-                    )}
-                  </div>
-                )}
+              <CardInHand
+                fields={player.fields}
+                canPlant={canPlant}
+                card={card}
+                openId={openId}
+                setOpenId={setOpenId}
+                hasThirdField={player.thirdField}
+                handlePlantFromHand={handlePlantFromHand}
+              />
             </li>
           ))}
         </ul>

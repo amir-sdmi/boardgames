@@ -9,7 +9,7 @@ const Button = ({ children, onClick, disabled = false }: ButtonProps) => {
     <button
       onClick={onClick}
       disabled={disabled}
-      className="rounded-lg bg-amber-500 px-6 py-3 text-center text-lg font-bold text-black"
+      className="w-full rounded-lg bg-amber-500 px-1 py-1 text-center text-xs font-bold text-white"
     >
       {children}
     </button>

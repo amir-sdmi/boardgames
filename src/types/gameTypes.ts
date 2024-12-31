@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 type PlayerType = {
   id: number;
   userId: string;
@@ -33,6 +35,7 @@ type CardInformationType = {
     4 | 5 | 6 | 7 | 8,
     7 | 8 | 9 | 10 | null,
   ];
+  icon: StaticImageData;
 };
 type CardsType = {
   id: number;
