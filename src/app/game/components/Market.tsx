@@ -6,7 +6,6 @@ import { useParams } from "next/navigation";
 import { plantFromMarketAction } from "../core/actions/plantFromMarket/plantFromMarketAction";
 import { useUser } from "@clerk/nextjs";
 import Trade from "./trade/Trade";
-import PlayerBuyingActions from "./PlayerBuyingActions";
 
 export default function Market({
   thisPlayer,
@@ -21,14 +20,11 @@ export default function Market({
   ) => void;
 }) {
   const { gameState } = useGameContext();
-  const { user } = useUser();
   const { roomId } = useParams<{ roomId: string }>();
 
   if (!gameState) {
     return <div>Loading game state ...</div>;
   }
-
-  if (!user) return null;
 
   const { currentPlayer, players } = gameState;
 
@@ -52,11 +48,8 @@ export default function Market({
 
   return (
     <div className="border border-white">
-      <PlayerBuyingActions player={thisPlayer} handleBuy={handleBuy} />
-
       {currentPlayer.turnStatus === "marketing" ? (
         <div>
-          <h2>Market</h2>
           <ul className="flex gap-4 border border-yellow-700">
             {currentPlayer.marketingCards.map((card, index) => (
               <li className="w-32 border border-green-600" key={index}>

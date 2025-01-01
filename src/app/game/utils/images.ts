@@ -1,19 +1,21 @@
-import bean from "@/app/assets/crops/bean.png";
-import carrot from "@/app/assets/crops/carrot.png";
-import cucumber from "@/app/assets/crops/cucumber.png";
-import eggplant from "@/app/assets/crops/eggplant.png";
-import onion from "@/app/assets/crops/onion.png";
-import peas from "@/app/assets/crops/peas.png";
-import pepperoni from "@/app/assets/crops/pepperoni.png";
-import potato from "@/app/assets/crops/potato.png";
-import pumpkin from "@/app/assets/crops/pumpkin.png";
-import tomato from "@/app/assets/crops/tomato.png";
-import turnip from "@/app/assets/crops/turnip.png";
-import watermelon from "@/app/assets/crops/watermelon.png";
+import beans from "@/app/assets/crops/beans.svg";
+import carrot from "@/app/assets/crops/carrot.svg";
+import corn from "@/app/assets/crops/corn.svg";
+import cucumber from "@/app/assets/crops/cucumber.svg";
+import eggplant from "@/app/assets/crops/eggplant.svg";
+import onion from "@/app/assets/crops/onion.svg";
+import peas from "@/app/assets/crops/peas.svg";
+import pepperoni from "@/app/assets/crops/pepperoni.svg";
+import potato from "@/app/assets/crops/potato.svg";
+import pumpkin from "@/app/assets/crops/pumpkin.svg";
+import tomato from "@/app/assets/crops/tomato.svg";
+import turnip from "@/app/assets/crops/turnip.svg";
+import watermelon from "@/app/assets/crops/watermelon.svg";
 
-export const cropsIcons = {
-  bean,
+export const cropsSvg = {
+  beans,
   carrot,
+  corn,
   cucumber,
   eggplant,
   onion,

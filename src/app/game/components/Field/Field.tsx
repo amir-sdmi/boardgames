@@ -7,6 +7,9 @@ import { harvestAction } from "../../core/actions/harvest/harvestAction";
 import { useParams } from "next/navigation";
 import manurePNG from "../../../assets/tokens/manure.png";
 import { cardName } from "../../utils/cardsUtils";
+import CropsCard from "../ui/cards/CropsCard";
+import NumberBadge from "@/app/components/ui/NumberBadge";
+import { findThePrice } from "../../core/actions/harvest/findThePrice";
 export default function Field({
   field,
   playerId,
@@ -41,21 +44,24 @@ export default function Field({
             className="absolute left-1/3 top-0"
           />
         )}
-        <div className="absolute left-2/4 top-2/4 h-10 w-10">
+        <div className="absolute left-6 top-16 h-10 w-10">
           {field.crops && (
             <div>
-              <p>id: {field.crops.id}</p>
-              <p>name : {cardName(field.crops.id)}</p>
-              <p>quantity: {field.crops.quantity}</p>
+              <CropsCard cardId={field.crops.id} />
             </div>
           )}
         </div>
+        {field.crops && (
+          <div className="absolute right-4 top-16">
+            <NumberBadge>{field.crops?.quantity}</NumberBadge>
+          </div>
+        )}
       </div>
       <Button
         onClick={() => handleHarvest(field.id, playerId)}
         disabled={!field.crops}
       >
-        Harvest
+        Harvest {field.crops ? findThePrice(field.crops, field.manure) : 0}
       </Button>
     </div>
   );

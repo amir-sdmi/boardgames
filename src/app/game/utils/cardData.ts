@@ -1,5 +1,5 @@
 import { CardInformationType } from "@/types/gameTypes";
-import { cropsIcons } from "./images";
+import { cropsSvg } from "./images";
 
 export const cardData: CardInformationType[] = [
   {
@@ -7,91 +7,90 @@ export const cardData: CardInformationType[] = [
     name: "pepperoni",
     totalQuantity: 6,
     value: [2, null, 4, null],
-    icon: cropsIcons.pepperoni,
+    svg: cropsSvg.pepperoni,
   },
   {
     id: 1,
     name: "peas",
     totalQuantity: 7,
     value: [2, 3, 5, null],
-    icon: cropsIcons.peas,
+    svg: cropsSvg.peas,
   },
   {
     id: 2,
     name: "eggplant",
     totalQuantity: 8,
     value: [2, 4, 5, null],
-    icon: cropsIcons.eggplant,
+    svg: cropsSvg.eggplant,
   },
   {
     id: 3,
     name: "tomato",
     totalQuantity: 9,
     value: [2, 4, 6, null],
-    icon: cropsIcons.tomato,
+    svg: cropsSvg.tomato,
   },
   {
     id: 4,
     name: "watermelon",
     totalQuantity: 10,
     value: [3, 4, 5, 7],
-    icon: cropsIcons.watermelon,
+    svg: cropsSvg.watermelon,
   },
   {
-    //TODO: add icons ! thisis wrong for now
     id: 5,
-    name: "kharboze",
+    name: "corn",
     totalQuantity: 11,
     value: [3, 5, 6, 7],
-    icon: cropsIcons.watermelon,
+    svg: cropsSvg.corn,
   },
   {
     id: 6,
     name: "pumpkin",
     totalQuantity: 12,
     value: [3, 5, 6, 8],
-    icon: cropsIcons.pumpkin,
+    svg: cropsSvg.pumpkin,
   },
   {
     id: 7,
     name: "turnip",
     totalQuantity: 13,
     value: [3, 5, 7, 8],
-    icon: cropsIcons.turnip,
+    svg: cropsSvg.turnip,
   },
   {
     id: 8,
     name: "carrot",
     totalQuantity: 14,
     value: [4, 5, 7, 8],
-    icon: cropsIcons.carrot,
+    svg: cropsSvg.carrot,
   },
   {
     id: 9,
-    name: "bean",
+    name: "beans",
     totalQuantity: 15,
     value: [4, 6, 7, 8],
-    icon: cropsIcons.bean,
+    svg: cropsSvg.beans,
   },
   {
     id: 10,
     name: "onion",
     totalQuantity: 16,
     value: [4, 6, 7, 9],
-    icon: cropsIcons.onion,
+    svg: cropsSvg.onion,
   },
   {
     id: 11,
     name: "potato",
     totalQuantity: 17,
     value: [4, 6, 8, 9],
-    icon: cropsIcons.potato,
+    svg: cropsSvg.potato,
   },
   {
     id: 12,
     name: "cucumber",
     totalQuantity: 18,
     value: [4, 6, 8, 10],
-    icon: cropsIcons.cucumber,
+    svg: cropsSvg.cucumber,
   },
 ];

@@ -4,6 +4,8 @@ import { BuyType, PlayerType } from "@/types/gameTypes";
 import { PRICES } from "@/config/constants";
 import Field from "./Field";
 import { findPlayer } from "../../utils/utils";
+import coin3 from "@/app/assets/coin3.png";
+import Image from "next/image";
 
 const MAX_FIELDS = 3 as const;
 
@@ -29,31 +31,22 @@ export default function Fields({ playerId, handleBuy }: FieldsProps) {
   }
 
   return (
-    <ul className="flex gap-4 border border-yellow-700">
+    <ul className="flex items-center">
       {player.fields.map((field) => (
-        <li className="w-32 border border-green-600" key={field.id}>
+        <li key={field.id}>
           <Field field={field} playerId={player.id} />
-
-          {
-            //TODO: move this logic near to game Cars based on design
-            !field.manure && gameState.availableManures > 0 && (
-              <Button
-                disabled={player.money < PRICES.manure}
-                onClick={() =>
-                  handleBuy(player, "manure", PRICES.manure, field.id)
-                }
-              >
-                Buy manure for {PRICES.manure}
-              </Button>
-            )
-          }
         </li>
       ))}
-      {player.fields.length < MAX_FIELDS && (
-        <Button onClick={() => handleBuy(player, "field", PRICES.field)}>
-          + Buy Field for {PRICES.field} coins
-        </Button>
-      )}
+      <li>
+        {player.fields.length < MAX_FIELDS && (
+          <Button onClick={() => handleBuy(player, "field", PRICES.field)}>
+            Buy Field: 3
+            <span>
+              <Image src={coin3} alt="coins" width={12} height={8} />
+            </span>
+          </Button>
+        )}
+      </li>
     </ul>
   );
 }

@@ -42,12 +42,14 @@ export default function CardToPlant({
         {card.quantity}
       </div>
       <div className="relative grid grid-cols-[30%_1fr_10%] items-center justify-between gap-4">
-        <Image
-          src={cardImage(card.id)}
-          alt={cardName(card.id)}
-          width={42}
-          height={42}
-        />
+        <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-lg border-4 border-blue-600 bg-yellow-100">
+          <Image
+            src={cardImage(card.id)}
+            alt={cardName(card.id)}
+            width={30}
+            height={30}
+          />
+        </div>
         <p>{cardName(card.id)}</p>
         {canPlant && (isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />)}
       </div>
