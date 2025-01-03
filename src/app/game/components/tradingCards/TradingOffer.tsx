@@ -22,8 +22,9 @@ export default function TradingOffer({
   setTradeOffer: (tradeOffer: TradeOfferType) => void;
 }) {
   const isMarketCardsEmpty = tradeOffer.marketCards.length === 0;
+
   return (
-    <div className="border-secondary text-secondary col-span-5 rounded-2xl border-2 p-4 text-center">
+    <div className="col-span-5 rounded-2xl border-2 border-secondary p-4 text-center text-secondary">
       <div className="flex flex-col items-center justify-center gap-2">
         <TradeOfferMarketCards
           marketCards={marketCards}
@@ -45,6 +46,7 @@ export default function TradingOffer({
           setTradeOffer={setTradeOffer}
         />
       </div>
+
       <Button onClick={handleProposeTrade} disabled={isMarketCardsEmpty}>
         Propose Trade
       </Button>

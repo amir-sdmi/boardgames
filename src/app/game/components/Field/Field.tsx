@@ -28,11 +28,13 @@ export default function Field({
   return (
     <div className="flex flex-col items-center justify-center gap-5">
       <Info>Field {field.id + 1}</Info>
-      <div className="relative h-[242px] w-[152px]">
+      <div className="relative">
         <Image
           src={emptyField}
           alt="Empty Field"
           className="-z-10"
+          width={152}
+          height={242}
           style={{ objectFit: "cover", objectPosition: "center" }}
         />
         {field.manure && (
