@@ -51,7 +51,7 @@ export default function Player({
           <div className="relative">
             <Image
               src={thisPlayer.color}
-              alt="Green Player"
+              alt={thisPlayer.playerName}
               width={172}
               height={242}
               className="mt-2"

@@ -30,13 +30,13 @@ export default function Fields({ playerId, handleBuy }: FieldsProps) {
   }
 
   return (
-    <ul className="flex items-center">
+    <div className="flex items-center">
       {player.fields.map((field) => (
-        <li key={field.id}>
+        <div key={field.id}>
           <Field field={field} playerId={player.id} />
-        </li>
+        </div>
       ))}
-      <li>
+      <div>
         {player.fields.length < MAX_FIELDS && (
           <Button onClick={() => handleBuy(player, "field", PRICES.field)}>
             <div className="flex gap-1">
@@ -47,7 +47,7 @@ export default function Fields({ playerId, handleBuy }: FieldsProps) {
             </div>
           </Button>
         )}
-      </li>
-    </ul>
+      </div>
+    </div>
   );
 }

@@ -25,6 +25,7 @@ export default function PlayerGame({ userId }: { userId: string }) {
   const [isChangeOpen, setIsChangeOpen] = useState(false);
   const [tradeOffer, setTradeOffer] = useState(emptyTradeOffer);
   const [trader, setTrader] = useState<PlayerType | null>(null);
+
   const { roomId } = useParams<{ roomId: string }>();
   const { gameState } = useGameContext();
 
