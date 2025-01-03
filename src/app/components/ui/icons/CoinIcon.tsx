@@ -93,36 +93,36 @@ const CoinIcon = ({ width = 29, height = 22 }) => {
             d="M7.72722 7.12284L8.59704 7.67792C8.53491 7.92462 8.47279 8.10963 8.47279 8.1713C8.47279 8.23298 8.53491 8.29464 8.59704 8.35632H8.78344C8.82486 8.35632 8.88698 8.29465 8.96982 8.1713L9.90178 5.95105L10.7716 6.32109C10.5231 7.12285 10.3988 7.55456 10.0882 8.35632L9.90178 8.84971L9.65326 9.03473C9.50141 9.11699 9.32379 9.13903 9.15622 9.09641C8.89745 9.08681 8.64353 9.02381 8.41066 8.91139C8.05326 8.72678 7.75274 8.44976 7.54083 8.10962C7.48785 7.97709 7.47144 7.83293 7.49328 7.692C7.51512 7.55107 7.57443 7.41847 7.66509 7.30788V7.18452L7.72722 7.12284Z"
             fill="#FDD835"
             stroke="#C3996C"
-            stroke-width="0.1"
-            stroke-miterlimit="10"
+            strokeWidth="0.1"
+            strokeMiterlimit="10"
           />
           <path
             d="M10.1494 9.5291C10.8345 8.64781 11.4573 7.72048 12.0133 6.75378L13.0695 6.9388C13.2076 8.04497 13.4362 9.13814 13.753 10.2075L12.5725 10.0842C12.5211 9.88277 12.5002 9.67492 12.5104 9.46742L11.6405 9.28239L11.3299 9.83746L10.1494 9.5291ZM11.8269 8.72733L12.4482 8.85068C12.4572 8.37703 12.4365 7.90327 12.3861 7.43218C12.2375 7.87902 12.0504 8.31233 11.8269 8.72733Z"
             fill="#FDD835"
             stroke="#C3996C"
-            stroke-width="0.1"
-            stroke-miterlimit="10"
+            strokeWidth="0.1"
+            strokeMiterlimit="10"
           />
           <path
             d="M16.8595 9.96041C16.0009 10.1342 15.1262 10.2169 14.25 10.2071C14.25 8.97363 14.25 8.29524 14.3121 7.06177H15.2441C15.3062 8.04854 15.3062 8.54193 15.3683 9.52871L16.7352 9.34368L16.8595 9.96041Z"
             fill="#FDD835"
             stroke="#C3996C"
-            stroke-width="0.1"
-            stroke-miterlimit="10"
+            strokeWidth="0.1"
+            strokeMiterlimit="10"
           />
           <path
             d="M17.3575 9.89821L16.7983 6.81453L17.7303 6.62952C18.0409 7.80131 18.1652 8.35637 18.538 9.58984L17.3575 9.89821Z"
             fill="#FDD835"
             stroke="#C3996C"
-            stroke-width="0.1"
-            stroke-miterlimit="10"
+            strokeWidth="0.1"
+            strokeMiterlimit="10"
           />
           <path
             d="M19.0958 9.34356L18.9715 8.7885C19.2362 8.04448 19.4439 7.28166 19.5928 6.50657L18.4745 6.99997L18.2881 6.44491C18.9914 6.20367 19.6598 5.87191 20.2762 5.45813L20.5248 5.88983C20.4402 6.6809 20.2948 7.46439 20.0899 8.23344C20.5788 8.02655 21.0383 7.757 21.4567 7.43167L21.7674 7.98675C20.9443 8.55943 20.0452 9.01604 19.0958 9.34356Z"
             fill="#FDD835"
             stroke="#C3996C"
-            stroke-width="0.1"
-            stroke-miterlimit="10"
+            strokeWidth="0.1"
+            strokeMiterlimit="10"
           />
         </g>
       </g>
@@ -134,9 +134,9 @@ const CoinIcon = ({ width = 29, height = 22 }) => {
           width="29"
           height="22"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -170,8 +170,8 @@ const CoinIcon = ({ width = 29, height = 22 }) => {
           y2="10.1841"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.02" stop-color="white" stop-opacity="0" />
-          <stop offset="1" stop-color="#F9A825" />
+          <stop offset="0.02" stopColor="white" stopOpacity="0" />
+          <stop offset="1" stopColor="#F9A825" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_4313_67160"
@@ -181,8 +181,8 @@ const CoinIcon = ({ width = 29, height = 22 }) => {
           y2="7.80351"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.02" stop-color="white" stop-opacity="0" />
-          <stop offset="1" stop-color="#F9A825" />
+          <stop offset="0.02" stopColor="white" stopOpacity="0" />
+          <stop offset="1" stopColor="#F9A825" />
         </linearGradient>
         <radialGradient
           id="paint2_radial_4313_67160"
@@ -192,8 +192,8 @@ const CoinIcon = ({ width = 29, height = 22 }) => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(13.7723 5.39207) rotate(90) scale(6.97526 9.48635)"
         >
-          <stop offset="0.02" stop-color="white" stop-opacity="0" />
-          <stop offset="1" stop-color="#F9A825" />
+          <stop offset="0.02" stopColor="white" stopOpacity="0" />
+          <stop offset="1" stopColor="#F9A825" />
         </radialGradient>
       </defs>
     </svg>

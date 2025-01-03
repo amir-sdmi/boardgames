@@ -41,8 +41,8 @@ const JalizCoinFrontIcon = ({ width = 60, height = 60, fill = "none" }) => {
           y2="66.6617"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.02" stop-color="white" stop-opacity="0" />
-          <stop offset="1" stop-color="#F9A825" />
+          <stop offset="0.02" stopColor="white" stopOpacity="0" />
+          <stop offset="1" stopColor="#F9A825" />
         </linearGradient>
         <radialGradient
           id="paint1_radial_4309_44763"
@@ -52,8 +52,8 @@ const JalizCoinFrontIcon = ({ width = 60, height = 60, fill = "none" }) => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(29.3933 28.793) rotate(180) scale(60.4457 60.5428)"
         >
-          <stop offset="0.02" stop-color="white" stop-opacity="0" />
-          <stop offset="1" stop-color="#F9A825" />
+          <stop offset="0.02" stopColor="white" stopOpacity="0" />
+          <stop offset="1" stopColor="#F9A825" />
         </radialGradient>
         <radialGradient
           id="paint2_radial_4309_44763"
@@ -63,8 +63,8 @@ const JalizCoinFrontIcon = ({ width = 60, height = 60, fill = "none" }) => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(29.3933 28.7927) rotate(180) scale(60.4457 60.5428)"
         >
-          <stop offset="0.02" stop-color="white" stop-opacity="0" />
-          <stop offset="1" stop-color="#F9A825" />
+          <stop offset="0.02" stopColor="white" stopOpacity="0" />
+          <stop offset="1" stopColor="#F9A825" />
         </radialGradient>
       </defs>
     </svg>
