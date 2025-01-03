@@ -31,8 +31,8 @@ export default function Hand({
     }
   };
   return (
-    <div className="flex h-[533px] w-[466px] flex-col gap-2 rounded-2xl border-2 border-blue-700 px-6 pb-6 pt-5">
-      <h2 className="text-lg font-bold text-blue-700">Your Hand</h2>
+    <div className="border-secondary col-span-5 flex h-[533px] w-[466px] flex-col gap-2 rounded-2xl border-2 px-6 pb-6 pt-5">
+      <h2 className="text-secondary text-lg font-bold">Your Hand</h2>
       <ul className="flex h-full flex-col flex-wrap gap-2">
         {player.hand.map((card, handIndex) => (
           <li key={handIndex}>

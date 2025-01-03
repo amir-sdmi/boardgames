@@ -13,10 +13,10 @@ export default function OfferTile({
   traderHand: CardsType[];
 }) {
   const { roomId } = useParams<{ roomId: string }>();
-
-  if (!deal.newTradeOffer) {
+  if (!deal || !deal.newTradeOffer) {
     return <div>no deal</div>;
   }
+
   //market to dealer, traderHand to dealer, dealerHand to trader
   const handleAcceptDeal = () => {
     acceptTradeDealFromDealerTile(roomId, deal.playerId);
@@ -41,7 +41,7 @@ export default function OfferTile({
       }
       <h3>Receive</h3>
       {
-        //since giveen handcards are received cards for trader
+        //since given handcards are received cards for trader
         deal.newTradeOffer.give.handCards.map((card, index) => (
           <li key={index}>
             {cardName(card.id)} x {card.quantity}

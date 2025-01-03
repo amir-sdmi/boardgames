@@ -1,7 +1,7 @@
 import Button from "@/app/components/ui/Button";
 import { CardsType, PlayerDealType, PlayerType } from "@/types/gameTypes";
 
-import OfferTile from "./OfferTile";
+import OfferTile from "../tradingCards/OfferTile";
 import { acceptBetweenAcceptedPlayers } from "../../core/actions/market/acceptTradeDealAction";
 import { useParams } from "next/navigation";
 

@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body>
+        <body className="font-custom select-none">
           <div className="flex min-h-screen justify-center overflow-hidden">
             <main className="flex flex-col items-center justify-center gap-10">
               {children}

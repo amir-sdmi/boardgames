@@ -10,7 +10,6 @@ import Image from "next/image";
 const MAX_FIELDS = 3 as const;
 
 type FieldsProps = {
-  roomId: string;
   playerId: number;
   handleBuy: (
     player: PlayerType,

@@ -10,7 +10,7 @@ import potato from "@/app/assets/crops/potato.svg";
 import pumpkin from "@/app/assets/crops/pumpkin.svg";
 import tomato from "@/app/assets/crops/tomato.svg";
 import turnip from "@/app/assets/crops/turnip.svg";
-import watermelon from "@/app/assets/crops/watermelon.svg";
+import melon from "@/app/assets/crops/melon.svg";
 
 export const cropsSvg = {
   beans,
@@ -25,5 +25,5 @@ export const cropsSvg = {
   pumpkin,
   tomato,
   turnip,
-  watermelon,
+  melon,
 };

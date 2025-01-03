@@ -9,7 +9,7 @@ export const LinkButton = ({
 }) => {
   return (
     <Link
-      className="w-80 rounded-lg bg-amber-500 px-1 py-3 text-center text-lg font-bold text-black"
+      className="bg-primary-500 w-80 rounded-lg px-1 py-3 text-center text-lg font-bold text-black"
       href={href}
     >
       {children}

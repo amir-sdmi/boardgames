@@ -43,7 +43,7 @@ export default function Player({
   };
   return (
     <>
-      <div className="flex items-stretch justify-center">
+      <div className="border-secondary col-span-7 flex justify-center rounded-2xl border-2 p-5">
         <div className="flex flex-col items-center justify-between">
           <div className="flex text-black">
             Your Farm : {thisPlayer.money} <CoinIcon />
@@ -55,35 +55,26 @@ export default function Player({
             height={242}
             className="mt-4"
           />
-          <>
-            {thisPlayer.id === currentPlayer.id && (
-              <div className="border border-green-400">
+
+          {thisPlayer.id === currentPlayer.id && (
+            <div className="w-36">
+              {currentPlayer.turnStatus === "planting" && (
                 <Button
                   onClick={handleShowMarket}
                   disabled={currentPlayer.turnStatus !== "planting"}
                 >
                   Start Marketting
                 </Button>
-                <Button
-                  onClick={() => handleAddCardsToHand(thisPlayer.id)}
-                  // disabled={
-                  //   //TODO : this is not totally correct, later should change it
-                  //   (currentPlayer.marketingCards.length !== 0 &&
-                  //     currentPlayer.turnStatus === "marketing") ||
-                  //   currentPlayer.turnStatus === "planting"
-                  // }
-                >
+              )}
+              {currentPlayer.turnStatus === "marketing" && (
+                <Button onClick={() => handleAddCardsToHand(thisPlayer.id)}>
                   Add Cards To Hand
                 </Button>
-              </div>
-            )}
-          </>
+              )}
+            </div>
+          )}
         </div>
-        <Fields
-          roomId={roomId}
-          playerId={thisPlayer.id}
-          handleBuy={handleBuy}
-        />
+        <Fields playerId={thisPlayer.id} handleBuy={handleBuy} />
       </div>
     </>
   );

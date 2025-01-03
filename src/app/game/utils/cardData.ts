@@ -32,10 +32,10 @@ export const cardData: CardInformationType[] = [
   },
   {
     id: 4,
-    name: "watermelon",
+    name: "melon",
     totalQuantity: 10,
     value: [3, 4, 5, 7],
-    svg: cropsSvg.watermelon,
+    svg: cropsSvg.melon,
   },
   {
     id: 5,

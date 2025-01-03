@@ -30,7 +30,9 @@ export function cardName(id: number | null) {
   const foundCard = cardData.find((card) => card.id === id);
   return foundCard ? foundCard.name : "Unknown card";
 }
-export function cardValue(id: number | null) {
+export function cardValue(
+  id: number | null,
+): CardInformationType["value"] | null {
   if (id === null) return null;
   const foundCard = cardData.find((card) => card.id === id);
   return foundCard ? foundCard.value : null;

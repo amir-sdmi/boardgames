@@ -6,7 +6,6 @@ import { FieldType, PlayerType } from "@/types/gameTypes";
 import { harvestAction } from "../../core/actions/harvest/harvestAction";
 import { useParams } from "next/navigation";
 import manurePNG from "../../../assets/tokens/manure.png";
-import { cardName } from "../../utils/cardsUtils";
 import CropsCard from "../ui/cards/CropsCard";
 import NumberBadge from "@/app/components/ui/NumberBadge";
 import { findThePrice } from "../../core/actions/harvest/findThePrice";
@@ -32,10 +31,8 @@ export default function Field({
         <Image
           src={emptyField}
           alt="Empty Field"
-          layout="fit"
-          objectFit="cover"
-          objectPosition="center"
           className="-z-10"
+          style={{ objectFit: "cover", objectPosition: "center" }}
         />
         {field.manure && (
           <Image

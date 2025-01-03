@@ -4,6 +4,7 @@ import Image from "next/image";
 import ChevronDownIcon from "@/app/components/ui/icons/ChevronDownIcon";
 import ChevronUpIcon from "@/app/components/ui/icons/ChevronUpIcon";
 import Button from "@/app/components/ui/Button";
+import CardAvatar from "../ui/cards/CardAvatar";
 
 interface CardInHandProps {
   card: CardsType;
@@ -35,28 +36,23 @@ export default function CardToPlant({
   };
   return (
     <div
-      className="relative flex w-[177px] flex-col justify-between gap-3 rounded-2xl border-2 border-blue-600 bg-white p-2 font-semibold text-blue-600"
+      className="border-secondary text-secondary relative flex w-[177px] flex-col justify-between gap-3 rounded-2xl border-2 bg-white p-2 font-semibold"
       onClick={handleToggle}
     >
-      <div className="absolute -right-2 -top-2 h-6 w-6 rounded-full bg-red-700 text-center text-sm font-semibold text-white">
+      <div className="bg-badge absolute -right-2 -top-2 h-6 w-6 rounded-full text-center text-sm font-semibold text-white">
         {card.quantity}
       </div>
       <div className="relative grid grid-cols-[30%_1fr_10%] items-center justify-between gap-4">
-        <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-lg border-4 border-blue-600 bg-yellow-100">
-          <Image
-            src={cardImage(card.id)}
-            alt={cardName(card.id)}
-            width={30}
-            height={30}
-          />
-        </div>
+        <CardAvatar cardId={card.id} />
         <p>{cardName(card.id)}</p>
         {canPlant && (isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />)}
       </div>
       {isOpen && canPlant && (
         <div className="flex justify-between gap-1 overflow-hidden">
           <Button
-            onClick={() => handlePlantFromHand(0, card)}
+            onClick={() => {
+              handlePlantFromHand(0, card);
+            }}
             disabled={
               fields[0].crops !== null && card.id !== fields[0].crops.id
             }

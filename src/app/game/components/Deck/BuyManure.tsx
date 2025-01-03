@@ -37,7 +37,7 @@ export default function BuyManure({
   };
   return (
     <div
-      className="relative flex w-[177px] flex-col justify-between gap-3 rounded-2xl border-2 border-blue-600 bg-white p-2 font-semibold text-blue-600"
+      className="border-secondary text-secondary relative flex w-[177px] flex-col justify-between gap-3 rounded-2xl border-2 bg-white p-2 font-semibold"
       onClick={handleOpenManure}
     >
       <NumberBadge>{availableManures}</NumberBadge>

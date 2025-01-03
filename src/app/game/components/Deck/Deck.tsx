@@ -7,13 +7,13 @@ import PriceInfo from "./PriceInfo";
 import DecCard from "../ui/cards/DecCard";
 import CropsCard from "../ui/cards/CropsCard";
 import Button from "@/app/components/ui/Button";
-import Field from "../Field/Field";
 import { plantFromMarketAction } from "../../core/actions/plantFromMarket/plantFromMarketAction";
 import { useParams } from "next/navigation";
 
 export default function Deck({
   thisPlayer,
   handleBuy,
+  setIsTradeOpen,
 }: {
   thisPlayer: PlayerType;
   handleBuy: (
@@ -22,6 +22,7 @@ export default function Deck({
     price: number,
     fieldId?: number,
   ) => void;
+  setIsTradeOpen: (value: boolean) => void;
 }) {
   const { roomId } = useParams<{ roomId: string }>();
 
@@ -29,7 +30,7 @@ export default function Deck({
   if (!gameState) {
     return <div>Loading game state ...</div>;
   }
-  const { availableTractors, deck, currentPlayer, players } = gameState;
+  const { availableTractors, deck, currentPlayer } = gameState;
   const handlePlantFromMarket = async (
     fieldIndex: number,
     card: CardsType,
@@ -47,11 +48,13 @@ export default function Deck({
       console.error("Error planting from market:", error);
     }
   };
-
+  const handleOpenTrade = () => {
+    setIsTradeOpen(true);
+  };
   return (
-    <div className="flex h-[379px] w-[662px] flex-col justify-between rounded-2xl border-2 border-blue-700 p-5">
+    <div className="border-secondary col-span-7 flex h-[379px] w-[662px] flex-col justify-between rounded-2xl border-2 p-5">
       <div className="flex justify-between">
-        <p className="text-lg font-bold text-blue-700">Deck</p>
+        <p className="text-secondary text-lg font-bold">Deck</p>
         <PriceInfo />
       </div>
 
@@ -67,8 +70,8 @@ export default function Deck({
       <div className="flex justify-between">
         <DecCard deckLength={deck.length} />
         {currentPlayer.marketingCards.map((card, index) => (
-          <div>
-            <CropsCard key={index} cardId={card.id} />
+          <div key={index} className="flex flex-col gap-4">
+            <CropsCard cardId={card.id} />
             {currentPlayer.id === thisPlayer.id && (
               <div className="flex justify-between gap-1">
                 <Button onClick={() => handlePlantFromMarket(0, card, index)}>
@@ -86,7 +89,12 @@ export default function Deck({
             )}
           </div>
         ))}
-        <DecCard type="discard" />
+        <div className="flex flex-col gap-4">
+          <DecCard type="discard" />
+          {currentPlayer.marketingCards.length !== 0 && (
+            <Button onClick={handleOpenTrade}>Trade ! </Button>
+          )}
+        </div>
       </div>
     </div>
   );
