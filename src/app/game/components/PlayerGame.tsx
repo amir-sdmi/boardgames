@@ -1,13 +1,13 @@
 import { useGameContext } from "@/contexts/GameContext";
 import Player from "./Player";
-import { BuyType, CardsType, PlayerType } from "@/types/gameTypes";
+import { BuyType, PlayerType } from "@/types/gameTypes";
 import { buyAction } from "../core/actions/buy/buyAction";
 import { useParams } from "next/navigation";
 import Deck from "./Deck/Deck";
 import Hand from "./Hand/Hand";
-import Button from "@/app/components/ui/Button";
-import { cardName } from "../utils/cardsUtils";
-import { plantFromTradeAction } from "../core/actions/plantFromTrade/plantFromTradeAction";
+// import Button from "@/app/components/ui/Button";
+// import { cardName } from "../utils/cardsUtils";
+// import { plantFromTradeAction } from "../core/actions/plantFromTrade/plantFromTradeAction";
 import { useEffect, useState } from "react";
 import Deals from "./tradingCards/Deals";
 
@@ -18,6 +18,7 @@ import {
   dealerTradeOfferAction,
   tradeOfferAction,
 } from "../core/actions/market/tradeOfferAction";
+import OtherPlayers from "./OtherPlayers";
 
 export default function PlayerGame({ userId }: { userId: string }) {
   const [isTradeOpen, setIsTradeOpen] = useState(false);
@@ -77,13 +78,13 @@ export default function PlayerGame({ userId }: { userId: string }) {
       console.error("Error creating trade offer", error);
     }
   };
-  const handlePlantFromTrade = async (fieldIndex: number, card: CardsType) => {
-    try {
-      await plantFromTradeAction(roomId, thisPlayer.id, fieldIndex, card.id);
-    } catch (error) {
-      console.error("Error planting from trade:", error);
-    }
-  };
+  // const handlePlantFromTrade = async (fieldIndex: number, card: CardsType) => {
+  //   try {
+  //     await plantFromTradeAction(roomId, thisPlayer.id, fieldIndex, card.id);
+  //   } catch (error) {
+  //     console.error("Error planting from trade:", error);
+  //   }
+  // };
 
   return (
     <div className="grid grid-cols-12 gap-2">
@@ -164,7 +165,8 @@ export default function PlayerGame({ userId }: { userId: string }) {
       )}
 
       <Player thisPlayer={thisPlayer} handleBuy={handleBuy} />
-      <ul className="border-4 border-yellow-500">
+      <OtherPlayers thisPlayerId={thisPlayer.id} />
+      {/* <ul className="border-4 border-yellow-500">
         {thisPlayer.acceptedTrade?.map((card) => (
           <li key={card.id}>
             {cardName(card.id)} x {card.quantity}
@@ -179,7 +181,7 @@ export default function PlayerGame({ userId }: { userId: string }) {
             </div>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 }

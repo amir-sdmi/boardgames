@@ -52,9 +52,9 @@ export default function Deck({
     setIsTradeOpen(true);
   };
   return (
-    <div className="border-secondary col-span-7 flex h-[379px] w-[662px] flex-col justify-between rounded-2xl border-2 p-5">
+    <div className="col-span-7 flex h-[379px] flex-col justify-between rounded-2xl border-2 border-secondary p-5">
       <div className="flex justify-between">
-        <p className="text-secondary text-lg font-bold">Deck</p>
+        <p className="text-lg font-bold text-secondary">Deck</p>
         <PriceInfo />
       </div>
 

@@ -9,6 +9,7 @@ import manurePNG from "../../../assets/tokens/manure.png";
 import CropsCard from "../ui/cards/CropsCard";
 import NumberBadge from "@/app/components/ui/NumberBadge";
 import { findThePrice } from "../../core/actions/harvest/findThePrice";
+import CoinIcon from "@/app/components/ui/icons/CoinIcon";
 export default function Field({
   field,
   playerId,
@@ -58,7 +59,10 @@ export default function Field({
         onClick={() => handleHarvest(field.id, playerId)}
         disabled={!field.crops}
       >
-        Harvest {field.crops ? findThePrice(field.crops, field.manure) : 0}
+        <div className="flex justify-center gap-1">
+          Harvest {field.crops ? findThePrice(field.crops, field.manure) : 0}
+          <CoinIcon width={18} height={18} />
+        </div>
       </Button>
     </div>
   );

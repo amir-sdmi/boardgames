@@ -1,7 +1,7 @@
 import { CardsType, PlayerType } from "@/types/gameTypes";
 
 export const generateAddRoomLink = (roomId: string) => {
-  return `${process.env.NEXT_PUBLIC_APP_URL}/lobby/${roomId}`;
+  return `${window.location.origin}/lobby/${roomId}`;
 };
 
 export function shuffleArray<T>(array: T[]): T[] {

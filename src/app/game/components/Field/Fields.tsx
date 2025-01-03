@@ -4,8 +4,8 @@ import { BuyType, PlayerType } from "@/types/gameTypes";
 import { PRICES } from "@/config/constants";
 import Field from "./Field";
 import { findPlayer } from "../../utils/utils";
-import coin3 from "@/app/assets/coin3.png";
-import Image from "next/image";
+
+import CoinIcon from "@/app/components/ui/icons/CoinIcon";
 
 const MAX_FIELDS = 3 as const;
 
@@ -39,10 +39,12 @@ export default function Fields({ playerId, handleBuy }: FieldsProps) {
       <li>
         {player.fields.length < MAX_FIELDS && (
           <Button onClick={() => handleBuy(player, "field", PRICES.field)}>
-            Buy Field: 3
-            <span>
-              <Image src={coin3} alt="coins" width={12} height={8} />
-            </span>
+            <div className="flex gap-1">
+              + Field: 3
+              <span>
+                <CoinIcon width={18} height={18} />
+              </span>
+            </div>
           </Button>
         )}
       </li>

@@ -13,6 +13,7 @@ type PlayerType = {
   otherPlayersHats: PlayerType["id"][];
   hasBoughtCards: boolean;
   acceptedTrade: CardsType[] | null;
+  color: StaticImageData;
 };
 
 type FieldType = {
