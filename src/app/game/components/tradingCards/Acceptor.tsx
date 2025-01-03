@@ -1,26 +1,13 @@
-import {
-  CurrentPlayerType,
-  PlayerType,
-  TradeOfferType,
-} from "@/types/gameTypes";
-import { cardName } from "../../utils/cardsUtils";
+import { CurrentPlayerType, PlayerType } from "@/types/gameTypes";
 import Button from "@/app/components/ui/Button";
-import { useState } from "react";
-import {
-  acceptOrRejectTradeAction,
-  dealerTradeOfferAction,
-} from "../../core/actions/market/tradeOfferAction";
+import { acceptOrRejectTradeAction } from "../../core/actions/market/tradeOfferAction";
 import { useParams } from "next/navigation";
 
-import {
-  emptyTradeOffer,
-  playerHasAllTheRequestedCards,
-} from "../../utils/tradeUtils";
+import { playerHasAllTheRequestedCards } from "../../utils/tradeUtils";
 import CardAvatar from "../ui/cards/CardAvatar";
 import NumberBadge from "@/app/components/ui/NumberBadge";
 import AcceptButton from "@/app/components/ui/AcceptButton";
 import RejectButton from "@/app/components/ui/RejectButton";
-import TradingOffer from "./TradingOffer";
 
 export default function Acceptor({
   currentPlayer,
@@ -31,12 +18,8 @@ export default function Acceptor({
   thisPlayer: PlayerType;
   setIsChangeOpen: (value: boolean) => void;
 }) {
-  const [dealer, setDealer] = useState<PlayerType>(thisPlayer);
-  const [dealerTradeOffer, setDealerTradeOffer] =
-    useState<TradeOfferType>(emptyTradeOffer);
   const { roomId } = useParams<{ roomId: string }>();
 
-  const [showChange, setShowChange] = useState(false);
   if (!currentPlayer.tradeProposal) {
     return <div>No trade proposal available.</div>;
   }
@@ -46,19 +29,9 @@ export default function Acceptor({
     acceptOrRejectTradeAction(roomId, thisPlayer.id, acceptedOrNot);
   };
   const handleCreateOffer = () => {
-    setShowChange(true);
+    setIsChangeOpen(true);
   };
 
-  const handleDealerTradeOffer = async () => {
-    try {
-      await dealerTradeOfferAction(roomId, dealerTradeOffer, thisPlayer.id);
-      setDealerTradeOffer(emptyTradeOffer);
-      setDealer(thisPlayer);
-      setShowChange(false);
-    } catch (error) {
-      console.error("Error creating trade offer", error);
-    }
-  };
   return (
     <div className="col-span-7 h-[379px]">
       <div className="border-secondary text-secondary flex w-[172px] flex-col items-center justify-between rounded-2xl border-2 bg-white p-2">
@@ -112,12 +85,10 @@ export default function Acceptor({
             Reject
           </RejectButton>
           {currentPlayer.id !== thisPlayer.id && (
-            <Button onClick={handleCreateOffer} disabled={showChange}>
-              Change
-            </Button>
+            <Button onClick={handleCreateOffer}>Change</Button>
           )}
         </div>
-        {showChange && (
+        {/* {showChange && (
           <TradingOffer
             marketCards={currentPlayer.marketingCards}
             playerHand={thisPlayer.hand}
@@ -127,7 +98,7 @@ export default function Acceptor({
             tradeOffer={dealerTradeOffer}
             handleProposeTrade={handleDealerTradeOffer}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

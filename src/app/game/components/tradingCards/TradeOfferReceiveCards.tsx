@@ -6,7 +6,7 @@ import Image from "next/image";
 import ChevronUpIcon from "@/app/components/ui/icons/ChevronUpIcon";
 import ChevronDownIcon from "@/app/components/ui/icons/ChevronDownIcon";
 import cardsPNG from "@/app/assets/tokens/cards.png";
-import { cardImage, cardName } from "../../utils/cardsUtils";
+import { cardName } from "../../utils/cardsUtils";
 import PlusIcon from "@/app/components/ui/icons/PlusIcon";
 import TrashIcon from "@/app/components/ui/icons/TrashIcon";
 import CardAvatar from "../ui/cards/CardAvatar";

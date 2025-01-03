@@ -1,6 +1,5 @@
 import { CardsType, FieldType } from "@/types/gameTypes";
-import { cardImage, cardName } from "../../utils/cardsUtils";
-import Image from "next/image";
+import { cardName } from "../../utils/cardsUtils";
 import ChevronDownIcon from "@/app/components/ui/icons/ChevronDownIcon";
 import ChevronUpIcon from "@/app/components/ui/icons/ChevronUpIcon";
 import Button from "@/app/components/ui/Button";

@@ -1,5 +1,5 @@
 import Button from "@/app/components/ui/Button";
-import { cardImage, cardName } from "../../utils/cardsUtils";
+import { cardName } from "../../utils/cardsUtils";
 import { CardsType, PlayerType, TradeOfferType } from "@/types/gameTypes";
 import Image from "next/image";
 import cardsPNG from "@/app/assets/tokens/cards.png";

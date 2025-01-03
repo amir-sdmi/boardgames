@@ -1,6 +1,5 @@
-import { cardImage, cardName } from "../../utils/cardsUtils";
+import { cardName } from "../../utils/cardsUtils";
 import { CardsType, TradeOfferType } from "@/types/gameTypes";
-import Image from "next/image";
 import { useState } from "react";
 import CardAvatar from "../ui/cards/CardAvatar";
 export default function TradeOfferMarketCards({
