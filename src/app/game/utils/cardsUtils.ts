@@ -20,13 +20,23 @@ export function fromDeckToHand(
 
   return updatedHand;
 }
-
+export function cardImage(id: number | null) {
+  if (id === null) return "";
+  const foundCard = cardData.find((card) => card.id === id);
+  return foundCard ? foundCard.svg : "";
+}
 export function cardName(id: number | null) {
   if (id === null) return "No card";
   const foundCard = cardData.find((card) => card.id === id);
   return foundCard ? foundCard.name : "Unknown card";
 }
-
+export function cardValue(
+  id: number | null,
+): CardInformationType["value"] | null {
+  if (id === null) return null;
+  const foundCard = cardData.find((card) => card.id === id);
+  return foundCard ? foundCard.value : null;
+}
 export function showHandCardsSeperately(hand: CardsType[]) {
   const seperatedHand: CardsType[] = [];
 

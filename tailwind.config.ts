@@ -9,8 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: "#FFAB00",
+        secondary: "#0891B2",
+        badge: "#DD0000",
+        success: "#36B37E",
+      },
+      fontFamily: {
+        custom: ["Swiss721"],
       },
     },
   },

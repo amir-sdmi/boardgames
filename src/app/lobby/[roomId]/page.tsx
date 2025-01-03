@@ -15,6 +15,9 @@ import { useRouter } from "next/navigation";
 import { PLAYER_LIMITS } from "@/config/constants";
 import Button from "@/app/components/ui/Button";
 import CopyIcon from "@/app/components/ui/icons/CopyIcon";
+import Image from "next/image";
+import Logo from "@/app/components/ui/Logo";
+import homepageBG from "../../../../public/homepageBG.png";
 
 export default function RoomPage() {
   const { roomId } = useParams<{ roomId: string }>();
@@ -101,6 +104,18 @@ export default function RoomPage() {
 
   return (
     <div className="flex min-w-[500px] flex-col items-center justify-center gap-5">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[rgba(13,13,13,0.7)] via-[rgba(25,25,25,0.7)] to-[rgba(115,115,115,0.7)]"></div>
+
+      <Image
+        src={homepageBG}
+        alt="background"
+        layout="fill"
+        objectFit="cover"
+        objectPosition="center"
+        className="-z-20"
+      />
+      <Logo />
+
       <div className="flex flex-col items-center justify-center gap-2">
         <p className="text-lg font-semibold">
           Share this link with your friends:
