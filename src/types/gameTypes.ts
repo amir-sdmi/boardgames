@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 type PlayerType = {
   id: number;
   userId: string;
@@ -11,6 +13,7 @@ type PlayerType = {
   otherPlayersHats: PlayerType["id"][];
   hasBoughtCards: boolean;
   acceptedTrade: CardsType[] | null;
+  color: StaticImageData;
 };
 
 type FieldType = {
@@ -33,6 +36,7 @@ type CardInformationType = {
     4 | 5 | 6 | 7 | 8,
     7 | 8 | 9 | 10 | null,
   ];
+  svg: StaticImageData;
 };
 type CardsType = {
   id: number;

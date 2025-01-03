@@ -26,8 +26,9 @@ export async function addCardsToHandAction(roomId: string, playerId: number) {
   // Draw cards from deck
   for (let i = 0; i < endTurnReceivingCardsCount; i++) {
     const cardId = newDeck.pop() as CardInformationType["id"];
-    if (!cardId) {
-      throw new Error("Insufficient cards in the deck to draw.");
+    console.log("cardId", cardId);
+    if (cardId === undefined) {
+      throw new Error("couldn't draw card from deck");
     }
     newHand = fromDeckToHand(cardId, newHand);
   }
