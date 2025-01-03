@@ -25,8 +25,12 @@ export default function Acceptor({
   }
   const { give, receive, marketCards } =
     currentPlayer.tradeProposal.proposerTradeOffer;
-  const handleAcceptOrRejectTrade = (acceptedOrNot: boolean) => {
-    acceptOrRejectTradeAction(roomId, thisPlayer.id, acceptedOrNot);
+  const handleAcceptOrRejectTrade = async (acceptedOrNot: boolean) => {
+    try {
+      await acceptOrRejectTradeAction(roomId, thisPlayer.id, acceptedOrNot);
+    } catch (error) {
+      console.error("Error accepting or rejecting trade:", error);
+    }
   };
   const handleCreateOffer = () => {
     setIsChangeOpen(true);

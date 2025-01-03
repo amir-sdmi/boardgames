@@ -5,10 +5,11 @@
 @font-face {
   font-family: "Swiss721";
   src:
-    url("../../public/fonts/Swis721\ BlkCn\ BT\ Black.woff") format("woff"),
-    url("../../public/fonts/Swis721\ BlkCn\ BT\ Black.woff2") format("woff2");
+    url("../../public/fonts/Swis721%20BlkCn%20BT%20Black.woff") format("woff"),
+    url("../../public/fonts/Swis721%20BlkCn%20BT%20Black.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 :root {
   --background: #ffffff;
@@ -17,8 +18,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffeccf;
+    --foreground: white;
   }
 }
 
