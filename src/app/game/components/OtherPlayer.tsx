@@ -9,8 +9,8 @@ import tractorPNG from "@/app/assets/tokens/tractor.png";
 export default function OtherPlayer({ player }: { player: PlayerType }) {
   return (
     <div className="col-span-1 flex flex-col gap-2 rounded-2xl border-2 border-secondary p-5">
-      <h3 className="text-secondary">{player.playerName}</h3>
-      <div className="flex items-center justify-center">
+      <h3 className="text-secondary">{player.playerName} </h3>
+      <div className="flex">
         <div className="relative">
           <Image
             src={player.color}

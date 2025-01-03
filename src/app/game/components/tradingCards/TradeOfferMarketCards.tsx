@@ -47,10 +47,10 @@ export default function TradeOfferMarketCards({
   return (
     <div className="flex flex-col gap-2">
       <h3 className="text-secondary">Market Cards</h3>
-      <ul className="border-secondary flex flex-col gap-2 overflow-hidden rounded-2xl border-2 p-4">
+      <ul className="flex flex-col gap-2 overflow-hidden rounded-2xl border-2 border-secondary p-4">
         {marketCards.map((card, index) => (
           <li
-            className="border-secondary text-secondary flex h-14 w-32 items-center justify-between rounded-2xl border-2 bg-white p-2"
+            className="flex h-14 w-32 items-center justify-between rounded-2xl border-2 border-secondary bg-white p-2 text-secondary"
             key={index}
             onClick={() => handleSelectFromMarket(card.id, index)}
           >
@@ -58,7 +58,7 @@ export default function TradeOfferMarketCards({
 
             <p>
               {cardName(card.id)}
-              <span>{selectFromMarket[index] ? "selectet" : ""}</span>
+              <span>{selectFromMarket[index] ? "✔️" : ""}</span>
             </p>
           </li>
         ))}
