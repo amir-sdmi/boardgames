@@ -8,7 +8,8 @@ import {
   GameType,
   PlayerType,
 } from "@/types/gameTypes";
-import { fieldImages } from "../utils/fieldImages";
+import { fieldImages, FIXCOLORS } from "../utils/colors";
+
 const createNewPlayer = (
   id: number,
   playerName: string,
@@ -30,7 +31,8 @@ const createNewPlayer = (
     otherPlayersHats: [],
     hasBoughtCards: false,
     acceptedTrade: null,
-    color: fieldImages[id],
+    fieldImage: fieldImages[id],
+    color: FIXCOLORS[id],
   };
 };
 
