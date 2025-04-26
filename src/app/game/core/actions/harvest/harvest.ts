@@ -9,7 +9,6 @@ export const harvest = (
   const newField = JSON.parse(JSON.stringify(field));
 
   if (newField.crops === null) {
-    console.log("no crops to harvest");
     return { field, harvestMoney: 0, discardPile };
   } else {
     const harvestMoney = findThePrice(newField.crops, newField.manure) ?? 0;
