@@ -20,6 +20,7 @@ import Logo from "@/app/components/ui/Logo";
 import homepageBG from "../../../../public/homepageBG.png";
 import { FIXCOLORS } from "@/app/game/utils/colors";
 
+
 export default function RoomPage() {
   const { roomId } = useParams<{ roomId: string }>();
   const { user } = useUser();

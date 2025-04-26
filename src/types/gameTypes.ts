@@ -15,6 +15,7 @@ type PlayerType = {
   acceptedTrade: CardsType[] | null;
   fieldImage: StaticImageData;
   color: string;
+
 };
 
 type FieldType = {

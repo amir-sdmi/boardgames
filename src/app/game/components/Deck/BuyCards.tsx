@@ -28,6 +28,7 @@ export default function BuyCards({
       >
         Buy
       </Button>
+
     </div>
   );
 }

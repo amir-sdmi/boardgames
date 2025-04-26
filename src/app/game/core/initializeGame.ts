@@ -10,6 +10,7 @@ import {
 } from "@/types/gameTypes";
 import { fieldImages, FIXCOLORS } from "../utils/colors";
 
+
 const createNewPlayer = (
   id: number,
   playerName: string,
@@ -33,6 +34,7 @@ const createNewPlayer = (
     acceptedTrade: null,
     fieldImage: fieldImages[id],
     color: FIXCOLORS[id],
+
   };
 };
 
