@@ -13,7 +13,7 @@ export default function OtherPlayer({ player }: { player: PlayerType }) {
       <div className="flex">
         <div className="relative">
           <Image
-            src={player.color}
+            src={player.fieldImage}
             alt="Green Player"
             width={172}
             height={242}
