@@ -18,6 +18,8 @@ import CopyIcon from "@/app/components/ui/icons/CopyIcon";
 import Image from "next/image";
 import Logo from "@/app/components/ui/Logo";
 import homepageBG from "../../../../public/homepageBG.png";
+import { FIXCOLORS } from "@/app/game/utils/colors";
+
 
 export default function RoomPage() {
   const { roomId } = useParams<{ roomId: string }>();
@@ -146,7 +148,7 @@ export default function RoomPage() {
               </div>
               <div
                 className="h-6 w-6 rounded-full"
-                style={{ backgroundColor: "#DD0000" }}
+                style={{ backgroundColor: FIXCOLORS[index] }}
               />
               {
                 //only host can kick other players
