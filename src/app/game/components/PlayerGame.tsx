@@ -32,6 +32,7 @@ export default function PlayerGame({ userId }: { userId: string }) {
   const thisPlayer = gameState?.players.find(
     (player) => player.userId === userId,
   );
+  console.log("thisPlayer", thisPlayer);
   useEffect(() => {
     // Set trader to thisPlayer once it's available
     if (thisPlayer) {

@@ -42,58 +42,56 @@ export default function Player({
     }
   };
   return (
-    <>
-      <div className="col-span-7 flex justify-center rounded-2xl border-2 border-secondary p-5">
-        <div className="flex flex-col items-center justify-between">
-          <div className="flex gap-1 text-xl text-secondary">
-            Your Farm : {thisPlayer.money} <CoinIcon />
-          </div>
-          <div className="relative">
-            <Image
-              src={thisPlayer.color}
-              alt={thisPlayer.playerName}
-              width={172}
-              height={242}
-              className="mt-2"
-            />
-            {thisPlayer.tractor && (
-              <div>
-                <Image
-                  src={tractorPNG}
-                  alt="Tractor"
-                  className="absolute left-1/3 top-16"
-                  width={75}
-                  height={75}
-                />
-              </div>
-            )}
-          </div>
-
-          {thisPlayer.id === currentPlayer.id && (
-            <div className="w-36">
-              {currentPlayer.turnStatus === "planting" && (
-                <Button
-                  onClick={handleShowMarket}
-                  disabled={currentPlayer.turnStatus !== "planting"}
-                >
-                  Start Marketting
-                </Button>
-              )}
-              {currentPlayer.turnStatus === "marketing" && (
-                <Button onClick={() => handleAddCardsToHand(thisPlayer.id)}>
-                  Add Cards To Hand
-                </Button>
-              )}
+    <div className="col-span-7 flex justify-center rounded-2xl border-2 border-secondary p-5">
+      <div className="flex flex-col items-center justify-between">
+        <div className="flex gap-1 text-xl text-secondary">
+          Your Farm : {thisPlayer.money} <CoinIcon />
+        </div>
+        <div className="relative">
+          <Image
+            src={thisPlayer.fieldImage}
+            alt={thisPlayer.playerName}
+            width={172}
+            height={242}
+            className="mt-2"
+          />
+          {thisPlayer.tractor && (
+            <div>
+              <Image
+                src={tractorPNG}
+                alt="Tractor"
+                className="absolute left-1/3 top-16"
+                width={75}
+                height={75}
+              />
             </div>
           )}
-          {thisPlayer.id !== currentPlayer.id && (
-            <Button onClick={() => {}} disabled={true}>
-              Wait ...
-            </Button>
-          )}
         </div>
-        <Fields playerId={thisPlayer.id} handleBuy={handleBuy} />
+
+        {thisPlayer.id === currentPlayer.id && (
+          <div className="w-36">
+            {currentPlayer.turnStatus === "planting" && (
+              <Button
+                onClick={handleShowMarket}
+                disabled={currentPlayer.turnStatus !== "planting"}
+              >
+                Start Marketting
+              </Button>
+            )}
+            {currentPlayer.turnStatus === "marketing" && (
+              <Button onClick={() => handleAddCardsToHand(thisPlayer.id)}>
+                Add Cards To Hand
+              </Button>
+            )}
+          </div>
+        )}
+        {thisPlayer.id !== currentPlayer.id && (
+          <Button onClick={() => {}} disabled={true}>
+            Wait ...
+          </Button>
+        )}
       </div>
-    </>
+      <Fields playerId={thisPlayer.id} handleBuy={handleBuy} />
+    </div>
   );
 }
