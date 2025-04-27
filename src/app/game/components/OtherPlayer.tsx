@@ -5,10 +5,22 @@ import CropsCard from "./ui/cards/CropsCard";
 import emptyField from "@/app/assets/fields/emptyField.png";
 import manurePNG from "@/app/assets/tokens/manure.png";
 import tractorPNG from "@/app/assets/tokens/tractor.png";
+import { useGameContext } from "@/contexts/GameContext";
 
 export default function OtherPlayer({ player }: { player: PlayerType }) {
+  const { gameState } = useGameContext();
+  if (!gameState) {
+    return <div>Loading game state ...</div>;
+  }
+  const { currentPlayer } = gameState;
   return (
-    <div className="col-span-1 flex flex-col gap-2 rounded-2xl border-2 border-secondary p-5">
+    <div
+      className="col-span-1 flex flex-col gap-2 rounded-2xl border-2 border-secondary p-5"
+      style={{
+        borderColor: player.id === currentPlayer.id ? "#FFB800" : "",
+        borderWidth: player.id === currentPlayer.id ? "5px" : "",
+      }}
+    >
       <h3 className="text-secondary">{player.playerName} </h3>
       <div className="flex">
         <div className="relative">
