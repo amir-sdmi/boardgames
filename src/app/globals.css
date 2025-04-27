@@ -11,23 +11,6 @@
   font-style: normal;
   font-display: swap;
 }
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffeccf;
-    --foreground: white;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
 
 *::-webkit-scrollbar {
   width: 6px;
@@ -40,4 +23,43 @@ body {
 *::-webkit-scrollbar-thumb {
   background-color: #63738150;
   border-radius: 12px;
+}
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #171717;
+    --card: #ffffff;
+    --card-foreground: #171717;
+    --popover: #ffffff;
+    --popover-foreground: #171717;
+    --primary: #171717; /* or your brand color */
+    --primary-foreground: #ffffff;
+    --secondary: #f2f2f2; /* light gray */
+    --secondary-foreground: #171717;
+    --muted: #f2f2f2;
+    --muted-foreground: #7e7e7e;
+    --accent: #f2f2f2;
+    --accent-foreground: #171717;
+    --destructive: #ff4d4f; /* red for errors */
+    --destructive-foreground: #ffffff;
+    --border: #e5e5e5;
+    --input: #e5e5e5;
+    --ring: #171717;
+    --chart-1: #f97316; /* optional charts */
+    --chart-2: #10b981;
+    --chart-3: #3b82f6;
+    --chart-4: #facc15;
+    --chart-5: #ec4899;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
