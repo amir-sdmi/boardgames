@@ -30,7 +30,11 @@ export default function Deck({
   if (!gameState) {
     return <div>Loading game state ...</div>;
   }
-  const { availableTractors, deck, currentPlayer } = gameState;
+  const { availableTractors, deck, currentPlayer, players } = gameState;
+  const thisPlayerIsCurrentPlayer: boolean = thisPlayer.id === currentPlayer.id;
+  const currentPlayerName = players.find(
+    (player) => player.id === currentPlayer.id,
+  )?.playerName;
   const handlePlantFromMarket = async (
     fieldIndex: number,
     card: CardsType,
@@ -67,6 +71,7 @@ export default function Deck({
         />
         <BuyCards thisPlayer={thisPlayer} handleBuy={handleBuy} />
       </div>
+      <p>its {thisPlayerIsCurrentPlayer ? "your" : currentPlayerName} trun</p>
       <div className="flex justify-between">
         <DecCard deckLength={deck.length} />
         {currentPlayer.marketingCards.map((card, index) => (
