@@ -91,7 +91,7 @@ export default function RoomPage() {
       }
     } else {
       console.error(
-        "You need at least 3 players and at most 7 to start the game",
+        `You need at least ${PLAYER_LIMITS.MIN} players and at most ${PLAYER_LIMITS.MAX} to start the game`,
       );
     }
   };

@@ -1,5 +1,5 @@
 const PLAYER_LIMITS = {
-  MIN: 1,
+  MIN: 3,
   MAX: 7,
 } as const;
 

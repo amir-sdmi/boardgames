@@ -5,9 +5,6 @@ import { buyAction } from "../core/actions/buy/buyAction";
 import { useParams } from "next/navigation";
 import Deck from "./Deck/Deck";
 import Hand from "./Hand/Hand";
-// import Button from "@/app/components/ui/Button";
-// import { cardName } from "../utils/cardsUtils";
-// import { plantFromTradeAction } from "../core/actions/plantFromTrade/plantFromTradeAction";
 import { useEffect, useState } from "react";
 import Deals from "./tradingCards/Deals";
 
@@ -19,6 +16,8 @@ import {
   tradeOfferAction,
 } from "../core/actions/market/tradeOfferAction";
 import OtherPlayers from "./OtherPlayers";
+import GameFinishedOverlay from "./GameFinishedOverlay";
+import AcceptedTradePlant from "./Hand/AcceptedTradePlant";
 
 export default function PlayerGame({ userId }: { userId: string }) {
   const [isTradeOpen, setIsTradeOpen] = useState(false);
@@ -33,7 +32,6 @@ export default function PlayerGame({ userId }: { userId: string }) {
     (player) => player.userId === userId,
   );
   useEffect(() => {
-    // Set trader to thisPlayer once it's available
     if (thisPlayer) {
       setTrader(thisPlayer);
     }
@@ -44,10 +42,32 @@ export default function PlayerGame({ userId }: { userId: string }) {
   if (!thisPlayer) {
     return <div> Player not found in game</div>;
   }
+
+  if (gameState.gameStatus === "finished") {
+    return <GameFinishedOverlay gameState={gameState} currentUserId={userId} />;
+  }
+
   const { currentPlayer } = gameState;
 
   const thisPlayerIsCurrentPlayer: boolean = thisPlayer.id === currentPlayer.id;
   const istradeProposal = currentPlayer.tradeProposal?.proposerTradeOffer;
+  const pendingTrade =
+    thisPlayer.acceptedTrade !== null && thisPlayer.acceptedTrade.length > 0;
+
+  const handOrAccepted = pendingTrade ? (
+    <AcceptedTradePlant
+      player={thisPlayer}
+      roomId={roomId}
+      acceptedTrade={thisPlayer.acceptedTrade!}
+    />
+  ) : (
+    <Hand
+      player={thisPlayer}
+      roomId={roomId}
+      currentPlayer={currentPlayer}
+    />
+  );
+
   const handleBuy = async (
     player: PlayerType,
     type: BuyType,
@@ -79,13 +99,6 @@ export default function PlayerGame({ userId }: { userId: string }) {
       console.error("Error creating trade offer", error);
     }
   };
-  // const handlePlantFromTrade = async (fieldIndex: number, card: CardsType) => {
-  //   try {
-  //     await plantFromTradeAction(roomId, thisPlayer.id, fieldIndex, card.id);
-  //   } catch (error) {
-  //     console.error("Error planting from trade:", error);
-  //   }
-  // };
 
   return (
     <div className="grid grid-cols-12 gap-2">
@@ -111,11 +124,7 @@ export default function PlayerGame({ userId }: { userId: string }) {
             handleBuy={handleBuy}
             setIsTradeOpen={setIsTradeOpen}
           />
-          <Hand
-            player={thisPlayer}
-            roomId={roomId}
-            currentPlayer={currentPlayer}
-          />
+          {handOrAccepted}
         </>
       )}
       {!thisPlayerIsCurrentPlayer && !istradeProposal && (
@@ -125,11 +134,7 @@ export default function PlayerGame({ userId }: { userId: string }) {
             handleBuy={handleBuy}
             setIsTradeOpen={setIsTradeOpen}
           />
-          <Hand
-            player={thisPlayer}
-            roomId={roomId}
-            currentPlayer={currentPlayer}
-          />
+          {handOrAccepted}
         </>
       )}
       {!thisPlayerIsCurrentPlayer && istradeProposal && isChangeOpen && (
@@ -157,32 +162,12 @@ export default function PlayerGame({ userId }: { userId: string }) {
             thisPlayer={thisPlayer}
             setIsChangeOpen={setIsChangeOpen}
           />
-          <Hand
-            player={thisPlayer}
-            roomId={roomId}
-            currentPlayer={currentPlayer}
-          />
+          {handOrAccepted}
         </>
       )}
 
       <Player thisPlayer={thisPlayer} handleBuy={handleBuy} />
       <OtherPlayers thisPlayerId={thisPlayer.id} />
-      {/* <ul className="border-4 border-yellow-500">
-        {thisPlayer.acceptedTrade?.map((card) => (
-          <li key={card.id}>
-            {cardName(card.id)} x {card.quantity}
-            <div>
-              <Button onClick={() => handlePlantFromTrade(0, card)}>F1</Button>
-              <Button onClick={() => handlePlantFromTrade(1, card)}>F2</Button>
-              {thisPlayer.fields.length > 2 && (
-                <Button onClick={() => handlePlantFromTrade(2, card)}>
-                  F3
-                </Button>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul> */}
     </div>
   );
 }

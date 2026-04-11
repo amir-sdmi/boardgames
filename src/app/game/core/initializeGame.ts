@@ -126,6 +126,6 @@ export const createNewGame = (
     availableTractors: players.length,
     endTurnReceivingCardsCount: endTurnReceivingCards(players.length),
     round: 1,
-    gameStatus: "initial",
+    gameStatus: "playing",
   };
 };
