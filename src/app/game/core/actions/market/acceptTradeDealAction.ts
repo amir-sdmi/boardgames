@@ -1,7 +1,4 @@
-import {
-  fetchGameState,
-  updateFirestoreDocument,
-} from "@/app/game/utils/gameStateUtils";
+import { fetchGameState, runGameStateTransaction } from "@/app/game/utils/gameStateUtils";
 import {
   addCardsToArray,
   findPlayer,
@@ -13,19 +10,18 @@ import {
   GameType,
   PlayerType,
 } from "@/types/gameTypes";
+
 async function fetchTradeDetails(roomId: string, dealerId: PlayerType["id"]) {
   const gameState = await fetchGameState(roomId);
   const { players, currentPlayer } = gameState;
 
   const dealer = findPlayer(players, dealerId);
-  if (!dealer) throw new Error(`Dealer not found for dealerId: ${dealerId}`);
 
   const trader = findPlayer(players, currentPlayer.id);
-  if (!trader)
-    throw new Error(`Trader not found for playerId: ${currentPlayer.id}`);
 
   return { gameState, dealer, trader, currentPlayer };
 }
+
 export async function acceptBetweenAcceptedPlayers(
   roomId: string,
   dealerId: PlayerType["id"],
@@ -42,9 +38,9 @@ export async function acceptBetweenAcceptedPlayers(
   const traderGive = give.handCards;
   const dealerGive = receive.expectedCards;
   const tradeDetails = {
-    dealer,
+    dealerId: dealer.id,
+    traderId: trader.id,
     dealerGive,
-    trader,
     traderGive,
     marketCards,
   };
@@ -54,6 +50,7 @@ export async function acceptBetweenAcceptedPlayers(
     tradeDetails,
   });
 }
+
 export async function acceptTradeDealFromDealerTile(
   roomId: string,
   dealerId: PlayerType["id"],
@@ -63,7 +60,7 @@ export async function acceptTradeDealFromDealerTile(
     dealerId,
   );
   const deal = currentPlayer.tradeProposal?.playersDeals.find(
-    (deal) => deal.playerId === dealerId,
+    (d) => d.playerId === dealerId,
   );
   if (!deal?.newTradeOffer) throw new Error("Deal offer not found");
 
@@ -72,9 +69,9 @@ export async function acceptTradeDealFromDealerTile(
   const traderGive = receive.expectedCards;
   const dealerGive = give.handCards;
   const tradeDetails = {
-    dealer,
+    dealerId: dealer.id,
+    traderId: trader.id,
     dealerGive,
-    trader,
     traderGive,
     marketCards,
   };
@@ -85,6 +82,7 @@ export async function acceptTradeDealFromDealerTile(
     tradeDetails,
   });
 }
+
 export async function acceptTradeDealAction({
   roomId,
   gameState,
@@ -93,61 +91,67 @@ export async function acceptTradeDealAction({
   roomId: string;
   gameState: GameType;
   tradeDetails: {
-    dealer: PlayerType;
+    dealerId: PlayerType["id"];
+    traderId: PlayerType["id"];
     dealerGive: CardsType[];
-    trader: PlayerType;
     traderGive: CardsType[];
     marketCards: CardsType[];
   };
 }) {
-  const { currentPlayer, players } = gameState;
-  const { dealer, dealerGive, trader, traderGive, marketCards } = tradeDetails;
-  const newDealerHand = removeCardsFromArray(dealer.hand, dealerGive);
-  const newTraderHand = removeCardsFromArray(trader.hand, traderGive);
-  const dealerAcceptedTradeOffer: CardsType[] = addCardsToArray(
-    traderGive,
-    marketCards,
-  );
-  const traderAcceptedTradeOffer: CardsType[] = [...dealerGive];
+  const proposalSnapshot = gameState.currentPlayer.tradeProposal;
 
-  const newMaketingCards: CardsType[] = removeCardsFromArray(
-    currentPlayer.marketingCards,
-    marketCards,
-  );
-  const updatedDealer: PlayerType = {
-    ...dealer,
-    hand: newDealerHand,
-    acceptedTrade: dealerAcceptedTradeOffer,
-  };
-  const updatedTrader: PlayerType = {
-    ...trader,
-    hand: newTraderHand,
-    acceptedTrade: traderAcceptedTradeOffer,
-  };
-  const updatedCurrentPlayer: CurrentPlayerType = {
-    ...currentPlayer,
-    marketingCards: newMaketingCards,
-    tradeProposal: null,
-  };
+  await runGameStateTransaction(roomId, (current) => {
+    if (
+      JSON.stringify(current.currentPlayer.tradeProposal) !==
+      JSON.stringify(proposalSnapshot)
+    ) {
+      throw new Error("Trade proposal changed; please try again");
+    }
 
-  const updatedPlayers = players.map((player) => {
-    if (player.id === dealer.id) return updatedDealer;
-    if (player.id === trader.id) return updatedTrader;
-    return player;
-  });
+    const { dealerId, traderId, dealerGive, traderGive, marketCards } =
+      tradeDetails;
+    const dealer = findPlayer(current.players, dealerId);
+    const trader = findPlayer(current.players, traderId);
+    const { currentPlayer } = current;
 
-  const updatedGameState = {
-    ...gameState,
-    players: updatedPlayers,
-    currentPlayer: updatedCurrentPlayer,
-  };
+    const newDealerHand = removeCardsFromArray(dealer.hand, dealerGive);
+    const newTraderHand = removeCardsFromArray(trader.hand, traderGive);
+    const dealerAcceptedTradeOffer: CardsType[] = addCardsToArray(
+      traderGive,
+      marketCards,
+    );
+    const traderAcceptedTradeOffer: CardsType[] = [...dealerGive];
 
-  try {
-    await updateFirestoreDocument("rooms", roomId, {
-      gameState: updatedGameState,
+    const newMaketingCards: CardsType[] = removeCardsFromArray(
+      currentPlayer.marketingCards,
+      marketCards,
+    );
+    const updatedDealer: PlayerType = {
+      ...dealer,
+      hand: newDealerHand,
+      acceptedTrade: dealerAcceptedTradeOffer,
+    };
+    const updatedTrader: PlayerType = {
+      ...trader,
+      hand: newTraderHand,
+      acceptedTrade: traderAcceptedTradeOffer,
+    };
+    const updatedCurrentPlayer: CurrentPlayerType = {
+      ...currentPlayer,
+      marketingCards: newMaketingCards,
+      tradeProposal: null,
+    };
+
+    const updatedPlayers = current.players.map((player) => {
+      if (player.id === dealer.id) return updatedDealer;
+      if (player.id === trader.id) return updatedTrader;
+      return player;
     });
-  } catch (error) {
-    console.error("Error updating firestore document", error);
-    throw new Error("Error updating firestore document");
-  }
+
+    return {
+      ...current,
+      players: updatedPlayers,
+      currentPlayer: updatedCurrentPlayer,
+    };
+  });
 }

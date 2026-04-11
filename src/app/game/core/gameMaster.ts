@@ -1,19 +1,11 @@
 import { CardsType, GameType } from "@/types/gameTypes";
 import { cardData } from "../utils/cardData";
 import { shuffleArray } from "../utils/utils";
-import {
-  fetchGameState,
-  updateFirestoreDocument,
-} from "../utils/gameStateUtils";
+import { runGameStateTransaction } from "../utils/gameStateUtils";
 import { MAX_ROUND } from "@/config/constants";
 
-export const nextRound = async (roomId: string) => {
-  const gameState = await fetchGameState(roomId);
-  if (!gameState) {
-    throw new Error("Game state not found");
-  }
+export function applyNextRound(gameState: GameType): GameType {
   const { deck, discardPile, round } = gameState;
-  //creating new CardsInformation Deck from discardPile and deck
   const newDeck = [...deck];
   discardPile.forEach((card) => {
     const cardInfo = cardData.find((c) => c.id === card.id);
@@ -30,25 +22,24 @@ export const nextRound = async (roomId: string) => {
   const emptyDiscardPile: CardsType[] = cardData.map((card) => {
     return {
       id: card.id,
-      name: card.name,
       quantity: 0,
     };
   });
 
-  const newRound = round + 1;
+  const nextRoundNum = round + 1;
   let updatedGameStatus = gameState.gameStatus;
-  if (newRound > MAX_ROUND) {
+  if (nextRoundNum > MAX_ROUND) {
     updatedGameStatus = "finished";
   }
-  const updatedGameState: GameType = {
+  return {
     ...gameState,
     deck: shuffledDeck,
     discardPile: emptyDiscardPile,
-    round: newRound,
+    round: nextRoundNum,
     gameStatus: updatedGameStatus,
   };
+}
 
-  await updateFirestoreDocument("rooms", roomId, {
-    gameState: updatedGameState,
-  });
+export const nextRound = async (roomId: string) => {
+  await runGameStateTransaction(roomId, (gameState) => applyNextRound(gameState));
 };

@@ -1,6 +1,7 @@
-import { db } from "@/lib/firebase";
 import { GameType } from "@/types/gameTypes";
-import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { runGameStateTransaction } from "@/app/game/utils/gameStateUtils";
+import { db } from "@/lib/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type GameContextType = {
@@ -43,15 +44,10 @@ export const GameProvider = ({
   const updateGameState = async (updates: Partial<GameType>) => {
     if (!gameState) return;
 
-    const roomRef = doc(db, "rooms", roomId);
-
-    // Update only the gameState field within the room document
-    await updateDoc(roomRef, {
-      gameState: {
-        ...gameState, // Include the current state
-        ...updates, // Apply the updates
-      },
-    });
+    await runGameStateTransaction(roomId, (current) => ({
+      ...current,
+      ...updates,
+    }));
   };
 
   return (

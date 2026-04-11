@@ -47,7 +47,10 @@ export default function CardToPlant({
         {canPlant && (isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />)}
       </div>
       {isOpen && canPlant && (
-        <div className="flex justify-between gap-1 overflow-hidden">
+        <div
+          className="flex justify-between gap-1 overflow-hidden"
+          onClick={(e) => e.stopPropagation()}
+        >
           <Button
             onClick={() => {
               handlePlantFromHand(0, card);

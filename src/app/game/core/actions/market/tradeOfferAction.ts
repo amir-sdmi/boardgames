@@ -1,8 +1,4 @@
-import {
-  fetchGameState,
-  updateFirestoreDocument,
-} from "@/app/game/utils/gameStateUtils";
-import {} from "@/app/game/utils/utils";
+import { runGameStateTransaction } from "@/app/game/utils/gameStateUtils";
 import {
   PlayerDealType,
   PlayerType,
@@ -14,40 +10,31 @@ export async function tradeOfferAction(
   roomId: string,
   tradeOffer: TradeOfferType,
 ) {
-  const gameState = await fetchGameState(roomId);
-  const { currentPlayer, players } = gameState;
+  await runGameStateTransaction(roomId, (gameState) => {
+    const { currentPlayer, players } = gameState;
 
-  const emptyPlayersDeals = players
-    .filter((player) => player.id !== currentPlayer.id)
-    .map((player) => ({
-      playerId: player.id,
-      accepted: null,
-      newTradeOffer: null,
-    }));
+    const emptyPlayersDeals = players
+      .filter((player) => player.id !== currentPlayer.id)
+      .map((player) => ({
+        playerId: player.id,
+        accepted: null,
+        newTradeOffer: null,
+      }));
 
-  //TODO: change later
-  const newTradeProposal: TradeProposalType = {
-    ...currentPlayer.tradeProposal,
-    proposerTradeOffer: tradeOffer,
-    playersDeals: emptyPlayersDeals,
-  };
+    const newTradeProposal: TradeProposalType = {
+      ...currentPlayer.tradeProposal,
+      proposerTradeOffer: tradeOffer,
+      playersDeals: emptyPlayersDeals,
+    };
 
-  const updatedGameState = {
-    ...gameState,
-    currentPlayer: {
-      ...currentPlayer,
-      tradeProposal: newTradeProposal,
-    },
-  };
-
-  try {
-    await updateFirestoreDocument("rooms", roomId, {
-      gameState: updatedGameState,
-    });
-  } catch (error) {
-    console.error("Error updating firestore document", error);
-    throw new Error("Error updating firestore document");
-  }
+    return {
+      ...gameState,
+      currentPlayer: {
+        ...currentPlayer,
+        tradeProposal: newTradeProposal,
+      },
+    };
+  });
 }
 
 export async function acceptOrRejectTradeAction(
@@ -55,42 +42,34 @@ export async function acceptOrRejectTradeAction(
   dealerId: PlayerType["id"],
   acceptedOrNot: boolean,
 ) {
-  const gameState = await fetchGameState(roomId);
-  const { currentPlayer } = gameState;
+  await runGameStateTransaction(roomId, (gameState) => {
+    const { currentPlayer } = gameState;
 
-  if (!currentPlayer.tradeProposal?.playersDeals) {
-    throw new Error("No trade proposal found");
-  }
+    if (!currentPlayer.tradeProposal?.playersDeals) {
+      throw new Error("No trade proposal found");
+    }
 
-  const newPlayerDeal: PlayerDealType = {
-    playerId: dealerId,
-    accepted: acceptedOrNot,
-    newTradeOffer: null,
-  };
+    const newPlayerDeal: PlayerDealType = {
+      playerId: dealerId,
+      accepted: acceptedOrNot,
+      newTradeOffer: null,
+    };
 
-  const newPlayersDeals = currentPlayer.tradeProposal?.playersDeals.map(
-    (deal) => (deal.playerId === dealerId ? newPlayerDeal : deal),
-  );
+    const newPlayersDeals = currentPlayer.tradeProposal.playersDeals.map(
+      (deal) => (deal.playerId === dealerId ? newPlayerDeal : deal),
+    );
 
-  const updatedGameState = {
-    ...gameState,
-    currentPlayer: {
-      ...currentPlayer,
-      tradeProposal: {
-        ...currentPlayer.tradeProposal,
-        playersDeals: newPlayersDeals,
+    return {
+      ...gameState,
+      currentPlayer: {
+        ...currentPlayer,
+        tradeProposal: {
+          ...currentPlayer.tradeProposal,
+          playersDeals: newPlayersDeals,
+        },
       },
-    },
-  };
-
-  try {
-    await updateFirestoreDocument("rooms", roomId, {
-      gameState: updatedGameState,
-    });
-  } catch (error) {
-    console.error("Error updating firestore document", error);
-    throw new Error("Error updating firestore document");
-  }
+    };
+  });
 }
 
 export async function dealerTradeOfferAction(
@@ -98,35 +77,32 @@ export async function dealerTradeOfferAction(
   tradeOffer: TradeOfferType,
   dealerId: PlayerType["id"],
 ) {
-  const gameState = await fetchGameState(roomId);
-  const { currentPlayer } = gameState;
+  await runGameStateTransaction(roomId, (gameState) => {
+    const { currentPlayer } = gameState;
 
-  const newPlayerDeal: PlayerDealType = {
-    playerId: dealerId,
-    accepted: null,
-    newTradeOffer: tradeOffer,
-  };
+    if (!currentPlayer.tradeProposal?.playersDeals) {
+      throw new Error("No trade proposal found");
+    }
 
-  const newPlayersDeals = currentPlayer.tradeProposal?.playersDeals.map(
-    (dealer) => (dealer.playerId === dealerId ? newPlayerDeal : dealer),
-  );
+    const newPlayerDeal: PlayerDealType = {
+      playerId: dealerId,
+      accepted: null,
+      newTradeOffer: tradeOffer,
+    };
 
-  const updatedGameState = {
-    ...gameState,
-    currentPlayer: {
-      ...currentPlayer,
-      tradeProposal: {
-        ...currentPlayer.tradeProposal,
-        playersDeals: newPlayersDeals,
+    const newPlayersDeals = currentPlayer.tradeProposal.playersDeals.map(
+      (dealer) => (dealer.playerId === dealerId ? newPlayerDeal : dealer),
+    );
+
+    return {
+      ...gameState,
+      currentPlayer: {
+        ...currentPlayer,
+        tradeProposal: {
+          ...currentPlayer.tradeProposal,
+          playersDeals: newPlayersDeals,
+        },
       },
-    },
-  };
-  try {
-    await updateFirestoreDocument("rooms", roomId, {
-      gameState: updatedGameState,
-    });
-  } catch (error) {
-    console.error("Error updating firestore document", error);
-    throw new Error("Error updating firestore document");
-  }
+    };
+  });
 }

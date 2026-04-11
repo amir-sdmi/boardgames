@@ -1,6 +1,32 @@
 import { db } from "@/lib/firebase";
-import { doc, FieldValue, getDoc, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  FieldValue,
+  getDoc,
+  runTransaction,
+  updateDoc,
+} from "firebase/firestore";
 import { GameType } from "@/types/gameTypes";
+
+export async function runGameStateTransaction(
+  roomId: string,
+  updateFn: (gameState: GameType) => GameType,
+): Promise<void> {
+  const roomRef = doc(db, "rooms", roomId);
+  await runTransaction(db, async (transaction) => {
+    const roomDoc = await transaction.get(roomRef);
+    if (!roomDoc.exists()) {
+      throw new Error("Room not found");
+    }
+    const data = roomDoc.data();
+    if (!data?.gameState) {
+      throw new Error("Invalid game state");
+    }
+    const gameState = data.gameState as GameType;
+    const updatedGameState = updateFn(gameState);
+    transaction.update(roomRef, { gameState: updatedGameState });
+  });
+}
 
 export async function fetchGameState(roomId: string): Promise<GameType> {
   try {
