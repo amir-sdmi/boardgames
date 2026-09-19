@@ -38,9 +38,9 @@ export default function Acceptor({
 
   return (
     <div className="col-span-7 h-[379px]">
-      <div className="border-secondary text-secondary flex w-[172px] flex-col items-center justify-between rounded-2xl border-2 bg-white p-2">
+      <div className="flex w-[172px] flex-col items-center justify-between rounded-2xl border-2 border-secondary bg-white p-2 text-secondary">
         <p>Trade</p>
-        <div className="border-secondary w-full border-b-2 p-1 text-left">
+        <div className="w-full border-b-2 border-secondary p-1 text-left">
           <h3>recieve</h3>
           <div className="flex items-center justify-around">
             {marketCards.map((card, index) => (
@@ -57,7 +57,7 @@ export default function Acceptor({
             ))}
           </div>
         </div>
-        <div className="border-secondary w-full border-b-2 p-1 text-left">
+        <div className="w-full border-b-2 border-secondary p-1 text-left">
           <h3>Give </h3>
           <div className="flex items-center justify-around">
             {receive.expectedCards.length === 0 &&
@@ -92,17 +92,6 @@ export default function Acceptor({
             <Button onClick={handleCreateOffer}>Change</Button>
           )}
         </div>
-        {/* {showChange && (
-          <TradingOffer
-            marketCards={currentPlayer.marketingCards}
-            playerHand={thisPlayer.hand}
-            trader={dealer}
-            setTrader={setDealer}
-            setTradeOffer={setDealerTradeOffer}
-            tradeOffer={dealerTradeOffer}
-            handleProposeTrade={handleDealerTradeOffer}
-          />
-        )} */}
       </div>
     </div>
   );

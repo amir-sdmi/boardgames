@@ -1,18 +1,5 @@
-type ButtonProps = {
-  children: React.ReactNode;
-  onClick: () => void;
-  disabled?: boolean;
-};
+import Button, { type ButtonProps } from "./Button";
 
-const RejectButton = ({ children, onClick, disabled = false }: ButtonProps) => {
-  return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      className="bg-badge w-full rounded-lg px-1 py-1 text-center text-xs font-bold text-white"
-    >
-      {children}
-    </button>
-  );
-};
-export default RejectButton;
+export default function RejectButton(props: Omit<ButtonProps, "variant">) {
+  return <Button {...props} variant="reject" />;
+}

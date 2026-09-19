@@ -1,7 +1,8 @@
+import type { BuyHandler } from "@/types/gameUiTypes";
 import cardsPNG from "@/app/assets/tokens/cards.png";
 import Button from "@/app/components/ui/Button";
 import { PRICES } from "@/config/constants";
-import { BuyType, PlayerType } from "@/types/gameTypes";
+import { PlayerType } from "@/types/gameTypes";
 import Image from "next/image";
 
 export default function BuyCards({
@@ -9,12 +10,7 @@ export default function BuyCards({
   handleBuy,
 }: {
   thisPlayer: PlayerType;
-  handleBuy: (
-    player: PlayerType,
-    type: BuyType,
-    price: number,
-    fieldId?: number,
-  ) => void;
+  handleBuy: BuyHandler;
 }) {
   return (
     <div className="flex w-[177px] flex-col justify-between gap-3 rounded-2xl border-2 border-secondary bg-white p-2 font-semibold text-secondary">
@@ -28,7 +24,6 @@ export default function BuyCards({
       >
         Buy
       </Button>
-
     </div>
   );
 }

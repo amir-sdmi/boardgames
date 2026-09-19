@@ -1,20 +1,10 @@
 import { LinkButton } from "./components/ui/LinkButton";
-import homepageBG from "../../public/homepageBG.png";
-import Image from "next/image";
+import { GameBackdrop } from "@/components/layout/GameBackdrop";
 import Logo from "./components/ui/Logo";
 export default function Home() {
   return (
     <>
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[rgba(13,13,13,0.7)] via-[rgba(25,25,25,0.7)] to-[rgba(115,115,115,0.7)]"></div>
-
-      <Image
-        src={homepageBG}
-        alt="background"
-        layout="fill"
-        objectFit="cover"
-        objectPosition="center"
-        className="-z-20"
-      />
+      <GameBackdrop />
       <Logo />
 
       <div className="flex flex-col items-center justify-center gap-4">

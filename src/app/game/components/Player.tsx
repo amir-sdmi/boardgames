@@ -1,5 +1,6 @@
+import type { BuyHandler } from "@/types/gameUiTypes";
 import { useGameContext } from "@/contexts/GameContext";
-import { BuyType, PlayerType } from "@/types/gameTypes";
+import { PlayerType } from "@/types/gameTypes";
 import Fields from "./Field/Fields";
 import { useParams } from "next/navigation";
 import Image from "next/image";
@@ -16,12 +17,7 @@ export default function Player({
   handleBuy,
 }: {
   thisPlayer: PlayerType;
-  handleBuy: (
-    player: PlayerType,
-    type: BuyType,
-    price: number,
-    fieldId?: number,
-  ) => void;
+  handleBuy: BuyHandler;
 }) {
   const { roomId } = useParams<{ roomId: string }>();
   const { gameState } = useGameContext();

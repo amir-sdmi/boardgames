@@ -1,8 +1,9 @@
+import type { BuyHandler } from "@/types/gameUiTypes";
 import Button from "@/app/components/ui/Button";
 import manurePNG from "@/app/assets/tokens/manure.png";
 import { useGameContext } from "@/contexts/GameContext";
 import Image from "next/image";
-import { BuyType, PlayerType } from "@/types/gameTypes";
+import { PlayerType } from "@/types/gameTypes";
 import { PRICES } from "@/config/constants";
 import NumberBadge from "@/app/components/ui/NumberBadge";
 
@@ -11,12 +12,7 @@ export default function BuyManure({
   handleBuy,
 }: {
   thisPlayer: PlayerType;
-  handleBuy: (
-    player: PlayerType,
-    type: BuyType,
-    price: number,
-    fieldId?: number,
-  ) => void;
+  handleBuy: BuyHandler;
 }) {
   const { gameState } = useGameContext();
   if (!gameState) {

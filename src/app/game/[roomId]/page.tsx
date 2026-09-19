@@ -1,17 +1,15 @@
-"use client";
-import { GameProvider } from "@/contexts/GameContext";
-import { useParams } from "next/navigation";
-import { useUser } from "@clerk/nextjs";
-import PlayerGame from "../components/PlayerGame";
+import { ProtectedGamePage } from "@/components/auth/ProtectedGamePage";
+import GameClient from "./GameClient";
 
-export default function GamePage() {
-  const { roomId } = useParams<{ roomId: string }>();
-  const { user } = useUser();
-  if (!user) return null;
-
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ roomId: string }>;
+}) {
+  const { roomId } = await params;
   return (
-    <GameProvider roomId={roomId}>
-      <PlayerGame userId={user.id} />
-    </GameProvider>
+    <ProtectedGamePage returnTo={`/game/${encodeURIComponent(roomId)}`}>
+      {(user) => <GameClient user={user} />}
+    </ProtectedGamePage>
   );
 }

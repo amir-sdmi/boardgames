@@ -5,10 +5,7 @@ import { buyAction } from "../core/actions/buy/buyAction";
 import { useParams } from "next/navigation";
 import Deck from "./Deck/Deck";
 import Hand from "./Hand/Hand";
-// import Button from "@/app/components/ui/Button";
-// import { cardName } from "../utils/cardsUtils";
-// import { plantFromTradeAction } from "../core/actions/plantFromTrade/plantFromTradeAction";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Deals from "./tradingCards/Deals";
 
 import Acceptor from "./tradingCards/Acceptor";
@@ -32,12 +29,12 @@ export default function PlayerGame({ userId }: { userId: string }) {
   const thisPlayer = gameState?.players.find(
     (player) => player.userId === userId,
   );
-  useEffect(() => {
-    // Set trader to thisPlayer once it's available
-    if (thisPlayer) {
-      setTrader(thisPlayer);
-    }
-  }, [thisPlayer]);
+  const [traderSource, setTraderSource] = useState(thisPlayer);
+  // Reset the editable trade when the server sends a new player snapshot.
+  if (thisPlayer !== traderSource) {
+    setTraderSource(thisPlayer);
+    if (thisPlayer) setTrader(thisPlayer);
+  }
   if (!gameState) {
     return <div>Loading game state ...</div>;
   }
@@ -79,13 +76,6 @@ export default function PlayerGame({ userId }: { userId: string }) {
       console.error("Error creating trade offer", error);
     }
   };
-  // const handlePlantFromTrade = async (fieldIndex: number, card: CardsType) => {
-  //   try {
-  //     await plantFromTradeAction(roomId, thisPlayer.id, fieldIndex, card.id);
-  //   } catch (error) {
-  //     console.error("Error planting from trade:", error);
-  //   }
-  // };
 
   return (
     <div className="grid grid-cols-12 gap-2">
@@ -167,22 +157,6 @@ export default function PlayerGame({ userId }: { userId: string }) {
 
       <Player thisPlayer={thisPlayer} handleBuy={handleBuy} />
       <OtherPlayers thisPlayerId={thisPlayer.id} />
-      {/* <ul className="border-4 border-yellow-500">
-        {thisPlayer.acceptedTrade?.map((card) => (
-          <li key={card.id}>
-            {cardName(card.id)} x {card.quantity}
-            <div>
-              <Button onClick={() => handlePlantFromTrade(0, card)}>F1</Button>
-              <Button onClick={() => handlePlantFromTrade(1, card)}>F2</Button>
-              {thisPlayer.fields.length > 2 && (
-                <Button onClick={() => handlePlantFromTrade(2, card)}>
-                  F3
-                </Button>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul> */}
     </div>
   );
 }

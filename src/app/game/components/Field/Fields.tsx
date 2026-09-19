@@ -1,6 +1,6 @@
+import type { BuyHandler } from "@/types/gameUiTypes";
 import Button from "@/app/components/ui/Button";
 import { useGameContext } from "@/contexts/GameContext";
-import { BuyType, PlayerType } from "@/types/gameTypes";
 import { PRICES } from "@/config/constants";
 import Field from "./Field";
 import { findPlayer } from "../../utils/utils";
@@ -11,12 +11,7 @@ const MAX_FIELDS = 3 as const;
 
 type FieldsProps = {
   playerId: number;
-  handleBuy: (
-    player: PlayerType,
-    type: BuyType,
-    price: number,
-    fieldId?: number,
-  ) => void;
+  handleBuy: BuyHandler;
 };
 export default function Fields({ playerId, handleBuy }: FieldsProps) {
   const { gameState } = useGameContext();

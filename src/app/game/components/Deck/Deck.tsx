@@ -1,5 +1,6 @@
+import type { BuyHandler } from "@/types/gameUiTypes";
 import { useGameContext } from "@/contexts/GameContext";
-import { BuyType, CardsType, PlayerType } from "@/types/gameTypes";
+import { CardsType, PlayerType } from "@/types/gameTypes";
 import BuyManure from "./BuyManure";
 import BuyTractor from "./BuyTractor";
 import BuyCards from "./BuyCards";
@@ -16,12 +17,7 @@ export default function Deck({
   setIsTradeOpen,
 }: {
   thisPlayer: PlayerType;
-  handleBuy: (
-    player: PlayerType,
-    type: BuyType,
-    price: number,
-    fieldId?: number,
-  ) => void;
+  handleBuy: BuyHandler;
   setIsTradeOpen: (value: boolean) => void;
 }) {
   const { roomId } = useParams<{ roomId: string }>();

@@ -1,5 +1,5 @@
-import { SignUp } from "@clerk/nextjs";
+import { AuthPage, type AuthPageProps } from "@/components/auth/AuthPage";
 
-export default function Page() {
-  return <SignUp />;
+export default function Page(props: AuthPageProps) {
+  return <AuthPage {...props} mode="sign-up" />;
 }
