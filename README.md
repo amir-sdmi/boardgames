@@ -56,6 +56,8 @@ npm run test:e2e
 
 The browser tests use the production build on port 3100 and their own ignored SQLite database. They cover route protection, registration, persistent sessions, invalid passwords, logout/revocation, expiration, password storage, origin checks, safe redirects, and login rate limits. The normal development database is not used. Live multiplayer testing requires your Firebase project configuration.
 
+The game-board fixture suite runs on port 3101 without Firebase credentials. Use `npm run test:board:serve` for a local visual preview. See [Game UX](docs/GAME_UX.md) for the redesign, interactions, coverage, and remaining limitations.
+
 ## Code review and project status
 
 - [Review and findings](docs/REVIEW.md) — quality assessment, evidence, and verification limits.

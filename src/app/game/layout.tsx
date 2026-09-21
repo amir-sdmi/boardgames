@@ -1,19 +1,9 @@
-import React from "react";
+import s from "./board/board.module.css";
 
-export default function RootLayout({
+export default function GameLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  return (
-    <div
-      style={{
-        backgroundColor: "#FFECCF",
-        minHeight: "100vh",
-        padding: "20px",
-      }}
-    >
-      {children}
-    </div>
-  );
+}) {
+  return <div className={s.gameRoute}>{children}</div>;
 }

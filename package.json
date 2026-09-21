@@ -12,7 +12,8 @@
     "test:e2e": "playwright test",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "npm run lint && npm run typecheck && npm test"
+    "check": "npm run lint && npm run typecheck && npm test",
+    "test:board:serve": "vite --config tests/board/vite.config.mts"
   },
   "dependencies": {
     "@firebase/firestore": "^4.7.5",
@@ -35,18 +36,21 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
+    "@testing-library/react": "^16.3.3",
     "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^20",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
+    "jsdom": "^29.1.1",
     "postcss": "^8",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.23.13",
     "typescript": "^5",
+    "vite": "^8.3.0",
     "vitest": "^4.1.11"
   },
   "engines": {

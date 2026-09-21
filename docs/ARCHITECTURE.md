@@ -12,7 +12,7 @@
 | `src/components/layout`              | Shared decorative layout.                                                                                         |
 | `src/app/components/ui`              | Existing game UI primitives; accept/reject buttons wrap the common button.                                        |
 | `src/components/ui`                  | Generated UI scaffolding; mostly unused by the current game. Do not assume it is the game's active design system. |
-| `src/app/game/components`            | Board, hand, field, purchase, and trade presentation.                                                             |
+| `src/app/game/components`            | Live board entry point plus retained legacy game components.                                                             |
 | `src/app/game/core`                  | Initialization, turn/round coordination, and game action helpers.                                                 |
 | `src/app/game/utils`                 | Card data, card/trade helpers, asset maps, and Firestore helpers.                                                 |
 | `src/services/roomService.ts`        | Room creation, membership, starting, subscription, and kicking.                                                   |
@@ -24,6 +24,8 @@
 | `docs`                               | Review, completed work, and prioritized remaining work.                                                           |
 
 The game is colocated under its route, which Next.js supports. Keeping these paths avoids a large import-only migration. New shared components belong outside the game feature; new game components should stay with the feature. Avoid adding generic abstractions for merely similar code with different game semantics.
+
+The active board presentation and action/subscription adapters now live in `src/app/game/board`. See [GAME_UX.md](GAME_UX.md) for interactions, synchronization states, and the isolated `tests/board` adapter. Board browser tests run on port 3101 alongside the authentication server on 3100.
 
 ## Authentication flow
 

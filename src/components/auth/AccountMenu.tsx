@@ -21,7 +21,7 @@ export function AccountMenu({ name }: { name: string }) {
     }
   }
   return (
-    <div className="fixed right-4 top-4 z-50 rounded-lg bg-white px-4 py-2 font-sans text-sm text-stone-900 shadow">
+    <div data-account-menu className="fixed right-4 top-4 z-50 rounded-lg bg-white px-4 py-2 font-sans text-sm text-stone-900 shadow">
       <div className="flex items-center gap-4">
         <span>Signed in as {name}</span>
         <button

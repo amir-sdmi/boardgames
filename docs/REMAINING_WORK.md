@@ -18,15 +18,15 @@ This is a prioritized backlog, not work claimed to be complete. Gameplay fixes w
 - [ ] **GAME-05:** Confirm 1–2-player support versus a 3-player minimum, initial money, and deck selection. Align constants, messages, and authoritative start checks.
 - [ ] **GAME-06:** Define exact deck-exhaustion/endgame timing, final harvest/scoring, tie handling, and winner display. Stop or allow actions according to those rules.
 - [ ] **GAME-07:** Validate trade quantities, duplicate requests, missing cards, counteroffer ownership, and market index identity. Define and implement hat trades if required.
-- [ ] **GAME-08:** Restore accepted-trade planting through tested UI and define when a turn may advance. The current action exists but its controls are absent.
-- [ ] **GAME-09:** Derive market selection from the draft offer or explicitly synchronize resets; verify draft behavior across remote snapshots and turn changes.
+- [ ] **GAME-08:** Decide whether received cards should restrict turn advancement. Accepted-trade planting controls are restored and tested; no new turn restriction was added. See [GAME_UX.md](GAME_UX.md).
+- [x] **GAME-09:** Derive market selection from one draft; preserve it across unrelated snapshots and visibly invalidate changed selections. Tested through the fixture adapter.
 
 ## Resilience and usability
 
-- [ ] **UX-01:** Add visible error/retry/room-not-found states; clear stale snapshots on room changes; handle all async event rejections; prevent accidental duplicate submissions where appropriate.
+- [x] **UX-01 (game board):** Loading/error/retry/room-not-found states, room cleanup, synchronization gates, and centralized mutation feedback/deduplication. Live service verification remains below.
 - [ ] **UX-02:** Make game controls keyboard accessible; label icon buttons; fix repeated SVG IDs; test narrow screens and touch input without redesigning the rules.
 - [ ] Test refresh/reconnect, host leaving, player kicking/rejoining, full rooms, and game completion with Firebase or its emulator.
-- [ ] Add component-level tests for draft trading and planting controls, plus multi-browser integration tests. Current unit tests mock persistence and cannot replace these.
+- [ ] Add live multi-browser integration tests. Component and Chromium fixture tests now cover board interactions and trading; they do not replace Firebase integration tests.
 
 ## Data, authentication, and operations
 
